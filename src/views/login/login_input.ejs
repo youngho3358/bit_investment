@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            min-width: 1340px;
+        }
+        .login_box{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 20px auto;
+            text-align: center;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .login_text {
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            background-color: #1da326;
+            border-bottom: 1px solid black;
+            color: white;
+            font-size: 20px;
+        }
+        .login_input_box{
+            margin-top: 30px;
+            border: 1px solid black;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="login_box">
+            <form action="/login/loginCheck" method="post">
+                <div class="login_text"><b>로&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;그&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;인</b></div>
+                <div class="login_input_box">
+                    <input name="userId" type="text" placeholder="아이디" style="width: 200px; height: 20px;">
+                    <br>
+                    <input name="userPwd" type="password" placeholder="비밀번호" style="width: 200px; height: 20px;">
+                    <br>
+                    <br>
+                    <input type="submit" value="로그인" style="width: 100px; height: 30px;"> <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
