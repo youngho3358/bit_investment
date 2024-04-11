@@ -1,4 +1,4 @@
-const service = require("../../service/login/login_service")
+const service = require("../../service/login/login_service");
 
 const views = {
     login_input : (req, res) => {
