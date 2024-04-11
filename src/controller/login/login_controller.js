@@ -14,7 +14,12 @@ const views = {
         const kakao_loginBase64 = fs.readFileSync(path.join(__dirname, kakao_loginPath), 'base64');
         const kakao_loginDataURI = `data:image/jpeg;base64,${kakao_loginBase64}`;
 
-        res.render("./login/login_input", {logoDataURI : logoDataURI, kakao_loginDataURI : kakao_loginDataURI});
+        // 네이버 로그인 이미지 사용
+        const naver_loginPath = "../../../img/login/naver_login.png";
+        const naver_loginBase64 = fs.readFileSync(path.join(__dirname, naver_loginPath), 'base64');
+        const naver_loginDataURI = `data:image/jpeg;base64,${naver_loginBase64}`;
+
+        res.render("./login/login_input", {logoDataURI, kakao_loginDataURI, naver_loginDataURI});
     },
 
 }
