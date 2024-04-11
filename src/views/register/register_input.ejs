@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            min-width: 1340px;
+        }
+        .register_box{
+            width: 450px;
+            height: 1000px;
+            border: 1px solid black;
+            margin: auto;
+            text-align: center;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .register_text {
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            /* background-color: #14aa1e; */
+            background-color: #14776a;
+            border-bottom: 1px solid black;
+            color: white;
+            font-size: 20px;
+        }
+        .register_input_box{
+            margin-top: 25px;
+            height: 100px;
+        }
+        .logo_box {
+            margin-top: 130px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .user_id {
+            padding-right: 310px;
+        }
+        .user_pwd {
+            padding-right: 290px;
+        }
+        .user_pwd_chk {
+            padding-right: 240px;
+        }
+        .user_name {
+            padding-right: 325px;
+        }
+        .user_gender {
+            padding-right: 325px;
+        }
+        .user_phone {
+            padding-right: 290px;
+        }
+        .user_age {
+            padding-right: 290px;
+        }
+        .user_email {
+            padding-right: 310px;
+        }
+        .user_nickname {
+            padding-right: 310px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="logo_box">
+            <a href="/">
+                <img    
+                    src="<%=logoDataURI%>"
+                    alt="logo"
+                    style="height: 100px;">
+            </a>
+        </div>
+        <div class="register_box">
+            <form action="" method="post">
+                <div class="register_text"><b>회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입</b></div>
+                <div class="register_input_box">
+                    <span><b class="user_id">아이디</b></span><br>
+                    <input name="userId" type="text" placeholder="아이디" style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_pwd">비밀번호</b></span><br>
+                    <input name="userPwd" type="password" placeholder="비밀번호" style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_pwd_chk">비밀번호 재확인</b></span><br>
+                    <input name="userPwdChk" type="password" placeholder="비밀번호 재확인" style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_name">이름</b></span><br>
+                    <input name="userName" type="text" placeholder="이름"  style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_phone">휴대전화</b></span><br>
+                    <input name="userPhone" type="text" placeholder="휴대전화"  style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_age">생년월일</b></span><br>
+                    <div class="info" id="info__birth">
+                        <select class="box" id="birth-year">
+                          <option disabled selected>출생 연도</option>
+                        </select>
+                        <select class="box" id="birth-month">
+                          <option disabled selected>월</option>
+                        </select>
+                        <select class="box" id="birth-day">
+                          <option disabled selected>일</option>
+                        </select>
+                    </div>
+                    <!-- <input name="userAge" type="text" placeholder="생년월일"  style="width: 350px; height: 40px;"> -->
+                    <br><br>
+                    <span><b class="user_gender">성별</b></span><br>
+                    <select name="userGender" style="width: 355px; height: 45px;">
+                        <option value="">성별 선택</option>
+                        <option value="남">남자</option>
+                        <option value="여">여자</option>
+                    </select>
+                    <br><br>
+                    <span><b class="user_email">이메일</b></span><br>
+                    <input name="userEmail" type="text" placeholder="이메일"  style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_nickname">닉네임</b></span><br>
+                    <input name="userNickname" type="text" placeholder="닉네임"  style="width: 350px; height: 40px;">
+                    <br>
+
+                    <br>
+                    <input type="submit" value="가입 하기" style="width: 350px; height: 40px;">
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

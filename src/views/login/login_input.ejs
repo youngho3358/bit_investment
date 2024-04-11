@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <style>
         *{
@@ -43,19 +43,41 @@
             text-align: center;
         }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="wrap">
-
         <div class="logo_box">
             <a href="/">
                 <img    src="<%=logoDataURI%>"
                         alt="logo"
                         style="height: 100px;">
             </a>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="login_box">
+            <form action="/login/loginCheck" method="post">
+                <div class="login_text"><b>로&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;그&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;인</b></div>
+                <div class="login_input_box">
+                    <input name="userId" type="text" placeholder="아이디" style="width: 350px; height: 40px;">
+                    <br>
+                    <input name="userPwd" type="password" placeholder="비밀번호" style="width: 350px; height: 40px;">
+                    <br>
+                    <br>
+                    <input type="submit" value="로그인" style="width: 350px; height: 40px;">
+                    <br>
+                    <a href="kakao_login">
+                        <img    src="<%=kakao_loginDataURI%>"
+                                alt="카카오계정으로 로그인"
+                                style="
+                                height: 40px;
+                                width: 300px;
+                                margin-top: 15px;
+                                border: 1px solid black;
+                                border-radius: 7px;
+                                ">
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-  </body>
+</body>
 </html>

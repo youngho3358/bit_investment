@@ -10,8 +10,8 @@ module.exports = (app) => {
   app.use("/login", loginRouter);
 
   // register 부분 router 정의
-  // const registerRouter = require("./login/register_router")(app);
-  // app.use("/register", registerRouter);
+  const registerRouter = require("./register/register_router")(app);
+  app.use("/register", registerRouter);
 
   // root경로의 router
   const router = require("express").Router();
