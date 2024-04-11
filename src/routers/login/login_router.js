@@ -4,6 +4,7 @@ module.exports = (app) => {
 
     router.get("/", loginCtrl.views.login_input);
     router.post("/loginCheck", loginCtrl.process.loginCheck);
+    router.get("/kakao_login", loginCtrl.process.kakaoLogin);
 
     return router;
 }

@@ -32,7 +32,12 @@ const process = {
             res.send(`<script>alert("로그인 정보를 확인하세요"); location.href="/login";</script>`)
         }
         res.send("로그인 이후부터 구현해야 함");
-    }
+    },
+    kakaoLogin : (req, res) => {
+        console.log("zzzzzzzzzzzzzzzz")
+        res.render("./login/kakao_login")
+    },
+
 }
 
 module.exports = {views, process};
