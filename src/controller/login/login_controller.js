@@ -5,7 +5,7 @@ const path = require("path");
 const views = {
     login_input : (req, res) => {
         // 로고 이미지 사용
-        const logoPath = "../../../img/logo/upbit.png";
+        const logoPath = "../../../img/logo/logo.png";
         const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
         const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
