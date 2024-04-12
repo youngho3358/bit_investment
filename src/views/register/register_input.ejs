@@ -4,6 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <script>
+        window.onload = function() {
+            const birthYearEl = document.querySelector('#birth-year')
+            isYearOptionExisted = false;
+            birthYearEl.addEventListener('focus', function () {
+                if(!isYearOptionExisted) {
+                    isYearOptionExisted = true
+                    for(var i = 1940; i <= 2022; i++) {
+                        const YearOption = document.createElement('option')
+                        YearOption.setAttribute('value', i)
+                        YearOption.innerText = i
+                        this.appendChild(YearOption);
+                    }   
+                }
+                // 년도 출력
+                // const selectedYearEl = document.querySelector('#birth-year')
+                // birthYearEl.addEventListener('change', (event) => {
+                    //     selectedYearEl.textContent = `Year of birth : ${event.target.value}`
+                    //     console.log(selectedYearEl.textContent);
+                    // });
+            });
+            const birthMonthEl = document.querySelector('#birth-month')
+            isMonthOptionExisted = false;
+            birthMonthEl.addEventListener('focus', function () {
+                if(!isMonthOptionExisted) {
+                    isMonthOptionExisted = true
+                    for(var i = 1; i <= 12; i++) {
+                        const MonthOption = document.createElement('option')
+                        MonthOption.setAttribute('value', i)
+                        MonthOption.innerText = i
+                        this.appendChild(MonthOption);
+                    }   
+                }
+            });
+            const birthDayEl = document.querySelector('#birth-day')
+            isDayOptionExisted = false;
+            birthDayEl.addEventListener('focus', function () {
+                if(!isDayOptionExisted) {
+                    isDayOptionExisted = true
+                    for(var i = 1; i <= 31; i++) {
+                        const DayOption = document.createElement('option')
+                        DayOption.setAttribute('value', i)
+                        DayOption.innerText = i
+                        this.appendChild(DayOption);
+                    }   
+                }
+            });
+            // 도메인 직접 입력 or domain option 선택
+            const domainListEl = document.querySelector('#domain-list')
+            const domainInputEl = document.querySelector('#domain-txt')
+            // select 옵션 변경 시
+            domainListEl.addEventListener('change', (event) => {
+                // option에 있는 도메인 선택 시
+                if(event.target.value !== "type") {
+                    domainInputEl.value = event.target.value
+                    domainInputEl.disabled = true
+                    // 이메일 아이디 출력
+                    //const asdf = document.querySelector('#userEmail');
+                    //console.log(asdf.value);
+                    // 이메일 주소 출력
+                    console.log(domainInputEl.value)
+                } else { 
+                    domainInputEl.value = ""
+                    domainInputEl.disabled = false
+                    //const asdf = document.querySelector('#userEmail');
+                    //console.log(asdf.value);
+                }
+            });
+            //const userPwd = document.querySelector("#userPwd")
+            //const userPwdChk = document.querySelector("#userPwdChk");
+        }
+        // const check = () => {
+            //     let userId = Document.querySelector("#asdf").value
+            
+            //     fetch("/register/register_chk/"+userId)
+            //     .then(res => res.json())
+            //     .then (result == 0)
+            // }
+        const user_pwd_chk = () => {
+            const pwdChkMsg = document.querySelector("#pwdChkMsg");
+                
+            const userPwd = document.querySelector("#userPwd").value;
+            const userPwdChk = document.querySelector("#userPwdChk").value;
+            if (userPwd == userPwdChk) {
+                pwdChkMsg.textContent = "비밀번호가 일치합니다.";
+                pwdChkMsg.style.color = "blue";
+            }else{
+                pwdChkMsg.textContent = "비밀번호가 일치하지 않습니다.";
+                pwdChkMsg.style.color = "red";
+            }
+                        
+            //document.getElementById("userPwdChk").addEventListener("blur", userPwdChk());
+        }
+        const user_id_chk = () => {
+            let userId = document.querySelector("#userId").value;
+            if (userId == "") {
+                alert("아이디를 입력해주세요.");
+            }else{
+                let data = {userId : userId};
+                fetch("/register/idCheck",{
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result == 1) {  
+                        let idChkMsg = document.querySelector("#idChkMsg");
+                        idChkMsg.textContent = "사용 가능한 아이디입니다."
+                        idChkMsg.style.color = "blue";
+                    }else{
+                        let idChkMsg = document.querySelector("#idChkMsg");
+                        idChkMsg.textContent = "중복된 아이디입니다."
+                        idChkMsg.style.color = "red";
+                    }
+                })
+            }
+        }
+    </script>
     <style>
         *{
             margin: 0;
@@ -44,7 +163,7 @@
         }
 
         .user_id {
-            padding-right: 310px;
+            padding-right: 300px;
         }
         .user_pwd {
             padding-right: 290px;
@@ -70,6 +189,30 @@
         .user_nickname {
             padding-right: 310px;
         }
+
+        .info#info__birth select::-webkit-scrollbar {
+            width: 10px;
+        }
+        .info#info__birth select::-webkit-scrollbar-thumb {
+            background-color: #b6b6b6;
+            border-radius: 3px;
+        }
+        .info#info__birth select::-webkit-scrollbar-track {
+            background-color: #ebe9e9;
+            border-radius: 6px;
+        }
+        #pwdChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        #idChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -83,39 +226,47 @@
             </a>
         </div>
         <div class="register_box">
-            <form action="" method="post">
+            <form action="/register/registerCheck" method="post">
                 <div class="register_text"><b>회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입</b></div>
                 <div class="register_input_box">
                     <span><b class="user_id">아이디</b></span><br>
-                    <input name="userId" type="text" placeholder="아이디" style="width: 350px; height: 40px;">
+                    <input name="userId" id="userId" type="text" placeholder="아이디" style="width: 280px; height: 40px;">
+                    <input onclick="user_id_chk()" name="userIdCheck" type="button" value="중복 확인" width="90px" height="50px" style="border-radius: 3px; ">
+                    <div id="idChkMsg"></div>
                     <br><br>
                     <span><b class="user_pwd">비밀번호</b></span><br>
-                    <input name="userPwd" type="password" placeholder="비밀번호" style="width: 350px; height: 40px;">
+                    <input name="userPwd" id="userPwd" type="password" placeholder="비밀번호" style="width: 350px; height: 40px;">
                     <br><br>
                     <span><b class="user_pwd_chk">비밀번호 재확인</b></span><br>
-                    <input name="userPwdChk" type="password" placeholder="비밀번호 재확인" style="width: 350px; height: 40px;">
+                    <input onblur="user_pwd_chk()" name="userPwdChk" id="userPwdChk" type="password" style="width: 350px; height: 40px;" >
+                    <div id="pwdChkMsg"></div>
                     <br><br>
                     <span><b class="user_name">이름</b></span><br>
                     <input name="userName" type="text" placeholder="이름"  style="width: 350px; height: 40px;">
                     <br><br>
                     <span><b class="user_phone">휴대전화</b></span><br>
-                    <input name="userPhone" type="text" placeholder="휴대전화"  style="width: 350px; height: 40px;">
+                    <input name="userPhone_1" type="text" maxlength="3" style="width: 101px; height: 35px;">
+                    -
+                    <input name="userPhone_2" type="text" maxlength="4" style="width: 101px; height: 35px;">
+                    -
+                    <input name="userPhone_3" type="text" maxlength="4" style="width: 101px; height: 35px;">
                     <br><br>
                     <span><b class="user_age">생년월일</b></span><br>
                     <div class="info" id="info__birth">
-                        <select class="box" id="birth-year">
+                        <select class="box" name="userAge" id="birth-year" style="width: 114px; height: 40px;">
                           <option disabled selected>출생 연도</option>
                         </select>
-                        <select class="box" id="birth-month">
+                        <select class="box" id="birth-month" style="width: 114px; height: 40px;">
                           <option disabled selected>월</option>
                         </select>
-                        <select class="box" id="birth-day">
+                        <select class="box" id="birth-day" style="width: 114px; height: 40px;">
                           <option disabled selected>일</option>
                         </select>
                     </div>
                     <!-- <input name="userAge" type="text" placeholder="생년월일"  style="width: 350px; height: 40px;"> -->
                     <br><br>
                     <span><b class="user_gender">성별</b></span><br>
+                    <!-- <div class=""></div> -->
                     <select name="userGender" style="width: 355px; height: 45px;">
                         <option value="">성별 선택</option>
                         <option value="남">남자</option>
@@ -123,14 +274,26 @@
                     </select>
                     <br><br>
                     <span><b class="user_email">이메일</b></span><br>
-                    <input name="userEmail" type="text" placeholder="이메일"  style="width: 350px; height: 40px;">
+                    <input id="userEmail" name="userEmail_id" style="width: 95px; height: 35px;">
+                    @
+                    <input class="box" id="domain-txt" name="userEmail_domain_write" type="text" style="width: 80px; height: 35px;"/>
+                    <select class="box" id="domain-list" name="userEmail_damin_auto" style="width: 80px; height: 40px;">
+                        <option value="type">직접 입력</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="google.com">google.com</option>
+                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="nate.com">nate.com</option>
+                        <option value="daum.net">daum.net</option>
+                    </select>
+                    <input name="userEmailCheck" type="button" value="중복 확인" width="100px" height="50px" style="border-radius: 3px; ">
+                    <!-- <input name="userEmail" type="text" placeholder="이메일"  style="width: 350px; height: 40px;"> -->
                     <br><br>
                     <span><b class="user_nickname">닉네임</b></span><br>
-                    <input name="userNickname" type="text" placeholder="닉네임"  style="width: 350px; height: 40px;">
+                    <input name="userNickname" type="text" placeholder="닉네임"  style="width: 290px; height: 40px;">
+                    <input name="userNicknameCheck" type="button" value="중복 확인" width="100px" height="50px" style="border-radius: 3px; ">
                     <br>
-
                     <br>
-                    <input type="submit" value="가입 하기" style="width: 350px; height: 40px;">
+                    <input type="submit" value="가입 하기" style="width: 350px; height: 40px; background-color: #14776a; color: white;">
                     <br>
                 </div>
             </form>

@@ -11,11 +11,23 @@ const views = {
 
         res.render("./register/register_input", {logoDataURI : logoDataURI});
     },
-
 }
 
 const process = {
+    register_check : (req, res) => {
+        const asdf = req.body;
+        console.log(asdf);
+        //console.log(asdf.userPhone_1);
 
+        res.json(asdf);
+    },
+    id_check : async (req, res) => {
+        console.log(req.body);
+        let userId = req.body.userId;
+        console.log("asdfasdf : ", userId);
+        let result = await service.check.id_check(userId);
+        res.json(result);
+    }
 }
 
 module.exports = {views, process};
