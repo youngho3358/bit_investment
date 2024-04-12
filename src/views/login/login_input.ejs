@@ -42,25 +42,34 @@
             margin-bottom: 10px;
             text-align: center;
         }
+        .kakao_naver_login_box{
+            margin-top: 65px;
+        }
         </style>
 
         <!-- 카카오톡 로그인 구현 -->
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
         <script>
+            let result;
             window.Kakao.init("02161298a67ff56f8d368887a7baa73c");
             
-            function kakaoLogin() {
-                window.Kakao.Auth.login({
+            async function kakaoLogin() {
+                await window.Kakao.Auth.login({
                     scope:'account_email',
-                    success: function(authObj) {
-                        console.log(authObj);
-                        window.Kakao.API.request({
+                    success:async function(authObj) {
+                        await window.Kakao.API.request({
                             url:'/v2/user/me',
                             success: res => {
                                 const kakao_account = res.kakao_account;
-                                console.log(kakao_account);
+                                result = kakao_account.email;
+                                console.log(result);
                             }
                     });
+                    if(result === undefined){
+                        alert("카카오 로그인 실패");
+                    }else{
+                        location.href = `login/kakao_login?email=${result}`;
+                    }
                 }
             });
         }
@@ -70,7 +79,7 @@
     <div class="wrap">
         <div class="logo_box">
             <a href="/">
-                <img    src="<%=logoDataURI%>"
+                <img    src="<%=blacklogo%>"
                         alt="logo"
                         style="height: 100px;">
             </a>
@@ -84,34 +93,35 @@
                     <input name="userPwd" type="password" placeholder="비밀번호" style="width: 350px; height: 40px;">
                     <br>
                     <br>
-                    <input type="submit" value="로그인" style="width: 350px; height: 40px;">
+                    <input type="submit" value="로그인" style="width: 350px; height: 40px; z-index: 99;">
                     <br>
-                    <a onclick="kakaoLogin()" href="">
-                        <img    src="<%=kakao_loginDataURI%>"
-                                alt="카카오 계정으로 로그인"
-                                style="
-                                height: 40px;
-                                width: 300px;
-                                margin-top: 15px;
-                                border: 1px solid black;
-                                border-radius: 7px;
-                                ">
-                    </a><br>
-                    <a href="naver_login"
-                        style=" display: block;
-                                margin: auto;
-                                height: 40px;
-                                width: 300px;
-                                background: #03C75A;
-                                border: 1px solid black;
-                                border-radius: 7px;">
-                        <img    src="<%=naver_loginDataURI%>" 
-                                alt="네이버 계정으로 로그인" 
-                                style="height: 40px;"
-                                >
-                    </a>
                 </div>
             </form>
+            <div class="kakao_naver_login_box">
+                <a onclick="kakaoLogin()" style="cursor: pointer;">
+                    <img    src="<%=kakao_loginDataURI%>"
+                            alt="카카오 계정으로 로그인"
+                            style="
+                            height: 40px;
+                            width: 300px;
+                            border: 1px solid black;
+                            border-radius: 7px;
+                            ">
+                </a><br>
+                <a href="naver_login"
+                    style=" display: block;
+                            margin: auto;
+                            height: 40px;
+                            width: 300px;
+                            background: #03C75A;
+                            border: 1px solid black;
+                            border-radius: 7px;">
+                    <img    src="<%=naver_loginDataURI%>" 
+                            alt="네이버 계정으로 로그인" 
+                            style="height: 40px;"
+                            >
+                </a>
+            </div>
         </div>
     </div>
 </body>

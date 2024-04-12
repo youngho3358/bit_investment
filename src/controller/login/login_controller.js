@@ -2,13 +2,19 @@ const service = require("../../service/login/login_service")
 const fs = require("fs");
 const path = require("path");
 
+
+// 흰 로고
+const whitelogoPath = "../../../img/logo/banner_logo.png";
+const whitelogoBase64 = fs.readFileSync(path.join(__dirname, whitelogoPath), 'base64');
+const whitelogo = `data:image/jpeg;base64,${whitelogoBase64}`;
+
+// 로고 이미지 사용
+const blacklogoPath = "../../../img/logo/logo.png";
+const blacklogoBase64 = fs.readFileSync(path.join(__dirname, blacklogoPath), 'base64');
+const blacklogo = `data:image/jpeg;base64,${blacklogoBase64}`;
+
 const views = {
     login_input : (req, res) => {
-        // 로고 이미지 사용
-        const logoPath = "../../../img/logo/logo.png";
-        const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
-        const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
-
         // 카카오 로그인 이미지 사용
         const kakao_loginPath = "../../../img/login/kakao_login.png";
         const kakao_loginBase64 = fs.readFileSync(path.join(__dirname, kakao_loginPath), 'base64');
@@ -19,9 +25,14 @@ const views = {
         const naver_loginBase64 = fs.readFileSync(path.join(__dirname, naver_loginPath), 'base64');
         const naver_loginDataURI = `data:image/jpeg;base64,${naver_loginBase64}`;
 
-        res.render("./login/login_input", {logoDataURI, kakao_loginDataURI, naver_loginDataURI});
+        res.render("./login/login_input", {blacklogo, kakao_loginDataURI, naver_loginDataURI});
     },
+    kakaoLogin : (req, res) => {
+        // 카카오 email 값 전달
+        let email = req.query.email;
 
+        res.render("./login/kakao_login", {email, blacklogo});
+    },
 }
 
 const process = {
@@ -33,11 +44,20 @@ const process = {
         }
         res.send("로그인 이후부터 구현해야 함");
     },
-    kakaoLogin : (req, res) => {
-        console.log("zzzzzzzzzzzzzzzz")
-        res.render("./login/kakao_login")
+    nicknameCheck : async (req, res) => {
+        let inputNickname = req.body.nickname;
+        let result = await service.duplicationCheck.nicknameCheck(inputNickname);
+        // 아이디가 존재할 시 result : 1
+        // 아이디가 존재하지 않을시 result : 0
+        res.json(result);
     },
+    kakaoRegister : async (req, res) => {
+        let email = req.body.email;
+        let nickname = req.body.nickname;
 
+        let result = await service.register.kakaoRegister(email, nickname);
+        res.json(result);
+    }
 }
 
 module.exports = {views, process};
