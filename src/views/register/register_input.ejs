@@ -64,7 +64,7 @@
                     //const asdf = document.querySelector('#userEmail');
                     //console.log(asdf.value);
                     // 이메일 주소 출력
-                    console.log(domainInputEl.value)
+                    //console.log(domainInputEl.value)
                 } else { 
                     domainInputEl.value = ""
                     domainInputEl.disabled = false
@@ -118,6 +118,58 @@
                         let idChkMsg = document.querySelector("#idChkMsg");
                         idChkMsg.textContent = "중복된 아이디입니다."
                         idChkMsg.style.color = "red";
+                    }
+                })
+            }
+        }
+        const user_nickname_chk = () => {
+            let userNickname = document.querySelector("#userNickname").value;
+            if (userNickname == "") {
+                alert("닉네임을 입력해주세요");
+            }else{
+                let data = {userNickname : userNickname};
+                fetch("/register/nicknameCheck", {
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result == 1) {
+                        let nickChkMsg = document.querySelector("#nicknameChkMsg")
+                        nickChkMsg.textContent = "사용 가능한 닉네임입니다.";
+                        nickChkMsg.style.color = "blue";
+                    }else{
+                        let nickChkMsg = document.querySelector("#nicknameChkMsg")
+                        nickChkMsg.textContent = "중복된 닉네임입니다.";
+                        nickChkMsg.style.color = "red";
+                    }
+                })
+            }
+        }
+        const user_email_chk = () => {
+            let user_Email = document.querySelector("#userEmail").value;
+            let domain_Txt = document.querySelector("#domain-txt").value;
+            let userEmail = user_Email.concat("@",domain_Txt);
+            if ((user_Email == "") || (domain_Txt == "")) {
+                alert("이메일을 입력해주세요");
+            }else{
+                let data = {userEmail : userEmail};
+                fetch("/register/emailCheck", {
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result == 1) {
+                        let nickChkMsg = document.querySelector("#emailChkMsg")
+                        nickChkMsg.textContent = "사용 가능한 이메일입니다.";
+                        nickChkMsg.style.color = "blue";
+                    }else{
+                        let nickChkMsg = document.querySelector("#emailChkMsg")
+                        nickChkMsg.textContent = "중복된 이메일입니다.";
+                        nickChkMsg.style.color = "red";
                     }
                 })
             }
@@ -187,7 +239,7 @@
             padding-right: 310px;
         }
         .user_nickname {
-            padding-right: 310px;
+            padding-right: 305px;
         }
 
         .info#info__birth select::-webkit-scrollbar {
@@ -208,6 +260,18 @@
             font-weight: bold;
         }
         #idChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        #nicknameChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        #emailChkMsg {
             position: absolute;
             margin-left: 50px;
             font-size: 10px;
@@ -274,10 +338,10 @@
                     </select>
                     <br><br>
                     <span><b class="user_email">이메일</b></span><br>
-                    <input id="userEmail" name="userEmail_id" style="width: 95px; height: 35px;">
+                    <input id="userEmail" name="userEmail_id" style="width: 90px; height: 35px;">
                     @
-                    <input class="box" id="domain-txt" name="userEmail_domain_write" type="text" style="width: 80px; height: 35px;"/>
-                    <select class="box" id="domain-list" name="userEmail_damin_auto" style="width: 80px; height: 40px;">
+                    <input class="box" id="domain-txt" name="userEmail_domain_write" type="text" style="width: 75px; height: 35px;"/>
+                    <select class="box" id="domain-list" name="userEmail_domain_auto" style="width: 80px; height: 40px;">
                         <option value="type">직접 입력</option>
                         <option value="naver.com">naver.com</option>
                         <option value="google.com">google.com</option>
@@ -285,12 +349,15 @@
                         <option value="nate.com">nate.com</option>
                         <option value="daum.net">daum.net</option>
                     </select>
-                    <input name="userEmailCheck" type="button" value="중복 확인" width="100px" height="50px" style="border-radius: 3px; ">
+                    <input onclick="user_email_chk()" name="userEmailCheck" type="button" value="중복 확인" width="100px" height="50px" style="border-radius: 3px; ">
+                    <div id="emailChkMsg"></div>
                     <!-- <input name="userEmail" type="text" placeholder="이메일"  style="width: 350px; height: 40px;"> -->
                     <br><br>
                     <span><b class="user_nickname">닉네임</b></span><br>
-                    <input name="userNickname" type="text" placeholder="닉네임"  style="width: 290px; height: 40px;">
-                    <input name="userNicknameCheck" type="button" value="중복 확인" width="100px" height="50px" style="border-radius: 3px; ">
+                    <input name="userNickname" id="userNickname" type="text" placeholder="닉네임"  style="width: 280px; height: 40px;">
+                    <input onclick="user_nickname_chk()" name="userNicknameCheck" type="button" value="중복 확인" width="100px" height="50px" style="border-radius: 3px; ">
+                    <div id="nicknameChkMsg"></div>
+                    <br>
                     <br>
                     <br>
                     <input type="submit" value="가입 하기" style="width: 350px; height: 40px; background-color: #14776a; color: white;">

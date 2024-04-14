@@ -22,10 +22,21 @@ const process = {
         res.json(asdf);
     },
     id_check : async (req, res) => {
-        console.log(req.body);
+        //console.log(req.body);
         let userId = req.body.userId;
-        console.log("asdfasdf : ", userId);
+        //console.log("asdfasdf : ", userId);
         let result = await service.check.id_check(userId);
+        res.json(result);
+    },
+    nickname_check : async (req, res) => {
+        let userNickname = req.body.userNickname;
+        let result = await service.check.nickname_check(userNickname);
+        //console.log(result);
+        res.json(result);
+    },
+    email_check : async (req, res) => {
+        let userEmail = req.body.userEmail;
+        let result = await service.check.email_check(userEmail);
         res.json(result);
     }
 }
