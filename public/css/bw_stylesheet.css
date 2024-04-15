@@ -1,0 +1,167 @@
+
+.board_top{
+    position: sticky;
+    top: 0px;
+    z-index: 1110;
+    height: auto;
+    padding: 15px;
+    margin: auto;
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+
+.toolbox_image {
+    position: sticky;
+    top: 72px;
+    z-index: 1100;
+    height: 100px;
+    margin: auto;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid rgb(231, 231, 231);
+}
+
+.toolbox_title {
+  margin: auto;
+  height: 100px;
+  padding: 15px;
+  border: 1px solid rgb(231, 231, 231);
+  border-radius: 10px;
+}
+
+.button {
+  position: relative;
+  float: right;
+  width: 100px;
+  height: 40px;
+  padding: auto;
+  margin: 0px 10px 0px 0px;
+  color: #498a81;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.2s ;
+}
+.btnFade:hover {
+  background: #14776a;
+  color: #ffffff;
+}
+
+.titlebox {
+  width: 90%;
+  height: 40px;
+  padding: 0px 0px 0px 15px;
+  background-color: rgb(245, 245, 245);
+  border: none;
+  border-radius: 10px;
+}
+
+.textarea {
+    width: 1258px;
+    height: 500px;
+    padding: 10px;
+    /*overflow-y: hidden;*/
+    border: 1px solid rgb(231, 231, 231);
+    resize: none; 
+}
+
+.combobox{
+    position: relative;
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid rgb(231, 231, 231);
+}
+
+.space {
+  position: sticky;
+  top: 60;
+  z-index: 1000;
+  height: 100px;
+  background-color: rgb(255, 0, 0);
+}
+
+/* -------------------------공통 상단바 CSS---------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+div{
+  display: block;
+}
+a {
+  text-decoration: none;
+}
+.wrap {
+  min-width: 1340px;
+  background: #f1f1f3;
+  padding-bottom: 20px;
+}
+.header {
+  width: 1280px;
+  height: 100px;
+  margin: 0px auto 0px;
+  /* background-color: #14aa1e; */
+  /* background-color: #14776a; */
+  /* border-radius: 20px; */
+}
+.container {
+  display: block;
+  position: relative;
+  width: 1280px;
+  margin: 20px auto 0px;
+  padding-bottom: 60px;
+ /*글쓰기에서는 컨테이너의 보더 제거*/
+  background: white;
+}
+.footer {
+  width: 1280px;
+  height: 100px;
+  margin: 20px auto 0px;
+  border: 1px solid black;
+  background: white;
+}
+.top_login_register_box {
+  display: inline-block;
+  height: 20px;
+  margin-top: 40px;
+  margin-left: 910px;
+  font-size: 17px;
+  font-weight: bolder;
+  text-align: right;
+}
+.top_login_button {
+  font-size: 20px;
+  margin-right: 40px;
+  color: white;
+}
+.top_register_button {
+  font-size: 20px;
+  margin-right: 40px;
+  color: white;
+}
+.top_logo {
+  position: absolute;
+  width: 150px;
+  height: 70px;
+  margin-left: 30px;
+  margin-top: 15px;
+  border: none;
+  text-align: center;
+}
+.top_menu{
+  position: absolute;
+  width: 700px;
+  height: 70px;
+  margin-left: 210px;
+  margin-top: 15px;
+}
+.top_menu_link{
+  display: inline-block;
+  height: 26px;
+  margin-top: 22px;
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+}

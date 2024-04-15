@@ -1,4 +1,5 @@
 const express = require("express");
+const ejs = require("ejs");
 const app = express();
 
 const bodyParser = require("body-parser");
@@ -9,7 +10,15 @@ app.use("/", router);
 
 app.set("views", "./src/views");
 app.set("view engine", "ejs");
+app.use(express.static("public"));
+
+app.get('/', (req, res) => {
+  res.render('index', { foo: 'FOO' });
+});
 
 app.listen(3000, () => {
   console.log("3000 서버 구동");
 });
+
+
+

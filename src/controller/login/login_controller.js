@@ -1,9 +1,27 @@
 const service = require("../../service/login/login_service")
+const fs = require("fs");
+const path = require("path");
 
 const views = {
     login_input : (req, res) => {
-        res.render("./login/login_input");
-    }
+        // 로고 이미지 사용
+        const logoPath = "../../../img/logo/logo.png";
+        const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
+        const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
+
+        // 카카오 로그인 이미지 사용
+        const kakao_loginPath = "../../../img/login/kakao_login.png";
+        const kakao_loginBase64 = fs.readFileSync(path.join(__dirname, kakao_loginPath), 'base64');
+        const kakao_loginDataURI = `data:image/jpeg;base64,${kakao_loginBase64}`;
+
+        // 네이버 로그인 이미지 사용
+        const naver_loginPath = "../../../img/login/naver_login.png";
+        const naver_loginBase64 = fs.readFileSync(path.join(__dirname, naver_loginPath), 'base64');
+        const naver_loginDataURI = `data:image/jpeg;base64,${naver_loginBase64}`;
+
+        res.render("./login/login_input", {logoDataURI, kakao_loginDataURI, naver_loginDataURI});
+    },
+
 }
 
 const process = {
@@ -14,7 +32,12 @@ const process = {
             res.send(`<script>alert("로그인 정보를 확인하세요"); location.href="/login";</script>`)
         }
         res.send("로그인 이후부터 구현해야 함");
-    }
+    },
+    kakaoLogin : (req, res) => {
+        console.log("zzzzzzzzzzzzzzzz")
+        res.render("./login/kakao_login")
+    },
+
 }
 
 module.exports = {views, process};
