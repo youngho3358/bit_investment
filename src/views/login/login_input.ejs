@@ -54,6 +54,7 @@
             window.Kakao.init("02161298a67ff56f8d368887a7baa73c");
             
             async function kakaoLogin() {
+                let result;
                 await window.Kakao.Auth.login({
                     scope:'account_email',
                     success:async function(authObj) {
@@ -62,17 +63,47 @@
                             success: res => {
                                 const kakao_account = res.kakao_account;
                                 result = kakao_account.email;
-                                console.log(result);
                             }
                     });
                     if(result === undefined){
                         alert("카카오 로그인 실패");
                     }else{
-                        location.href = `login/kakao_login?email=${result}`;
+                        // 카카오톡에서 이메일 받아서 DB에 가입된 고객 중
+                        // email 이 동일한 고객이 있는지 확인
+                        let data = {email : result};
+
+                        fetch("/login/emailCheck",{
+                            method : "post",
+                            headers : {"Content-Type":"application/json"},
+                            body : JSON.stringify(data)
+                        })
+                        .then(res => res.json())
+                        .then(checkResult => {
+                            if(checkResult !== 0){
+                                // 이메일 중복검사 이후 기존 가입 회원이면 회원 테이블 정보
+                                // 반환받음 > 회원 정보 전송
+                                document.getElementById("success_addr").value = checkResult.ADDR;
+                                document.getElementById("success_age").value = checkResult.AGE;
+                                document.getElementById("success_email").value = checkResult.EMAIL;
+                                document.getElementById("success_grade").value = checkResult.GRADE;
+                                document.getElementById("success_id").value = checkResult.ID;
+                                document.getElementById("success_login_type").value = checkResult.LOGIN_TYPE;
+                                document.getElementById("success_memberId").value = checkResult.MEMBER_ID;
+                                document.getElementById("success_name").value = checkResult.NAME;
+                                document.getElementById("success_nickname").value = checkResult.NICKNAME;
+                                document.getElementById("success_phone").value = checkResult.PHONE;
+                                document.getElementById("user_data").submit();
+                            }else{
+                                // 기존회원 아닐 시 닉네임 기입 창으로 보냄
+                                let invisible_email = document.getElementById("invisible_email");
+                                invisible_email.value = result;
+                                document.getElementById("invisible_email_post").submit();
+                            }
+                        })
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
         </script>
 </head>
 <body>
@@ -123,6 +154,25 @@
                 </a>
             </div>
         </div>
+    </div>
+    <div style="display: none;">
+        <form action="login/kakao_login" method="post" id="invisible_email_post" >
+            <input name="email" type="text" id="invisible_email" value="none" readonly>
+        </form>
+    </div>
+    <div style="display: none;">
+        <form action="login/success_kakao_login" method="post" id="user_data" >
+            <input name="addr" type="text" id="success_addr" value="none" readonly>
+            <input name="age" type="text" id="success_age" value="none" readonly>
+            <input name="email" type="text" id="success_email" value="none" readonly>
+            <input name="grade" type="text" id="success_grade" value="none" readonly>
+            <input name="id" type="text" id="success_id" value="none" readonly>
+            <input name="login_type" type="text" id="success_login_type" value="none" readonly>
+            <input name="member_id" type="text" id="success_memberId" value="none" readonly>
+            <input name="name" type="text" id="success_name" value="none" readonly>
+            <input name="nickname" type="text" id="success_nickname" value="none" readonly>
+            <input name="phone" type="text" id="success_phone" value="none" readonly>
+        </form>
     </div>
 </body>
 </html>

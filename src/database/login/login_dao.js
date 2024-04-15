@@ -16,6 +16,11 @@ const duplicationCheck = {
         const con = await oracledb.getConnection(dbConfig);
         let result = await con.execute(`select * from member where nickname='${nickname}'`);
         return result.rows[0];
+    },
+    emailCheck : async (email) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`select * from member where email='${email}'`);
+        return result.rows[0];
     }
 }
 

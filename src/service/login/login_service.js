@@ -34,7 +34,14 @@ const duplicationCheck = {
         // 동일한 닉네임이 없다면 0 반환
         result = 0;
         return result;
-    }
+    },
+    emailCheck : async (email) => {
+        let result = await dao.duplicationCheck.emailCheck(email);
+        if(result === undefined){
+            result = 0;
+        }
+        return result;
+    },
 }
 
 const register = {
