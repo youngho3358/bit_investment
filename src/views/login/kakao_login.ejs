@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <script>
+        nickname_check = () => {
+            let userNickname = document.querySelector("#userNickname").value;
+            if(userNickname === ""){
+                alert("닉네임을 입력해주세요.")
+            }else{
+                let data = {nickname : userNickname};
+
+                fetch("/login/nicknameCheck",{
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    console.log("result : ", result);
+                    if(result == 1){
+                        let isableNickname = document.querySelector("#isableNickname");
+                        isableNickname.style.color = "red";
+                        isableNickname.textContent = "이미 사용중인 아이디입니다."
+                    }else{
+                        let isableNickname = document.querySelector("#isableNickname");
+                        isableNickname.style.color = "blue";
+                        isableNickname.textContent = "사용 가능한 아이디입니다."
+                    }
+                })
+            }
+        }
+        final_check = () => {
+            let userNickname = document.querySelector("#userNickname").value;
+            if(userNickname === ""){
+                alert("닉네임을 입력해주세요.")
+            }else{
+                let data = {nickname : userNickname};
+
+                fetch("/login/nicknameCheck",{
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    console.log("result : ", result);
+                    if(result == 1){
+                        alert("닉네임 중복체크를 진행해주세요.")
+                    }else{
+                        register();
+                    }
+                })
+            }
+        }
+
+        const register = () => {
+            let nickname = document.querySelector("#userNickname").value;
+            let email = document.querySelector("#userEmail").value;
+
+            let data = {email, nickname};
+
+            fetch("/login/kakaoRegister",{
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    console.log("result : ", result);
+                    if(result){
+                        alert("카카오톡 연동 계정 생성이 완료되었습니다.");
+                        window.location.href = 'http://localhost:3000/login';
+                    }else{
+                        alert("오류 발생... 관리자에게 문의하세요");
+                        window.location.href = 'http://localhost:3000/login';
+                    }
+                })
+        }
+    </script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            min-width: 1340px;
+        }
+        .register_box{
+            width: 450px;
+            height: 330px;
+            border: 1px solid black;
+            margin: auto;
+            text-align: center;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .register_text {
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            /* background-color: #14aa1e; */
+            background-color: #14776a;
+            border-bottom: 1px solid black;
+            color: white;
+            font-size: 20px;
+        }
+        .register_input_box{
+            margin-top: 25px;
+            height: 100px;
+        }
+        .logo_box {
+            margin-top: 130px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .user_email {
+            padding-right: 240px;
+        }
+        .user_nickname {
+            padding-right: 310px;
+        }
+        .nickname_check{
+            background: rgb(212, 212, 212);
+            width: 120px;
+            height: 20px;
+            margin: 20px auto 0px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid black;
+        }
+        .nickname_check:hover{
+            background: rgb(204, 204, 204);
+        }
+        .regitster_button{
+            width: 350px;
+            height: 40px;
+            background-color: #14776a;
+            color: white;
+            margin-top: 10px; 
+        }
+        .isableNickname{
+            position: absolute;
+            display: inline;
+            margin-left: -115px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="logo_box">
+            <a href="/">
+                <img    
+                    src="<%=blacklogo%>"
+                    alt="logo"
+                    style="height: 100px;">
+            </a>
+        </div>
+        <div class="register_box">
+            <div>
+                <div class="register_text"><b>회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입</b></div>
+                <div class="register_input_box">
+                    <span><b class="user_email">카카오톡 이메일</b></span><br>
+                    <input 
+                        id="userEmail" 
+                        name="userEmail" 
+                        value="<%=email%>" 
+                        readonly 
+                        style="
+                                width: 350px;
+                                height: 40px;
+                                color: black;
+                                ">
+                    <br><br>
+                    <span><b class="user_nickname">닉네임</b></span>
+                    <br>
+                    <input name="userNickname" id="userNickname" type="text" placeholder="닉네임"  style="width: 350px; height: 40px;">
+                    <br>
+                    <div class="isableNickname" id="isableNickname"></div>
+                    <input type="button" value="닉네임 중복체크" class="nickname_check" onclick="nickname_check()">
+                    <br>
+                    <input class="regitster_button" type="submit" onclick="final_check()" value="가입 하기">
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
