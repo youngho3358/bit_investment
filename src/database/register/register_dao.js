@@ -18,8 +18,13 @@ const check = {
     email_check : async (userEmail) => {
         const con = await oracledb.getConnection(dbConfig);
         let result = await con.execute(`select * from member where email='${userEmail}'`);
-        //console.log(result.rows[0]);
         return result.rows[0];
+    },
+    register_check: async (userInfo) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`insert into member(email, name, age, phone, nickname, grade, login_type, id, password) values('${userInfo.email}', '${userInfo.name}', ${userInfo.age}, '${userInfo.phone}', '${userInfo.nickname}', ${userInfo.grade}, ${userInfo.loginType}, '${userInfo.id}', '${userInfo.pwd}')`);
+        //console.log("result : ", result.rowsAffected);
+        return result.rowsAffected;
     }
 }
 module.exports = {check}

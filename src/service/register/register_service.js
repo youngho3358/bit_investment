@@ -32,6 +32,16 @@ const check = {
             result = 0;
         }
         return result;
+    },
+    register_check: async (userInfo) => {
+        let result;
+        data = await dao.check.register_check(userInfo);
+        if (data == 1){
+            result = 1;
+        }else{
+            result = 0;
+        }
+        return result;
     }
 }
 
