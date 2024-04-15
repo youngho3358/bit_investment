@@ -11,7 +11,7 @@ const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
 const bm_input = (req, res) => {
 
-    res.render("./board/bm_input",{logoDataURI});
+    res.render("board/bm_input",{logoDataURI});
 
 }
 
@@ -19,13 +19,13 @@ const board_views = {
     data : async (req,res) => {
         const data = await ser.boardRead.data(req.params.num)
         const username = req.session.username;
-        res.render("./board/bm_data",{data,username});
+        res.render("board/data",{data,username});
         
     },
 
     bm_free : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
-        res.render("./board/bm_free",{
+        res.render("board/list",{
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
@@ -34,8 +34,8 @@ const board_views = {
     });
 },
     bm_news : async (req,res)=>{
-        const data = await ser.boardRead.list(req.query.start);
-        res.render("./board/bm_news", {
+        const data = await ser.boardRead.list(1);
+        res.render("board/bm_news", {
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
@@ -44,7 +44,7 @@ const board_views = {
     },
     bm_notice : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
-        res.render("./board/bm_notice",{
+        res.render("board/bm_notice",{
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,

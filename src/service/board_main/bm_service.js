@@ -8,16 +8,19 @@ boardUpdate ={
 }
 const boardRead ={
     data : async (num)=>{
-        dao.boardUpdate.upHit(num);
+        this.boardUpdate.upHit(num);
+        let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
         return data[0];
     },
     list : async (start) =>{
         const totalCounter = await dao.boardRead.totalContent();
         start = (start && start >1)?Number(start) :1;
+        console.log(start, ", " , totalCounter);
         const page = pageOperation(start, totalCounter);
 
         let list = await dao.boardRead.list(page.startNum, page.endNum);
+        //console.log(data)
         data = {};
         data.totalpage = page.totpage;
         data.start = start;
@@ -57,6 +60,10 @@ const boardInsert = {
             body.change_file_name = "nan";
         }
     }
+    
+}
+const  getMessage = (msg, url) =>{
+    return `<script>alert('${msg}'); location.href="${url}";</script>`;
 }
 
-module.exports ={boardUpdate,boardRead,pageOperation,boardInsert};
+module.exports ={boardUpdate,boardRead,pageOperation,boardInsert,getMessage};
