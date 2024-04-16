@@ -15,7 +15,6 @@ const check = {
     nickname_check: async (userNickname) => {
         let result;
         data = await dao.check.nickname_check(userNickname);
-        //console.log(data);
         if (data == undefined) {
             result = 1;
         }else{

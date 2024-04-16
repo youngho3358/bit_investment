@@ -2,6 +2,7 @@ const oracledb = require("oracledb");
 const dbConfig = require("../../../config/database/db_config");
 oracledb.outFormat = oracledb.OBJECT;
 oracledb.autoCommit = true;
+const bcrypt = require("bcrypt");
 
 const check = {
     id_check : async (userId) => {
@@ -22,8 +23,8 @@ const check = {
     },
     register_check: async (userInfo) => {
         const con = await oracledb.getConnection(dbConfig);
+        userInfo.pwd = bcrypt.hashSync(userInfo.pwd, 10);
         let result = await con.execute(`insert into member(email, name, age, phone, nickname, grade, login_type, id, password) values('${userInfo.email}', '${userInfo.name}', ${userInfo.age}, '${userInfo.phone}', '${userInfo.nickname}', ${userInfo.grade}, ${userInfo.loginType}, '${userInfo.id}', '${userInfo.pwd}')`);
-        //console.log("result : ", result.rowsAffected);
         return result.rowsAffected;
     }
 }

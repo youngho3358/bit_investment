@@ -39,7 +39,7 @@ const process = {
             res.send(`<script>alert("이메일을 입력해주세요");location.href="/register"</script>`);
         }else{
             if ((req.body.userEmail_domain_auto != "type") || (req.body.userEmail_domain_write != "")) {
-                //console.log("이메일 입력했구나!!")
+
             }else{
                 res.send(`<script>alert("이메일을 입력해주세요");location.href="/register"</script>`);
             }
@@ -74,7 +74,6 @@ const process = {
         register_member.loginType = 1;
         register_member.grade = 1;
 
-        // console.log(register_member);
 
         let result_id = await service.check.id_check(register_member.id);
         if (result_id == 1) {

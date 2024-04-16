@@ -89,7 +89,13 @@
         margin-top: 22px;
         font-size: 26px;
         font-weight: bold;
-        color: white;
+        color: white
+      }
+      .coin_relation {
+        display: flex;
+      }
+      .coin_list {
+        display: flex;
       }
     </style>
   </head>
@@ -122,7 +128,262 @@
                 </div>
             </div>
         </div>
-        <div class="container"></div>
+        <div class="container">
+          <div style="height: 550px;">
+          </div>
+          <!-- <hr> -->
+          <div>
+            <script>
+              window.onload = function() {
+                function coin_rate() {
+                  btcChange();
+                  ethChange();
+                  solChange();
+                  xrpChange();
+                  dogeChange();
+                  shibChange();
+                }
+                setInterval(coin_rate, 10);
+              }
+              const options = {
+                method: "GET",
+                headers: { accept: "application/json" },
+              };
+              const btcChange = () => {
+                fetch(
+                  "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+                  options
+                )
+                .then((response) => response.json())
+                .then((response) => {
+                  document.getElementById("btc_price").innerText = (response[0].trade_price).toLocaleString('ko-KR');
+                  if (response[0].signed_change_rate < 0) {
+                    document.getElementById("btc_color").style.color = "rgb(0, 0, 255, 0.7)";
+                    document.getElementById("btc_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else if (response[0].signed_change_rate == 0) {
+                    document.getElementById("btc_color").style.color = "gray";
+                    document.getElementById("btc_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else{
+                    document.getElementById("btc_color").style.color = "red";
+                    document.getElementById("btc_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }
+                })
+                .catch((err) => console.error(err));
+              };
+              
+              const ethChange = () => {
+                fetch(
+                  "https://api.upbit.com/v1/ticker?markets=KRW-ETH",
+                  options
+                )
+                .then((response) => response.json())
+                .then((response) => {
+                  document.getElementById("eth_price").innerText = (response[0].trade_price).toLocaleString('ko-KR');
+                  if (response[0].signed_change_rate < 0) {
+                    document.getElementById("eth_color").style.color = "rgb(0, 0, 255, 0.7)";
+                    document.getElementById("eth_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else if (response[0].signed_change_rate == 0) {
+                    document.getElementById("eth_color").style.color = "gray";
+                    document.getElementById("eth_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else{
+                    document.getElementById("eth_color").style.color = "red";
+                    document.getElementById("eth_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }
+                })
+                .catch((err) => console.error(err));
+              };
+
+              const solChange = () => {
+                fetch(
+                  "https://api.upbit.com/v1/ticker?markets=KRW-SOL",
+                  options
+                )
+                .then((response) => response.json())
+                .then((response) => {
+                  document.getElementById("sol_price").innerText = (response[0].trade_price).toLocaleString('ko-KR');
+                  if (response[0].signed_change_rate < 0) {
+                    document.getElementById("sol_color").style.color = "rgb(0, 0, 255, 0.7)";
+                    document.getElementById("sol_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else if (response[0].signed_change_rate == 0) {
+                    document.getElementById("sol_color").style.color = "gray";
+                    document.getElementById("sol_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else{
+                    document.getElementById("sol_color").style.color = "red";
+                    document.getElementById("sol_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }
+                })
+                .catch((err) => console.error(err));
+              };
+
+              const xrpChange = () => {
+                fetch(
+                  "https://api.upbit.com/v1/ticker?markets=KRW-XRP",
+                  options
+                )
+                .then((response) => response.json())
+                .then((response) => {
+                  document.getElementById("xrp_price").innerText = (response[0].trade_price).toLocaleString('ko-KR');
+                  if (response[0].signed_change_rate < 0) {
+                    document.getElementById("xrp_color").style.color = "rgb(0, 0, 255, 0.7)";
+                    document.getElementById("xrp_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else if (response[0].signed_change_rate == 0) {
+                    document.getElementById("xrp_color").style.color = "gray";
+                    document.getElementById("xrp_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else{
+                    document.getElementById("xrp_color").style.color = "red";
+                    document.getElementById("xrp_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }
+                })
+                .catch((err) => console.error(err));
+              };
+
+              const dogeChange = () => {
+                fetch(
+                  "https://api.upbit.com/v1/ticker?markets=KRW-DOGE",
+                  options
+                )
+                .then((response) => response.json())
+                .then((response) => {
+                  document.getElementById("doge_price").innerText = (response[0].trade_price).toLocaleString('ko-KR');
+                  if (response[0].signed_change_rate < 0) {
+                    document.getElementById("doge_color").style.color = "rgb(0, 0, 255, 0.7)";
+                    document.getElementById("doge_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else if (response[0].signed_change_rate == 0) {
+                    document.getElementById("doge_color").style.color = "gray";
+                    document.getElementById("doge_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else{
+                    document.getElementById("doge_color").style.color = "red";
+                    document.getElementById("doge_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }
+                })
+                .catch((err) => console.error(err));
+              };
+
+              const shibChange = () => {
+                fetch(
+                  "https://api.upbit.com/v1/ticker?markets=KRW-SHIB",
+                  options
+                )
+                .then((response) => response.json())
+                .then((response) => {
+                  document.getElementById("shib_price").innerText = (response[0].trade_price).toFixed(5);
+                  if (response[0].signed_change_rate < 0) {
+                    document.getElementById("shib_color").style.color = "rgb(0, 0, 255, 0.7)";
+                    document.getElementById("shib_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else if (response[0].signed_change_rate == 0) {
+                    document.getElementById("shib_color").style.color = "gray";
+                    document.getElementById("shib_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }else{
+                    document.getElementById("shib_color").style.color = "red";
+                    document.getElementById("shib_change").innerHTML = (response[0].signed_change_rate * 100).toFixed(2);
+                  }
+                })
+                .catch((err) => console.error(err));
+              };
+            </script>
+            <div class="coin_relation">
+              <div id="coin_news" style="width: 830px;">
+                <label style="font-size: 30px;"><b>코인 뉴스</b></label><br><br>
+
+              </div>
+
+              <div id="coin_market_price" style="width: 435px;" >
+                <label style="font-size: 30px;">코인 시세</label><br><br>
+
+                <div class="coin_list" style="font-size: 18px; width: 450px;">
+                  <div style="width: 150px;">
+                    <label>비트코인</label>
+                  </div>
+                  <div id="btc_color" style="display: flex; text-align: right;">
+                    <div style="width: 180px;">
+                      <label id="btc_price"></label> KRW
+                    </div>
+                    <div style="width: 100px; text-align: right;">
+                      <label id="btc_change"></label>%
+                    </div>
+                  </div>
+                </div>
+                <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px; margin: 12px 0px;">
+
+                <div class="coin_list" style="font-size: 20px; width: 450px;">
+                  <div style="width: 150px;">
+                    <label>이더리움</label>
+                  </div>
+                  <div id="eth_color" style="display: flex; text-align: right;">
+                    <div style="width: 180px;">
+                      <label id="eth_price"></label> KRW
+                    </div>
+                    <div style="width: 100px; text-align: right;">
+                      <label id="eth_change"></label>%
+                    </div>
+                  </div>
+                </div>
+                <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px; margin: 12px 0px;">
+                
+                <div class="coin_list" style="font-size: 20px; width: 450px;">
+                  <div style="width: 150px;">
+                    <label>솔라나</label>
+                  </div>
+                  <div id="sol_color" style="display: flex; text-align: right;">
+                    <div style="width: 180px;">
+                      <label id="sol_price"></label> KRW
+                    </div>
+                    <div style="width: 100px; text-align: right;">
+                      <label id="sol_change"></label>%
+                    </div>
+                  </div>
+                </div>
+                <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px; margin: 12px 0px;">
+
+                <div class="coin_list" style="font-size: 20px; width: 450px;">
+                  <div style="width: 150px;">
+                    <label>리플</label>
+                  </div>
+                  <div id="xrp_color" style="display: flex; text-align: right;">
+                    <div style="width: 180px;">
+                      <label id="xrp_price"></label> KRW
+                    </div>
+                    <div style="width: 100px; text-align: right;">
+                      <label id="xrp_change"></label>%
+                    </div>
+                  </div>
+                </div>
+                <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px; margin: 12px 0px;">
+
+                <div class="coin_list" style="font-size: 20px; width: 450px;">
+                  <div style="width: 150px;">
+                    <label>도지코인</label>
+                  </div>
+                  <div id="doge_color" style="display: flex; text-align: right;">
+                    <div style="width: 180px;">
+                      <label id="doge_price"></label> KRW
+                    </div>
+                    <div style="width: 100px; text-align: right;">
+                      <label id="doge_change"></label>%
+                    </div>
+                  </div>
+                </div>
+                <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px; margin: 12px 0px;">
+
+                <div class="coin_list" style="font-size: 20px; width: 450px;">
+                  <div style="width: 150px;">
+                    <label>시바이누</label>
+                  </div>
+                  <div id="shib_color" style="display: flex; text-align: right;">
+                    <div style="width: 180px;">
+                      <label id="shib_price"></label> KRW
+                    </div>
+                    <div style="width: 100px; text-align: right;">
+                      <label id="shib_change"></label>%
+                    </div>
+                  </div>
+                </div>
+                <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px; margin: 12px 0px;">
+
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="footer"></div>
     </div>
   </body>
