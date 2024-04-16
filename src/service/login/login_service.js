@@ -51,4 +51,12 @@ const register = {
     }
 }
 
-module.exports = {memberCheck, duplicationCheck, register}
+const deleteMember = {
+    deleteMember : async (member_id) => {
+        let result = await dao.deleteMember.deleteMember(member_id);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    }
+}
+
+module.exports = {memberCheck, duplicationCheck, register, deleteMember}

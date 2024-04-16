@@ -20,11 +20,17 @@ module.exports = (app) => {
     // 카카오 회원등록 성공 시 세션 발급 후 메인화면으로 redirect
     router.post("/success_kakao_login", loginCtrl.process.success_kakao_login);
 
-    // 로그아웃
+    // 로그아웃 || 세션 삭제
     router.get("/logout", loginCtrl.process.logout);
 
     // 유저 개인정보 확인
     router.get("/userInfo", loginCtrl.views.userInfo);
+
+    // 계정 삭제 확인 문구 출력
+    router.get("/delete_id", loginCtrl.process.deleteId);
+
+    // 계정 삭제
+    router.get("/deleteMember", loginCtrl.process.deleteMember);
 
     return router;
 }

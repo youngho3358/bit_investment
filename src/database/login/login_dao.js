@@ -32,4 +32,13 @@ const register = {
     }
 }
 
-module.exports = {memberCheck, duplicationCheck, register}
+const deleteMember = {
+    deleteMember : async (member_id) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`delete from member where member_id='${member_id}'`);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result.rowsAffected;
+    }
+}
+
+module.exports = {memberCheck, duplicationCheck, register, deleteMember}
