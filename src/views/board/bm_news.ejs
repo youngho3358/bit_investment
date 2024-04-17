@@ -11,6 +11,7 @@
             display: inline-block;
             border: 1px solid black;
             float : left;
+            text-align: center;
         }
         .login-btn{
             display: block;
@@ -59,6 +60,10 @@
             width : 900px;
             float : left;
         }
+        #right-btn{
+            margin : 0px 0px 10px 0px;
+            text-align : right;
+        }
         #btn{
         display: inline-block;
         padding: 0 25px;
@@ -72,6 +77,7 @@
         text-align: center;
         transition: .2s;
         cursor: pointer;
+        
         }
         #btn2{
         padding : 0 25px; 
@@ -100,6 +106,7 @@
         url = '/member/login';
         return res.send( ser.getMessage(msg, url) );
     }
+    return 0;
    
  }
 </script>
@@ -131,7 +138,7 @@
                     <ol id = "ul">
                         <li>
                             <span style ="font-weight : bold">
-                                <a href ="/board/free">자유게시판</a>
+                                <a href ="/board/free?id">자유게시판</a>
                             </span>
                         </li>
                         <li>
@@ -141,7 +148,7 @@
                         </li>
                         <li>
                             <span style ="font-weight : bold">
-                                <a href ="/board/news">뉴스</a>
+                                <a href ="/board/news">코인 게시판</a>
                             </span>
                         </li>
                     </ol>
@@ -150,18 +157,18 @@
             </div>
             <div class ="content">
                 <div>
-                    <h2 style ="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;"> 뉴스 게시판 </h2>
+                    <h2 style ="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;"> 코인 게시판 </h2>
                 </div>
                 <br>
                 <br>
                 <br>
                 <div class = "news-list">
-                    <div>
+                    <div id = "right-btn">
                         <input type ="button" id="btn2" value ="목록"  onclick = "location.href ='/board/news'">
-                        <input type ="button" id ="btn" value ="글 쓰기" onclick = "">
+                        <input type ="button" id ="btn" value ="글 쓰기" onclick = "location.href='/board_write/write_form'">
                     </div>
                     <div class = "news-board">
-                        <table style ="width:100%">
+                        <table style ="width:100%" border="2">
                             <colgroup>
                                 <col class ="size01" data-alias ="number">
                                 <col class ="size02" data-alias ="subject">
@@ -190,9 +197,10 @@
                                         <tr>
                                         <td><%=data.BOARD_ID%></td>
                                         <td><%=data.MEMBER_ID%></td>                                      
-                                        <td><%=data.BOARD_TITLE %></td>
+                                        <td><a href = "/board/data/<%=data.BOARD_ID%>"><%= data.BOARD_TITLE%></a></td>
+                                        
                                         <td><%=data.BOARD_CREATE_DATE%></td>
-                                        <td><%=data.HIT%></td>
+                                        <td><%=data.Hit%></td>
                                     </tr>
                                    <%})
                                     }%>

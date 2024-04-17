@@ -9,23 +9,34 @@ const logoPath = "../../../img/logo/banner_logo.png";
 const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
 const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
-const bm_input = (req, res) => {
-
-    res.render("board/bm_input",{logoDataURI});
-
+const bm_input = async (req, res) => {
+    const data = await ser.boardRead.list(req.query.start);
+    res.render("board/bm_input",{
+        data,
+        list : data.list,
+        start : data.start,
+        totalPage : data.totalPage,
+        logoDataURI
+    });
 }
 
 const board_views = {
     data : async (req,res) => {
         const data = await ser.boardRead.data(req.params.num)
-        const username = req.session.username;
-        res.render("board/data",{data,username});
-        
+        // const username = req.session.username;
+        res.render("board/data",{
+            data,
+            // username,       
+            list : data.list,
+            start : data.start,
+            totalPage : data.totalPage,
+            logoDataURI
+        });
     },
 
     bm_free : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
-        res.render("board/list",{
+        res.render("board/bm_free",{
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
@@ -34,7 +45,7 @@ const board_views = {
     });
 },
     bm_news : async (req,res)=>{
-        const data = await ser.boardRead.list(1);
+        const data = await ser.boardRead.list(req.query.start);
         res.render("board/bm_news", {
             list : data.list,
             start : data.start,

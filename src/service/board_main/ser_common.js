@@ -13,7 +13,7 @@ const getMesaage = (msg,url) =>{
 }
 const timeModify = (list) =>{
     list = list.map((data) =>{
-        data.SAVE_DATE = data.SAVE_DATE.toLocalString();
+        data.BOARD_CREATE_DATE = data.BOARD_CREATE_DATE.toLocaleString();
         return data;
     })
     return list;

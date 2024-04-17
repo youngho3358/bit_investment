@@ -1,16 +1,40 @@
 const dao = require("../../database/board_main/bm_dao")
 const common = require("./ser_common");
 
-boardUpdate ={
-    upHit : (num) =>{
-        dao.boardUpdate.upHit(num);
-    }
+boardUpdate = {
+    Hit : (num) =>{
+        dao.boardUpdate.Hit(num);
+    },
+    // delete : (BOARD_ID) =>{
+    //     dao.boardUpdate.delete(BOARD_ID);
+    // },
+    // modify : async (body,file)=>{
+    //     if(file !== undefined){
+    //         body.orifin_file_name = file.originalname;
+    //         body.change_file_name = file.filename;
+    //     }
+    //     let result = 0;
+    //     try{
+    //         result = await dao.boardUpdate.modify(body);
+    //     }catch(err){
+    //     }
+    //     let msg, url;
+    //     let message = {};
+    //     if(result !== 0 ){
+    //         msg = "수정 되었습니다.";
+    //         url = `/board/data/${body.BOARD_ID}`;
+    //     }else{
+    //         msg = ""
+    //     }
+    // }
+
 }
 const boardRead ={
     data : async (num)=>{
-        this.boardUpdate.upHit(num);
+        boardUpdate.Hit(num);
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
+        console.log("data : ",data)
         return data[0];
     },
     list : async (start) =>{

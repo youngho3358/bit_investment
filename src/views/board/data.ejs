@@ -1,1 +1,288 @@
-<%- include("header") %>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coin_investment</title>
+    <style>
+        .left-info {
+            width: 240px;
+            padding: 18px 0px 12px;
+            display: inline-block;
+            border: 1px solid black;
+            float: left;
+            text-align:  center;
+        }
+
+        .login-btn {
+            display: block;
+            margin: 0;
+            width: 200px;
+            height: 31px;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+            border: 0;
+            background-color: black;
+            background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
+        }
+
+        .register {
+            padding: 0 15px;
+            position: relative;
+            font-size: 15px;
+            color: black;
+        }
+
+        .search {
+            padding: 20px 0px 15px;
+            font-size: 15px;
+            color: black;
+            text-align: left;
+        }
+
+        .log-out {
+            font-size: 15px;
+            padding: 15px 0 12px;
+        }
+
+        .left-menu {
+            font-size: 30px;
+            text-align: center;
+            display: block;
+            color: black;
+        }
+
+        .all {
+            text-align: center;
+            font-size: 40px;
+            padding: 20px 0 15px;
+        }
+
+        #ul>li {
+            list-style: none;
+            padding: 0px 20px 15px;
+
+        }
+
+        .content {
+            width: 900px;
+            float: left;
+        }
+
+        .view {
+            font-size: 100%;
+            margin: 0px;
+            padding: 0px;
+            display: block;
+            float: none;
+        }
+
+        .right-btn {
+            margin: 0px 0 10px 0;
+            overflow: hidden;
+            float : right;
+        }
+
+        #btn {
+            display: inline-block;
+            padding: 0 25px;
+            height: 30px;
+            background: #fff;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            box-sizing: border-box;
+            color: #686868;
+            line-height: 30px;
+            text-align: center;
+            transition: .2s;
+            cursor: pointer;
+        }
+
+        #btn2 {
+            padding: 0 25px;
+            background: #444;
+            border: 1px solid #303030;
+            color: #fff;
+            display: inline-block;
+            height: 30px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            line-height: 30px;
+            text-align: center;
+            transition: .2s;
+            cursor: pointer;
+        }
+
+        .Headview {
+            font-size: 30px;
+            /* font-weight: normal; */
+            /* line-height: 33px; */
+            color: brown;
+            padding : 0 0 100px 50px;
+            display : block;
+        }
+
+        .subcontent {
+            font-size: 20px;
+            box-sizing: content-box;
+            vertical-align: baseline;
+            line-height: 25px;
+            letter-spacing: normal;
+        }
+
+        .MainView {
+
+        }
+
+        .articlehead {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            display: block;
+            float: none;
+        }
+
+        .articleinfo {
+            padding: 14px 10px 16px;
+            margin : 0 0 20px 0;
+            background: #f8f8f8;
+            border-bottom: 1px solid gray;
+            display: flex;
+            border : 1;
+            font-size : 15px;
+        }
+
+        .articlewriter {
+            width : 250px;
+            padding : 10px 10px 0 10px;
+
+        }
+        .articledate {
+            width : 250px;
+            padding :10px 10px 0 10px;
+            text-align: center;
+
+        }
+        .articlehit{
+            width : 250px;
+            padding :10px 10px 0 10px;
+            text-align : right;
+        }
+
+        #modibtn{
+            padding: 0 25px;
+            background: #444;
+            border: 1px solid white;
+            color: #fff;
+            height: 30px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            float : right;
+            transition: .2s;
+            cursor: pointer;
+            
+        }
+        #delbtn{
+            padding: 0 25px;
+            background: #444;
+            border: 1px solid white;
+            color: #fff;
+            height: 30px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            float : right;
+            transition: .2s;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header><%- include("header") %></header>
+    <div class="container" style="border: 1px solid black;">
+        <div class="left-info">
+            <h2>
+                <a href="/board" title="메인 페이지로 이동">메인으로 이동</a>
+            </h2>
+            <div class="log-out">
+                <p>"로그인을 해주세요"</p>
+                <br>
+                <a href="/login" class="login-btn">로그인</a>
+            </div>
+            <div class="register">
+                <a href="/register">회원가입</a>&nbsp;&nbsp;&nbsp;
+                <a href="">ID/Password 찾기</a>
+            </div>
+            <div class="search" id="main-search">
+                <form action="" method="get">
+                    <input type="text" name="keyword" placeholder="게시판 검색">
+                    <button type="submit">검색</button>
+                </form>
+            </div>
+            <hr>
+            <div class="left-menu">
+                <br>
+                <div>
+                    <h3 class="all">통합 게시판</h3>
+                    <ol id="ul">
+                        <li>
+                            <span style="font-weight : bold">
+                                <a href="/board/free">자유게시판</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span style="font-weight : bold">
+                                <a href="/board/notice">공지사항</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span style="font-weight : bold">
+                                <a href="/board/news">코인 게시판</a>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="MainView">
+            <div class="articlehead">
+                <div class="articleinfo">
+                    <div class="articlewriter">
+                        <%= data.MEMBER_ID%>
+                    </div>
+                    <div class="articledate">
+                        <%=data.BOARD_CREATE_DATE%>
+                    </div>
+                    <div class="articlehit">
+                        조회 : <%=data.Hit %>
+                    </div>
+                </div>
+            </div>
+            <div class = "headbtn">
+                <input type ="button" id="modibtn" value ="수정" onclick="">
+                <input type ="button" id="delbtn" value ="삭제" onclick="">
+            </div>
+            <br>
+            <br>
+            <div class="Headview">
+                <%= data.BOARD_TITLE %>
+            </div>
+            <div class="content">
+                <div class="subcontent">
+                    <%= data.BOARD_CONTENT %>
+                </div>
+                <div class="right-btn">
+                    <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
+                    <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board_write/write_form'">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+    </div>
+</body>
+
+</html>

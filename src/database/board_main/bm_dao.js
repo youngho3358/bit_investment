@@ -8,7 +8,9 @@ const boardRead ={
     data : async(num) =>{
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD where BOARD_ID ='${num}'`;
+        console.log(num)
         const data = await con.execute(sql);
+   
         return data;
     },
     list : async (start, end) =>{
@@ -24,4 +26,11 @@ const boardRead ={
         return totalContent.rows[0]['COUNT(*)'];
     }
 }
-module.exports={boardRead}
+boardUpdate ={
+    Hit : async(num) =>{
+        const con = await oracledb.getConnection(dbConfig);
+        const sql = `update BOARD set hit = hit + 1 where BOARD_ID ='${num}'`;
+        con.execute(sql)
+    }
+}
+module.exports={boardRead,boardUpdate}
