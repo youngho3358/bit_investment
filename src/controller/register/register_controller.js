@@ -9,7 +9,7 @@ const views = {
         const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
         res.render("./register/register_input", {logoDataURI : logoDataURI});
-    },
+    }, 
 }
 
 const process = {
