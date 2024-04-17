@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coin_investment</title>
+    <style>
+        .left-info{
+            width : 240px;
+            padding : 18px 0px 12px;
+            display: inline-block;
+            border: 1px solid black;
+            float : left;
+            text-align: center;
+        }
+        .login-btn{
+            display: block;
+            margin : 0;
+            width : 200px;
+            height : 31px;
+            line-height: 30px;
+            text-align : center;
+            color : #fff;
+            border : 0;
+            background-color: black;
+            background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
+        }
+        .register{
+            padding : 0 15px;
+            position: relative;
+            font-size: 15px;
+            color : black;
+        }
+        .search{
+            padding : 20px 0px 15px;
+            font-size :15px;
+            color : black;
+        }
+        .log-out{
+            font-size :15px;
+            padding : 15px 0 12px;
+        }
+        .left-menu{
+            font-size : 30px;
+            text-align: center;
+            display: block;
+            color : black;
+        }
+        .all{
+            text-align: center;
+            font-size : 40px;
+            padding : 20px 0 15px;
+        }
+        #ul>li{
+            list-style : none;
+            padding : 0px 20px 15px;
+            
+        }
+        .content{
+            width : 900px;
+            float : left;
+        }
+        #right-btn{
+            margin : 0px 0px 10px 0px;
+            text-align : right;
+        }
+        #btn{
+        display: inline-block;
+        padding: 0 25px;
+        height: 30px;
+        background: #fff;
+        border: 1px solid #aaa;
+        border-radius: 3px;
+        box-sizing: border-box;
+        color: #686868;
+        line-height: 30px;
+        text-align: center;
+        transition: .2s;
+        cursor: pointer;
+        
+        }
+        #btn2{
+        padding : 0 25px; 
+        background: #444;
+        border: 1px solid #303030;
+        color: #fff;
+        display: inline-block;
+        height: 30px;
+        border-radius: 3px;
+        box-sizing: border-box;
+        line-height: 30px;
+        text-align: center;
+        transition: .2s;
+        cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+        <header><%- include("header") %></header>
+<script>
+ function btn(){
+    
+    if(!req.cookies.isLogin && !req.session.username){
+        msg = "로그인 사용자만 접근 가능합니다!!!";
+        url = '/member/login';
+        return res.send( ser.getMessage(msg, url) );
+    }
+    return 0;
+   
+ }
+</script>
+        <div class="container" style="border: 1px solid black;">
+                <div class = "left-info">
+                    <h2>
+                        <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
+                    </h2>                
+                <div class="log-out">   
+                <p>"로그인을 해주세요"</p>
+                <br>
+                    <a href ="/login" class="login-btn">로그인</a>  
+                    </div>
+                <div class="register">
+                    <a href = "/register">회원가입</a>&nbsp;&nbsp;&nbsp;
+                    <a href = "" >ID/Password 찾기</a>
+                </div>
+                <div class ="search" id="main-search">
+                    <form action ="" method="get">
+                        <input type ="text" name ="keyword" placeholder="게시판 검색">
+                        <button type ="submit">검색</button>
+                    </form>
+                </div>
+                <hr>
+                <div class ="left-menu">
+                <br>
+                <div>
+                    <h3 class = "all">통합 게시판</h3>
+                    <ol id = "ul">
+                        <li>
+                            <span style ="font-weight : bold">
+                                <a href ="/board/free?id">자유게시판</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span style ="font-weight : bold">
+                                <a href ="/board/notice">공지사항</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span style ="font-weight : bold">
+                                <a href ="/board/news">코인 게시판</a>
+                            </span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            </div>
+            <div class ="content">
+                <div>
+                    <h2 style ="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;"> 코인 게시판 </h2>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class = "news-list">
+                    <div id = "right-btn">
+                        <input type ="button" id="btn2" value ="목록"  onclick = "location.href ='/board/news'">
+                        <input type ="button" id ="btn" value ="글 쓰기" onclick = "location.href='/board_write/write_form'">
+                    </div>
+                    <div class = "news-board">
+                        <table style ="width:100%" border="2">
+                            <colgroup>
+                                <col class ="size01" data-alias ="number">
+                                <col class ="size02" data-alias ="subject">
+                                <col class ="size03" data-alias ="writer">
+                                <col class ="size04" data-alias ="date">
+                                <col calss ="size05" data-alias ="view">
+                            </colgroup>
+                            <thead>
+                                <Tr>
+                                    <th>번호</th>
+                                    <th>글쓴이</th>
+                                    <th>제목</th>
+                                    <th>등록일</th>
+                                    <th>조회</th>
+                                </Tr>
+                            </thead>
+
+                            <tbody style="text-align: center;">
+                                <% if( list.length == 0 ){%>
+                                    <tr>
+                                        <th colspan ="7">아직 등록된 글이 없습니다</th>
+                                    </tr>
+                                    
+                                <%}else{
+                                   list.forEach(data => {%>
+                                        <tr>
+                                        <td><%=data.BOARD_ID%></td>
+                                        <td><%=data.MEMBER_ID%></td>                                      
+                                        <td><a href = "/board/data/<%=data.BOARD_ID%>"><%= data.BOARD_TITLE%></a></td>
+                                        
+                                        <td><%=data.BOARD_CREATE_DATE%></td>
+                                        <td><%=data.Hit%></td>
+                                    </tr>
+                                   <%})
+                                    }%>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+        <div class= "footer">
+        </div>
+    </div>
+</body>
+</html>
