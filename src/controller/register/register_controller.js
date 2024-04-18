@@ -71,7 +71,7 @@ const process = {
         register_member.email = userEmail;
 
         register_member.nickname = req.body.userNickname;
-        register_member.loginType = 1;
+        register_member.loginType = 0;
         register_member.grade = 1;
 
         // console.log(register_member);

@@ -32,5 +32,20 @@ module.exports = (app) => {
     // 계정 삭제
     router.get("/deleteMember", loginCtrl.process.deleteMember);
 
+    // 닉네임 변경 화면 출력
+    router.get("/change_nickname", loginCtrl.views.changeNickname);
+
+    // 닉네임 변경
+    router.post("/change_nickname_submit", loginCtrl.process.changeNickname);
+
+    // 회원정보 수정 화면 출력
+    router.get("/edit_info_form", loginCtrl.views.editInfoForm);
+
+    // 전화번호 변경
+    router.post("/change_phone", loginCtrl.process.changePhone);
+
+    // 이메일 변경
+    router.post("/change_email", loginCtrl.process.changeEmail);
+
     return router;
 }

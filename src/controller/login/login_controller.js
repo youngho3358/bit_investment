@@ -52,6 +52,30 @@ const views = {
                         </script>`);
             return;
         }
+    },
+    changeNickname : (req, res) => {
+        if(req.session.member){
+            let member = req.session.member;
+            res.render("./login/change_nickname", {member, whitelogo});
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
+    },
+    editInfoForm : (req, res) => {
+        if(req.session.member){
+            let member = req.session.member;
+            res.render("./login/edit_info_form", {member, whitelogo});
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
     }
 }
 
@@ -133,6 +157,51 @@ const process = {
                     `)
         }
 
+    },
+    changeNickname : async (req, res) => {
+        // 전달받은 변경 닉네임과 기존 닉네임
+        let changeNickname = req.body.nickname;
+        let originNickname = req.body.originNickname;
+
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.register.changeNickname(changeNickname, originNickname);
+
+        if(result === 1){
+            req.session.member.nickname = changeNickname;
+            res.send(`
+                        <script>alert("닉네임 변경 성공");
+                            location.href = "/login/change_nickname";
+                        </script>
+                    `)
+        }else{
+            res.send(`
+                        <script>alert("닉네임 변경을 실패하였습니다.");
+                            location.href = "/";
+                        </script>
+                    `)
+        }
+    },
+    changePhone : async (req, res) => {
+        let changePhone = req.body.changePhone;
+        let memberId = req.session.member.member_id;
+
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.register.changePhone(changePhone, memberId);
+        if(result == 1){
+            req.session.member.phone = changePhone;
+        }
+        res.json(result);
+    },
+    changeEmail : async (req, res) => {
+        let changeEmail = req.body.changeEmail;
+        let memberId = req.session.member.member_id;
+
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.register.changeEmail(changeEmail, memberId);
+        if(result == 1){
+            req.session.member.email = changeEmail;
+        }
+        res.json(result);
     }
 }
 

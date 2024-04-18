@@ -29,6 +29,24 @@ const register = {
         const con = await oracledb.getConnection(dbConfig);
         let result = await con.execute(`insert into member(email, nickname, grade, login_type) values ('${email}', '${nickname}', 1, 1)`);
         return result;
+    },
+    changeNickname : async (changeNickname, originNickname) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`update member set nickname='${changeNickname}' where nickname='${originNickname}'`);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result.rowsAffected;
+    },
+    changePhone : async (changePhone, memberId) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`update member set phone='${changePhone}' where member_id='${memberId}'`);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result.rowsAffected;
+    },
+    changeEmail : async (changeEmail, memberId) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`update member set email='${changeEmail}' where member_id='${memberId}'`);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result.rowsAffected;
     }
 }
 

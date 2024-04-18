@@ -48,6 +48,21 @@ const register = {
     kakaoRegister : async (email, nickname) => {
         let result = await dao.register.kakaoRegister(email, nickname);
         return result;
+    },
+    changeNickname : async (changeNickname, originNickname) => {
+        let result = await dao.register.changeNickname(changeNickname, originNickname);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    },
+    changePhone : async (changePhone, memberId) => {
+        let result = await dao.register.changePhone(changePhone, memberId);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    },
+    changeEmail : async (changeEmail, memberId) => {
+        let result = await dao.register.changeEmail(changeEmail, memberId);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
     }
 }
 
