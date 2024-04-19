@@ -67,7 +67,7 @@ const board_Update = {
 
 const board_delete = {
     delete : (req, res) => {
-        deleteImg(req.params.img);
+        board_delete.deleteImg(req.params.img);
         service.boardDelete.delete(req.params.BId);
         res.send(message.msg);
         res.redirect("/board")
@@ -75,7 +75,7 @@ const board_delete = {
 
     },
     deleteImg : (img) => {
-        if(imgName !== 'non'){
+        if(img !== 'non'){
             try{
             fs.unlinkSync(`./upload_file/${img}`)
             }catch(err){

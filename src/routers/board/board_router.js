@@ -14,7 +14,7 @@ router.get("/modify_form/:BId", bwCtrl.board_views.modify_form);
 //router.post("/modify", upload.single("img"), bwCtrl.board_Update.modify)
 
 router.post("/data/:BId",upload.single("img"), bwCtrl.board_Update.modify)
-router.post("/delete/:BId/:Img", bwCtrl.board_delete.delete)
+router.get("/delete/:BId/:Img", bwCtrl.board_delete.delete)
 
 
 

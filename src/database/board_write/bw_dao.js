@@ -47,8 +47,7 @@ const boardUpdate = {
 const board_Delete = {
     delete : async (BId) => {
         const sql = `delete from board where BOARD_ID = ${BId}`
-        console.log("sql : ",sql);
-        const result = (await con).execute(sql)
+        const result = await (await con).execute(sql)
         return result;
     }
 }
