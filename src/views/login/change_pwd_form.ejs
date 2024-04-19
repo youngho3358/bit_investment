@@ -5,51 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>coin_investment</title>
     <script>
-        function nickname_check() {
-            const nickname = document.getElementById("input_nickname").value;
-            if(nickname.length == 0){
-                const checkLabel = document.getElementById("live_nickname_check");
-                checkLabel.innerText = "";
-                return;
-            }
-            else if( nickname.length < 2 || nickname.length > 8){
-                const checkLabel = document.getElementById("live_nickname_check");
-                checkLabel.style.color = "red";
-                checkLabel.innerText = "2~8자리 닉네임을 입력해주세요";
+        function submit_change() {
+            const changePassword = document.getElementById("input_password").value;
+            if(changePassword === ""){
+                alert("변경할 비밀번호를 입력해주세요.");
+                document.getElementById("input_password").focus();
                 return;
             }else{
-                const checkLabel = document.getElementById("live_nickname_check");
-
-                let data = {nickname : nickname};
-
-                fetch("/login/nicknameCheck",{
+                let data = {changePassword : changePassword};
+                fetch("/login/change_pwd",{
                             method : "post",
                             headers : {"Content-Type":"application/json"},
                             body : JSON.stringify(data)
                         })
                         .then(res => res.json())
-                        .then(checkResult => {
-                            if(checkResult == 1){
-                                checkLabel.style.color = "red";
-                                checkLabel.innerText = "중복된 닉네임이 존재합니다."
-                                return;
+                        .then(result => {
+                            if(result === 1){
+                                alert("비밀번호가 변경되었습니다.");
+                                location.href = "/";
                             }else{
-                                checkLabel.style.color = "blue";
-                                checkLabel.innerText = "사용 가능한 닉네임입니다."
-                                return;
+                                alert("비밀번호 변경 실패!!!")
                             }
                         })
-                return;
-            }
-        }
-        function submit_change() {
-            const checkLabel = document.getElementById("live_nickname_check");
-            const nickname = document.getElementById("input_nickname");
-            if(checkLabel.innerText == "사용 가능한 닉네임입니다."){
-                document.getElementById("change_nickname_submit").submit();
-                return;
-            }else{
-                document.getElementById("input_nickname").focus();
                 return;
             }
         }
@@ -132,7 +109,7 @@
             margin: 100px auto 20px;
             text-align: center;
         }
-        .input_nickname{
+        .input_password{
             margin-top: 40px;
             width: 550px;
             height: 50px;
@@ -144,7 +121,7 @@
         .notice{
             font-size: 18px;
         }
-        .change_nickname_check_button{
+        .change_password_button{
             display: inline-block;
             border: 1px solid black;
             background-color: #14776a;
@@ -156,7 +133,7 @@
             color: white;
             border-radius: 4px;
         }
-        .change_nickname_check_button:hover{
+        .change_password_button:hover{
             background-color: #106459;
             cursor: pointer;
         }
@@ -192,18 +169,13 @@
             </div>
         </div>
         <div class="myPage_box">
-            <h1>사용할 닉네임을 입력해 주세요.</h1>
-            <br>
-            <label class="notice">coin_investment 내 이용자 식별을 위해 사용됩니다.</label>
+            <h1>변경할 비밀번호를 입력해 주세요.</h1>
         </div>
         <div class="container_1">
-            <form action="change_nickname_submit" id="change_nickname_submit" method="post">
-                <input name="nickname" id="input_nickname" class="input_nickname" type="text" onkeyup="nickname_check()" placeholder="2~8자 입력, 현재 사용 닉네임 : <%=member.nickname%>">
-                <input name="originNickname" type="text" readonly style="display: none;" value="<%=member.nickname%>">
+            <form action="change_password_submit" id="change_password_submit" method="post">
+                <input name="password" id="input_password" class="input_password" type="text" placeholder="변경할 비밀번호를 입력해주세요.">
                 <br>
-                <label id="live_nickname_check" class="live_nickname_check"></label>
-                <br>
-                <div class="change_nickname_check_button" onclick="submit_change()">확인</div>
+                <div class="change_password_button" onclick="submit_change()">변경</div>
             </form>
         </div>
 </body>

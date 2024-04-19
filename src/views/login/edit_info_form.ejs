@@ -67,6 +67,9 @@
                 alert("SNS 로그인 회원은 이메일 변경이 불가합니다.")
             }
         }
+        function go_to_pwdChange() {
+            location.href = "change_pwd_form"
+        }
     </script>
     <style>
         * {
@@ -81,7 +84,7 @@
         }
         .wrap {
             min-width: 1340px;
-            min-height: 1100px;
+            min-height: 1500px;
             background: #f1f1f3;
             padding-bottom: 20px;
         }
@@ -92,7 +95,7 @@
         }
         .container_1 {
             position: relative;
-            height: 800px;
+            height: 980px;
             width: 800px;
             margin: 10px auto 0px;
             border: 1px solid black;
@@ -210,6 +213,7 @@
             font-weight: 5px;
             border-radius: 4px;
             background: #f1f1f3;
+            color: gray;
         }
         #phone_box{
             margin-top: 5px;
@@ -249,6 +253,22 @@
             font-weight: bold;
             padding: 7px;
             border-radius: 5px;
+        }
+        #change_pwd_box{
+            display: inline-block;
+            margin-top: 100px;
+            padding-top: 10px;
+            width: 550px;
+            height: 40px;
+            font-size: 23px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-align: center;
+            color: white;
+            background: #14776a;
+        }
+        #change_pwd_box:hover{
+            cursor: pointer;
         }
     </style>
 </head>
@@ -311,6 +331,7 @@
             <br>
             <label id="live_phone_check">(비밀번호 찾기 시 사용되는 정보입니다.)</label>
             <br>
+            <div id="change_pwd_box" onclick="go_to_pwdChange()">비밀번호 변경</div>
             <div class="back_button_box">
                 <a href="/login/userInfo" class="back_button">돌아가기</a>
             </div>

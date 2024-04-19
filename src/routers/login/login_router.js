@@ -47,5 +47,20 @@ module.exports = (app) => {
     // 이메일 변경
     router.post("/change_email", loginCtrl.process.changeEmail);
 
+    // 아이디 비밀번호 찾기
+    router.get("/find", loginCtrl.views.find);
+
+    // 아이디 찾기
+    router.post("/find_id", loginCtrl.process.findId);
+    
+    // 비밀번호 찾기
+    router.post("/find_pwd", loginCtrl.process.findPwd);
+
+    // 비밀번호 변경 화면 출력
+    router.get("/change_pwd_form", loginCtrl.views.changePwdForm);
+
+    // 비밀번호 변경
+    router.post("/change_pwd", loginCtrl.process.changePwd);
+
     return router;
 }

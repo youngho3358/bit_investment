@@ -76,6 +76,23 @@ const views = {
                         </script>`);
             return;
         }
+    },
+    find : (req, res) => {
+        let type = req.query.type;
+        res.render("./login/find", {type, whitelogo});
+    },
+    changePwdForm : (req, res) => {
+        if(req.session.member){
+            let member = req.session.member;
+            res.render("./login/change_pwd_form", {member, whitelogo});
+            return;
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
     }
 }
 
@@ -200,6 +217,31 @@ const process = {
         let result = await service.register.changeEmail(changeEmail, memberId);
         if(result == 1){
             req.session.member.email = changeEmail;
+            return;
+        }
+        res.json(result);
+    },
+    findId : async (req, res) => {
+        let email = req.body.email;
+        let result = await service.find.id(email);
+        res.json(result);
+    },
+    findPwd : async (req, res) => {
+        let id = req.body.id;
+        let email = req.body.email;
+        let result = await service.find.pwd(id, email);
+        res.json(result);
+    },
+    changePwd : async (req, res) => {
+        let changePassword = req.body.changePassword;
+        let member_id = req.session.member.member_id;
+        
+        let result = await service.register.changePassword(member_id, changePassword);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        if(result == 1){
+            req.session.destroy();
+            res.json(result);
+            return;
         }
         res.json(result);
     }

@@ -47,6 +47,16 @@ const register = {
         let result = await con.execute(`update member set email='${changeEmail}' where member_id='${memberId}'`);
         // 성공 시 1 반환, 실패 시 promise 반환
         return result.rowsAffected;
+    },
+    changePwd : async (id, email, bcryptPwd) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`update member set password='${bcryptPwd}' where id='${id}' and email='${email}'`);
+        return result.rowsAffected;
+    },
+    changePassword : async (member_id, bcrypt_changePwd) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`update member set password='${bcrypt_changePwd}' where member_id='${member_id}'`);
+        return result.rowsAffected;
     }
 }
 
@@ -59,4 +69,22 @@ const deleteMember = {
     }
 }
 
-module.exports = {memberCheck, duplicationCheck, register, deleteMember}
+const find = {
+    id : async (email) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`select id from member where email='${email}'`);
+        return result.rows[0];
+    },
+    pwd : async (id, email) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`select password from member where email='${email}' and id='${id}'`);
+        return result.rows[0];
+    },
+    member_id : async (id, email) => {
+        const con = await oracledb.getConnection(dbConfig);
+        let result = await con.execute(`select member_id from member where email='${email}' and id='${id}'`);
+        return result.rows[0];
+    }
+}
+
+module.exports = {memberCheck, duplicationCheck, register, deleteMember, find}
