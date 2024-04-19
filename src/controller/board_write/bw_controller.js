@@ -70,6 +70,7 @@ const board_delete = {
         deleteImg(req.params.img);
         service.boardDelete.delete(req.params.BId);
         res.send(message.msg);
+        res.redirect("/board")
 
 
     },
