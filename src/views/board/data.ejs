@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,22 +11,19 @@
         .left-info {
             width: 240px;
             padding: 18px 0px 12px;
-            display: inline-block;
             border: 1px solid black;
+            text-align: center;
             float: left;
-            text-align:  center;
         }
 
         .login-btn {
-            display: block;
-            margin: 0;
+            padding: 10px 10px;
             width: 200px;
             height: 31px;
-            line-height: 30px;
             text-align: center;
             color: #fff;
-            border: 0;
-            background-color: black;
+            border: 2px;
+            background-color: gray;
             background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
         }
 
@@ -67,8 +66,7 @@
         }
 
         .content {
-            width: 900px;
-            float: left;
+            display: block;
         }
 
         .view {
@@ -79,13 +77,113 @@
             float: none;
         }
 
+        .Headview {
+            font-size: 30px;
+            /* font-weight: normal; */
+            /* line-height: 33px; */
+            color: brown;
+            padding: 0 0 100px 50px;
+            display: block;
+            border: 1px;
+        }
+
+        .subview {
+            font-size: 20px;
+            box-sizing: content-box;
+            vertical-align: baseline;
+            line-height: 25px;
+            letter-spacing: normal;
+        }
+
+        .articlehead {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            float: none;
+        }
+
+        .articleinfo {
+            padding: 14px 10px 16px;
+            margin: 0 0 20px 0;
+            background: #f8f8f8;
+            border-bottom: 1px solid gray;
+            display: flex;
+            border: 1;
+            font-size: 15px;
+        }
+
+        .MainView {
+            width: 1000px;
+            display: block;
+            position: absolute;
+            left: 250px;
+
+        }
+
+        .articlewriter {
+            width: 250px;
+            padding: 10px 10px 0 10px;
+
+        }
+
+        .articledate {
+            width: 250px;
+            padding: 10px 10px 0 10px;
+            text-align: center;
+
+        }
+
+        .articlehit {
+            width: 250px;
+            padding: 10px 10px 0 10px;
+            text-align: right;
+        }
+
+        .headbtn {
+            display: block;
+            text-align: center;
+        }
+
+        #modibtn {
+            padding: 0 25px;
+            background: #444;
+            border: 1px solid white;
+            color: #fff;
+            height: 30px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            float: right;
+            cursor: pointer;
+
+        }
+
+        #delbtn {
+            padding: 0 25px;
+            background: #444;
+            border: 1px solid white;
+            color: #fff;
+            height: 30px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            float: right;
+            cursor: pointer;
+        }
+
         .right-btn {
-            margin: 0px 0 10px 0;
+            margin: 0px 0 30px 0;
             overflow: hidden;
-            float : right;
+
+        }
+
+        .rightmenu {
+            display: flex;
+            float: right;
+            list-style: none;
+            ;
         }
 
         #btn {
+            padding: 20px;
             display: inline-block;
             padding: 0 25px;
             height: 30px;
@@ -95,111 +193,81 @@
             box-sizing: border-box;
             color: #686868;
             line-height: 30px;
-            text-align: center;
             transition: .2s;
             cursor: pointer;
         }
 
         #btn2 {
+            padding: 20px;
+            display: inline-block;
             padding: 0 25px;
+            height: 30px;
             background: #444;
             border: 1px solid #303030;
             color: #fff;
-            display: inline-block;
-            height: 30px;
             border-radius: 3px;
             box-sizing: border-box;
             line-height: 30px;
-            text-align: center;
             transition: .2s;
             cursor: pointer;
         }
 
-        .Headview {
-            font-size: 30px;
-            /* font-weight: normal; */
-            /* line-height: 33px; */
-            color: brown;
-            padding : 0 0 100px 50px;
-            display : block;
-        }
-
-        .subcontent {
-            font-size: 20px;
-            box-sizing: content-box;
-            vertical-align: baseline;
-            line-height: 25px;
-            letter-spacing: normal;
-        }
-
-        .MainView {
+        .replywrap {
+            margin: 5px 0 0 0;
 
         }
 
-        .articlehead {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            display: block;
-            float: none;
+        #cmtlist {
+            list-style: none;
         }
 
-        .articleinfo {
-            padding: 14px 10px 16px;
-            margin : 0 0 20px 0;
-            background: #f8f8f8;
-            border-bottom: 1px solid gray;
+        .cmtcontent {
             display: flex;
-            border : 1;
-            font-size : 15px;
-        }
-
-        .articlewriter {
-            width : 250px;
-            padding : 10px 10px 0 10px;
-
-        }
-        .articledate {
-            width : 250px;
-            padding :10px 10px 0 10px;
-            text-align: center;
-
-        }
-        .articlehit{
-            width : 250px;
-            padding :10px 10px 0 10px;
-            text-align : right;
-        }
-
-        #modibtn{
-            padding: 0 25px;
-            background: #444;
-            border: 1px solid white;
-            color: #fff;
-            height: 30px;
-            border-radius: 3px;
-            box-sizing: border-box;
-            float : right;
-            transition: .2s;
-            cursor: pointer;
-            
-        }
-        #delbtn{
-            padding: 0 25px;
-            background: #444;
-            border: 1px solid white;
-            color: #fff;
-            height: 30px;
-            border-radius: 3px;
-            box-sizing: border-box;
-            float : right;
-            transition: .2s;
-            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
+    <script>
+        // function rep() {
+        //     let form = {};
+        //     let arr = $("#frm").serializeArray();
+        //     arr.forEach(d => { form[d.username] = d.value; })
+        //     console.log("form : ", form)
+        //     fetch("/board/rep_register", {
+        //         method: "post",
+        //         headers: { "Content-Type": "application/json" },
+        //         body: JSON.stringify(form)
+        //     })
+        //         .then(res => res.json())
+        //         .then(result => {
+        //             if (result === 1)
+        //                 alert("댓글이 달렸습니다");
+
+        //             let html = "아이디 : " + form["id"] + " / ";
+        //             html += "작성일 : " + new Date().toLocaleString() + "<br>"
+        //             html += "제목 : " + form["title"] + "<br>";
+        //             html += "내용 : " + form["content"] + "<hr>"
+
+        //             const comment = document.getElementById("comment");
+        //             comment.insertAdjacentHTML("afterbegin", html);
+        //         });
+        // }
+        function init(groupNum){
+            fetch(`/board/replyData/`+groupNum)
+            .then(res=>res.json())
+            .then(data => {
+                let html ="";
+                data.forEach((d) =>{
+                    html +="<div align = 'center'>" +d.COMMENT_ID;
+                    html += d.COMMENT_CREATE_DATE + "<br>";
+                    html += d.COMMENT_CONTENT; "<hr></div>"
+                });
+                    const content = document.getElementById("reply")
+                    content.innerHTML = html;
+            })  
+        }
+    </script>
     <header><%- include("header") %></header>
     <div class="container" style="border: 1px solid black;">
         <div class="left-info">
@@ -260,9 +328,9 @@
                     </div>
                 </div>
             </div>
-            <div class = "headbtn">
-                <input type ="button" id="modibtn" value ="수정" onclick="">
-                <input type ="button" id="delbtn" value ="삭제" onclick="">
+            <div class="headbtn">
+                <input type="button" id="modibtn" value="수정" onclick="">
+                <input type="button" id="delbtn" value="삭제" onclick="">
             </div>
             <br>
             <br>
@@ -270,15 +338,39 @@
                 <%= data.BOARD_TITLE %>
             </div>
             <div class="content">
-                <div class="subcontent">
+                <div class="subview">
                     <%= data.BOARD_CONTENT %>
                 </div>
-                <div class="right-btn">
-                    <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
-                    <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board_write/write_form'">
-                </div>
+                <br>
+                <bR>
             </div>
-        </div>
+            <div class="right-btn">
+                <ul class="rightmenu">
+                    <li>
+                        <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
+                    </li>
+                    <li>
+                        <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board_write/write_form'">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="replywrap">
+                <div class="replyhead">
+                    <h3>댓글</h3>
+                </div>
+                <hr>
+                <div class="reply">
+                        <%= data.COMMENT_CONTENT %>
+                        <%= data.COMMENT_CONTENT %>
+                      </div>
+                        <hr>
+                        <div class="cmtcontent">
+                        <textarea name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
+                        <button type="button" style="padding: 25px;" onclick="rep()">등록</button>
+                        </div>
+                    </div>
+                </div>
     </div>
     <div class="footer">
     </div>

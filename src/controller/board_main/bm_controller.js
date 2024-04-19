@@ -1,5 +1,5 @@
 const ser = require("../../service/board_main/bm_service")
-
+const common = require("../../service/board_main/ser_common")
 const fs = require("fs");
 
 const path = require("path");
@@ -60,7 +60,17 @@ const board_views = {
             start : data.start,
             totalPage : data.totalPage,
             logoDataURI
-    });
-}
+    })
+},
+    rep_views : async (req,res)=>{
+        const replyData = await ser.boardRead.replyData(req.params.groupNum);
+        res.json(replyData);
+    },
+    // rep_register : async(req,res)=>{
+    //     const data = await ser.boardInsert.register(req.body);
+    //     console.log("ddd:" ,data)
+    //     res.json(data)
+    // }
+
 }
 module.exports ={bm_input,board_views}
