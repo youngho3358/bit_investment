@@ -26,6 +26,9 @@ const check = {
         userInfo.pwd = bcrypt.hashSync(userInfo.pwd, 10);
         let result = await con.execute(`insert into member(email, name, age, phone, nickname, grade, login_type, id, password) values('${userInfo.email}', '${userInfo.name}', ${userInfo.age}, '${userInfo.phone}', '${userInfo.nickname}', ${userInfo.grade}, ${userInfo.loginType}, '${userInfo.id}', '${userInfo.pwd}')`);
         return result.rowsAffected;
+    },
+    test: async (code) => {
+        console.log("받아온 값 : ", code);
     }
 }
 module.exports = {check}
