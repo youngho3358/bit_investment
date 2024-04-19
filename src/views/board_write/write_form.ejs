@@ -82,7 +82,7 @@
             </div>
             <div class="top_menu">
                 <a href="" class="top_menu_link" style="margin-left: 20px;">거래소</a>
-                <a href="/board/list" class="top_menu_link" style="margin-left: 30px;">게시판</a>
+                <a href="/board" class="top_menu_link" style="margin-left: 30px;">게시판</a>
                 <a href="" class="top_menu_link" style="margin-left: 30px;">내 코인</a>
                 <a href="" class="top_menu_link" style="margin-left: 30px;">거래내역</a>
             </div>
@@ -105,10 +105,10 @@
 
                 <b style="font-size: 30px;">게시글 쓰기</b>
 
-                <input class="button btnFade"  type="submit" value="완료">
+                <input type="submit" class="button btnFade"  value="완료">
 
-                <input class="button btnFade" type=button value="목록보기" 
-                    onClick="location.href='/board/list'">
+                <input type="button" class="button btnFade" value="목록보기" 
+                    onClick="location.href='/board'">
                     
             </div>
       
@@ -135,7 +135,7 @@
                 
                 <div style="height: 5px;"></div>
                 
-                <input class="titlebox" type="text" 
+                <input type="text" class="titlebox" 
                 placeholder="제목을 입력해주세요" name="title" />
                 
                 <div style="height: 5px;"></div>
@@ -154,12 +154,15 @@
                 <div style="height: 30px;"> <b>이미지</b> </div> 
 
                 <div class="filebox">
-                    <label for="file">파일찾기</label> 
-                    <input type="file" id= "file"/>
-                    <input class="upload-name" value="첨부파일" placeholder="첨부파일">
-                    <img id="img" src="#" width=100 height=100 alt="선택된 이미지가 없습니다" />
+                <table>
+                    <td> <label for="file">파일찾기</label>  </td>
+                    <td> <input type="file" id= "file" name="img" onchange="readURL(this);"/> </td>
+                    <td> <img id="img" src="#" width=100 alt="선택된 이미지가 없습니다" /> </td>
+                </table>
+                  
                 </div>
-            <!-- 
+                <!-- 
+                <input class="upload-name" value="첨부파일" placeholder="첨부파일">
                     <input type="file" name="img" onchange="readURL(this);"/> <br>
                     
                     on multiple

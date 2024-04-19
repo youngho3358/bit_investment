@@ -11,11 +11,12 @@ member_id , name , nickname , phone
 const seMId = 9;
 const seNick = "일평";
 
+const logoPath = "../../../img/logo/banner_logo.png";
+const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
+const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
+
 const board_views = {
     writeForm : (req, res) => {
-        const logoPath = "../../../img/logo/banner_logo.png";
-        const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
-        const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
         /*
         const session = req.session;
@@ -28,6 +29,11 @@ const board_views = {
 
         res.render("board_write/write_form",
             {logoDataURI, seNick});
+    },
+    modify_form : async (req, res) => {
+        const data = await service.boardRead.modify_form(req.params.BId);
+        console.log("수정폼으로 보내는 data : ", data)
+        res.render("board_write/modify_form", {logoDataURI, data })
     }
 }
 const board_Insert = {
@@ -40,4 +46,42 @@ const board_Insert = {
     
 }
 
-module.exports = {seMId, seNick, board_views, board_Insert}
+const board_Update = {
+    modify : async (req,res) => {
+
+        //const deleteFile = req.body.img;
+      
+        const message = await service.boardUpdate.modify(req.body, req.file);
+        /*
+        if(req.file !== undefined && message.result === 1) {
+           this.file_process.delete(deleteFile);
+        }
+        */
+
+        console.log("컨트롤러 req.body.BOARD_ID? : ", req.body.BOARD_ID)
+        let data = req.body
+        console.log("컨트롤러에서 받은 req.body 변수 : ",data)
+        res.send(message.msg);
+    }        
+}
+
+const board_delete = {
+    delete : (req, res) => {
+        deleteImg(req.params.img);
+        service.boardDelete.delete(req.params.BId);
+        res.send(message.msg);
+
+
+    },
+    deleteImg : (img) => {
+        if(imgName !== 'non'){
+            try{
+            fs.unlinkSync(`./upload_file/${img}`)
+            }catch(err){
+                console.log(err)
+            }
+        }
+    }
+}
+
+module.exports = {seMId, seNick, board_views, board_Insert, board_Update, board_delete}

@@ -9,5 +9,13 @@ const upload = require("../../../config/file/file_config")
 router.post("/write" , upload.single("img")
     , bwCtrl.board_Insert.write);
 
+router.get("/modify_form/:BId", bwCtrl.board_views.modify_form);
+
+//router.post("/modify", upload.single("img"), bwCtrl.board_Update.modify)
+
+router.post("/data/:BId",upload.single("img"), bwCtrl.board_Update.modify)
+router.post("/delete/:BId/:Img", bwCtrl.board_delete.delete)
+
+
 
 module.exports = router;

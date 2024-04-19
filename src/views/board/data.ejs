@@ -261,8 +261,10 @@
                 </div>
             </div>
             <div class = "headbtn">
-                <input type ="button" id="modibtn" value ="수정" onclick="">
-                <input type ="button" id="delbtn" value ="삭제" onclick="">
+                <input type ="button" id="modibtn" value ="수정" 
+                    onclick="location.href='/board/modify_form/<%= data.BOARD_ID%>'">
+                <input type ="button" id="delbtn" value ="삭제" 
+                    onclick="location.href='/board/delete/<%= data.BOARD_ID%>/<%= data.IMAGE_LINK%>'">
             </div>
             <br>
             <br>
@@ -275,7 +277,7 @@
                 </div>
                 <div class="right-btn">
                     <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
-                    <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board_write/write_form'">
+                    <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board/write_form'">
                 </div>
             </div>
         </div>
