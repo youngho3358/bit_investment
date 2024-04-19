@@ -23,7 +23,7 @@ const boardRead ={
     list : async (start, end) =>{
         const con = await oracledb.getConnection(dbConfig);
         const list = await con.execute(`select * from (select rownum rn, A.* from (select * from BOARD order by BOARD_ID desc)A) where rn between ${start} and ${end}`);
-        console.log("list : ", list.rows);
+        //console.log("list : ", list.rows);
         return list.rows;
 },
     totalContent : async() =>{

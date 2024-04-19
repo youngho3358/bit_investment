@@ -1,5 +1,4 @@
 const dbConfig = require("../../../config/database/db_config");
-const { boardDelete } = require("../../service/board_write/bw_service");
 const con = require("../root_dao");
 
 const boardRead = {
@@ -46,7 +45,7 @@ const boardUpdate = {
 const board_Delete = {
     delete : async (BId) => {
         const sql = `delete from board where BOARD_ID = ${BId}`
-        const result = await (await con).execute(sql)
+        const result = await (await con).execute(sql);
         return result;
     }
 }

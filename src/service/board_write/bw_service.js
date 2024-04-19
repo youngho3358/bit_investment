@@ -31,10 +31,10 @@ const boardRead = {
         return data;
     }
 }
-
 const boardInsert = {
-    write : async (body, file, fileValidation ) => {
+    write : async (body, file, fileValidation) => {
         let msg, url;
+        let message = {};
         /*
         if (!session.member_id) {
             msg = "로그인이 필요합니다";
@@ -42,13 +42,13 @@ const boardInsert = {
             return getMessage(msg, url);
         }
         */
+       
 
         if( fileValidation ){
             msg = fileValidation;
             url = "/board/write_form";
             return getMessage(msg, url);
         }
-        console.log(fileValidation);
 
 
         if( file !== undefined ){
@@ -59,15 +59,38 @@ const boardInsert = {
             body.img  = "non";
         }
 
+        if(body.category == 5){
+           msg = '카테고리를 선택해주세요';
+           url = "/board/write_form"
+           message.msg = getMessage(msg, url);
+            return message;
+        }
+        if(body.title == ''){
+            msg = '제목을 입력해주세요';
+            url = "/board/write_form"
+            message.msg = getMessage(msg, url);
+             return message;
+        }
+        if(body.content == ''){
+            msg = '내용을 입력해주세요';
+            url = "/board/write_form"
+            message.msg = getMessage(msg, url);
+            return message;      
+        }
+
         const result = await dao.boardInsert.write( body );
+
+    
+        message.result = result.rowsAffected;
         if( result.rowsAffected === 1 ){
             msg = "등록되었습니다!!!";
             url = "/board";
         }else{
             msg = "문제 발생!!!";
-            url = "board_write/write_form";
+            url = "/board/write_form";
         }
-        return getMessage(msg, url);
+        message.msg = getMessage(msg, url);
+        return message;
     }
 }
 
@@ -81,10 +104,8 @@ const boardUpdate = {
        }else{
            body.img  = "non";
        }
-   
 
         const result = await dao.boardUpdate.modify(body);
-        
 
         let msg, url;
         let message = {};
@@ -103,11 +124,9 @@ const boardUpdate = {
 }
 const boardDelete = {
     delete : (BId) => {
-      
-        console.log("삭제할 글 보드아이디 : ", BId)
-        dao.board_Delete.delete(BId);
+        console.log("너는 아니? BId : ", BId)
+        const result = dao.board_Delete.delete(BId);
 
-        console.log("삭제 확인용 result : ", result)
         let msg, url;
         let message = {};
         message.result = result.rowsAffected;

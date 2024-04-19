@@ -38,12 +38,12 @@ const board_views = {
 }
 const board_Insert = {
     write : async (req, res) => {
-        const msg = await service.boardInsert.write(
+        console.log("req.body : ", req.body)
+        const message = await service.boardInsert.write(
             req.body, req.file, req.fileValidation
         );
-        res.send( msg );
-    }
-    
+            res.send( message.msg );
+    }   
 }
 
 const board_Update = {
@@ -57,24 +57,25 @@ const board_Update = {
            this.file_process.delete(deleteFile);
         }
         */
-        let data = req.body
         res.send(message.msg);
     }        
 }
 
 const board_delete = {
     delete : (req, res) => {
-        board_delete.deleteImg(req.params.img);
-        service.boardDelete.delete(req.params.BId);
+        board_delete.deleteImg(req.params.Img);
+        const message = service.boardDelete.delete(req.params.BId);
         res.send(message.msg);
-        res.redirect("/board")
+
 
 
     },
-    deleteImg : (img) => {
-        if(img !== 'non'){
+    deleteImg : (Img) => {
+        console.log("이미지 삭제 가동")
+        if(Img !== 'non'){
             try{
-            fs.unlinkSync(`./upload_file/${img}`)
+                console.log("이미지 이름 : ", Img)
+            fs.unlinkSync(`./upload_file/${Img}`)
             }catch(err){
                 console.log(err)
             }
