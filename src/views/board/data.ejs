@@ -343,12 +343,35 @@
                 <div class="subview">
                     <%= data.BOARD_CONTENT %>
                 </div>
-                <div class="right-btn">
-                    <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
-                    <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board/write_form'">
-                </div>
+                <br>
+                <bR>
             </div>
-        </div>
+            <div class="right-btn">
+                <ul class="rightmenu">
+                    <li>
+                        <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
+                    </li>
+                    <li>
+                        <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board/write_form'">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="replywrap">
+                <div class="replyhead">
+                    <h3>댓글</h3>
+                </div>
+                <hr>
+                <div class="reply">
+
+                      </div>
+                        <hr>
+                        <div class="cmtcontent">
+                        <textarea name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
+                        <button type="button" style="padding: 25px;" onclick="rep()">등록</button>
+                        </div>
+                    </div>
+                </div>
     </div>
     <div class="footer">
     </div>

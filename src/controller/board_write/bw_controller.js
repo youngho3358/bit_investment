@@ -32,7 +32,7 @@ const board_views = {
     },
     modify_form : async (req, res) => {
         const data = await service.boardRead.modify_form(req.params.BId);
-        console.log("수정폼으로 보내는 data : ", data)
+       
         res.render("board_write/modify_form", {logoDataURI, data })
     }
 }
@@ -57,10 +57,7 @@ const board_Update = {
            this.file_process.delete(deleteFile);
         }
         */
-
-        console.log("컨트롤러 req.body.BOARD_ID? : ", req.body.BOARD_ID)
         let data = req.body
-        console.log("컨트롤러에서 받은 req.body 변수 : ",data)
         res.send(message.msg);
     }        
 }

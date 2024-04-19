@@ -26,7 +26,7 @@ const timeModify = (list) => {
 const boardRead = {
     modify_form : async (BId) => {
         let data = await dao.boardRead.modify_form(BId);
-        console.log("service에서 받은 수정할 내용 data : ", data)
+
         //data = timeModify(data.rows);
         return data;
     }
@@ -50,7 +50,7 @@ const boardInsert = {
         }
         console.log(fileValidation);
 
-        console.log("글쓰기에서 넣은 이미지 file : ", file);
+
         if( file !== undefined ){
             //body.origin_file_name = file.originalname;
             body.img = file.filename;
@@ -58,7 +58,7 @@ const boardInsert = {
             //body.origin_file_name = "non";
             body.img  = "non";
         }
-        console.log("글쓰기 내용 가져온것 body : ", body);
+
         const result = await dao.boardInsert.write( body );
         if( result.rowsAffected === 1 ){
             msg = "등록되었습니다!!!";
@@ -76,19 +76,16 @@ const boardUpdate = {
        // if(file !== undefined) {
        //     body.img = file.filename;
        // }
-
-       console.log("수정에서 온 이미지 file : ", file);
        if( file !== undefined ){
            body.img = file.filename;
        }else{
            body.img  = "non";
        }
    
-        console.log("11수정된 내용 body : ", body);
+
         const result = await dao.boardUpdate.modify(body);
         
-        console.log("수정 확인용 result : ", result)
-        console.log("22수정된 내용 body : ", body);
+
         let msg, url;
         let message = {};
         message.result = result.rowsAffected;
