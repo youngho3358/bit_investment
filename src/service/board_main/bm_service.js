@@ -48,7 +48,7 @@ const boardRead ={
         data.list = list;
         return data;
     },
-    
+
     replyData : async (groupNum) =>{
         let replyData = await dao.boardRead.replyData(groupNum);
         replyData = common.timeModify(replyData.rows);

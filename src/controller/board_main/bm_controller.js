@@ -64,6 +64,7 @@ const board_views = {
 },
     rep_views : async (req,res)=>{
         const replyData = await ser.boardRead.replyData(req.params.groupNum);
+        console.log("replyData : " ,replyData)
         res.json(replyData);
     },
     // rep_register : async(req,res)=>{
