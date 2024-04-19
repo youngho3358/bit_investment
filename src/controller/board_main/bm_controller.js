@@ -44,9 +44,9 @@ const board_views = {
             
     });
 },
-    bm_news : async (req,res)=>{
+    news : async (req,res)=>{
         const data = await ser.boardRead.list(req.query.start);
-        res.render("board/bm_news", {
+        res.render("board/news", {
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
@@ -61,12 +61,8 @@ const board_views = {
             totalPage : data.totalPage,
             logoDataURI
     })
-},
-    rep_views : async (req,res)=>{
-        const replyData = await ser.boardRead.replyData(req.params.groupNum);
+}
 
-        res.json(replyData);
-    },
     // rep_register : async(req,res)=>{
     //     const data = await ser.boardInsert.register(req.body);
     //     console.log("ddd:" ,data)
@@ -74,4 +70,10 @@ const board_views = {
     // }
 
 }
-module.exports ={bm_input,board_views}
+rep_views = {
+replyData : async (req,res)=>{
+    const result = await ser.boardRead.replyData(req.params.groupNum);
+    res.json(result);
+}
+}
+module.exports ={bm_input,board_views,rep_views}

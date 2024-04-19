@@ -6,7 +6,7 @@ const boardRead = {
     modify_form : async(BId) => {
         const sql = `select * from board where board_id ='${BId}'`;
         const data = await ((await con).execute(sql));
-        console.log("dao에서 빼온 수정할 data : ", data.rows)
+
         return data.rows[0];
     }
 }
@@ -18,7 +18,7 @@ const boardInsert = {
 values(9, :title, :content, :img, :category)`;
 //!!-회원번호 세션에서 받는걸로 바꿔야함
         const result = await (await con).execute(sql, body);
-        console.log("result : ", result);
+
         return result;
     } 
 }
@@ -26,7 +26,7 @@ values(9, :title, :content, :img, :category)`;
 const boardUpdate = {
     modify : async ( body )=>{
         //const date = new Date();
-        console.log("dao는 body를 받았나? : ", body)
+
         const sql = `update board set 
             BOARD_TITLE = :title,
             BOARD_CONTENT = :content, 
@@ -39,16 +39,14 @@ const boardUpdate = {
         //BOARD_MODIFY_DATE = ${date}    console.log('Date.toString(): ' + date.toString());
         //console.log('Date.toUTCString(): ' + date.toUTCString());
 
-        const result = await (await con).execute(sql, body);
-        console.log("수정 업데이트 하고 난 뒤 result : ", result);
+        const result = await (await con).execute(sql, body)
         return result;
     }
 }
 const board_Delete = {
     delete : async (BId) => {
         const sql = `delete from board where BOARD_ID = ${BId}`
-        console.log("sql : ",sql);
-        const result = (await con).execute(sql)
+        const result = await (await con).execute(sql)
         return result;
     }
 }

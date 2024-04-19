@@ -3,7 +3,7 @@ const common = require("./ser_common");
 
 boardUpdate = {
     Hit : (num) =>{
-        dao.boardUpdate.Hit(num);
+        dao.boardRead.Hit(num);
     },
     // delete : (BOARD_ID) =>{
     //     dao.boardUpdate.delete(BOARD_ID);
@@ -32,6 +32,7 @@ boardUpdate = {
 const boardRead ={
     data : async (num)=>{
         boardUpdate.Hit(num);
+        console.log("hit : ",num)
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
         return data[0];
@@ -43,16 +44,17 @@ const boardRead ={
         let list = await dao.boardRead.list(page.startNum, page.endNum);
         //console.log(data)
         data = {};
-        data.totalpage = page.totpage;
+        data.totalpage = page.totPage;
         data.start = start;
         data.list = list;
         return data;
     },
 
     replyData : async (groupNum) =>{
-        let replyData = await dao.boardRead.replyData(groupNum);
-        replyData = common.timeModify(replyData.rows);
-        return replyData;
+        let repData = await dao.boardRead.replyData(groupNum);
+        repData = common.timeModify(repData.rows);
+        console.log("re : ", repData)
+        return repData;
     }
 }
 
@@ -66,8 +68,11 @@ const boardRead ={
         const num = (totalCounter % pageNum === 0)?0:1;
 
         page.totPage = parseInt(totalCounter/pageNum)+num;
+
         page.startNum = (start-1) * pageNum +1;
+
         page.endNum = start * pageNum;
+
         return page;   
 }
 

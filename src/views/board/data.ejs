@@ -253,20 +253,7 @@
         //             comment.insertAdjacentHTML("afterbegin", html);
         //         });
         // }
-        function init(groupNum){
-            fetch(`/board/replyData/`+groupNum)
-            .then(res=>res.json())
-            .then(data => {
-                let html ="";
-                data.forEach((d) =>{
-                    html +="<div align = 'center'>" +d.COMMENT_ID;
-                    html += d.COMMENT_CREATE_DATE + "<br>";
-                    html += d.COMMENT_CONTENT; "<hr></div>"
-                });
-                    const content = document.getElementById("reply")
-                    content.innerHTML = html;
-            })  
-        }
+
     </script>
     <header><%- include("header") %></header>
     <div class="container" style="border: 1px solid black;">
@@ -343,26 +330,54 @@
                 <div class="subview">
                     <%= data.BOARD_CONTENT %>
                 </div>
-                <div class="right-btn">
-                    <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
-                    <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board/write_form'">
-                </div>
+                <br>
+                <bR>
             </div>
+            <div class="right-btn">
+                <ul class="rightmenu">
+                    <li>
+                        <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
+                    </li>
+                    <li>
+                        <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board/write_form'">
+                    </li>
+                </ul>
+            </div>
+
             <div class="replywrap">
                 <div class="replyhead">
                     <h3>댓글</h3>
                 </div>
                 <hr>
                 <div class="reply">
+                    아니 외 않돼 는 데  애러 창도 않뜨고 뭐가 문재인지는 알려저야 할 겉 아냐;ㅜ
+                    <script>
 
-                      </div>
+                    function init(groupNum){
+                    fetch(`/board/replyData/`+groupNum)
+                    .then(res=>res.json())
+                    .then(data => {
+                        let html ="";
+                        data.forEach((d) =>{
+                            html +="<div align = 'center'>" +d.COMMENT_ID;
+                                html += d.COMMENT_CREATE_DATE + "<br>";
+                                html += d.COMMENT_CONTENT; "<hr></div>"
+                            });
+                            const content = document.querySelector(".reply")
+                            content.innerHTML = html;
+                            
+                        })  
+                    }
+                    init(groupNum);
+                    </script>
+                </div>
                         <hr>
                         <div class="cmtcontent">
                         <textarea name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
                         <button type="button" style="padding: 25px;" onclick="rep()">등록</button>
                         </div>
                     </div>
-        </div>
+                </div>
     </div>
     <div class="footer">
     </div>
