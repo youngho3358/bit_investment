@@ -6,6 +6,7 @@ const dao = require("../src/database/get_coin/get_coin_dao");
 const coin = [];
 const btc = {};
 const eth = {};
+const shib = {};
 
 const payload = {
     access_key: "Bx6sc5IRHtdszeVWxA16WhsfAVXp19DV6AzBWagK", 
@@ -23,7 +24,7 @@ const ws = new WebSocket("wss://api.upbit.com/websocket/v1", {
 
 ws.on("open", () => {
     console.log("connected!");
-    ws.send('[{"ticket":"test example"},{"type":"ticker", "codes":["KRW-BTC", "KRW-ETH"]}]');
+    ws.send('[{"ticket":"test example"},{"type":"ticker", "codes":["KRW-BTC", "KRW-ETH", "KRW-SHIB"]}]');
     
 });
 
@@ -55,22 +56,37 @@ ws.on("message", (data) => {
 
     if (parsedData.code == "KRW-BTC") {
         btc.name = "비트코인";
+        btc.eng_name = parsedData.code;
         btc.high_price = parsedData.high_price;
         btc.low_price = parsedData.low_price;
         btc.now_price = parsedData.trade_price;
         btc.change_rate = (parsedData.signed_change_rate * 100).toFixed(2);
+        btc.change_price = parsedData.signed_change_price;
         btc.trans_price = Math.round(parsedData.acc_trade_price_24h / 1000000);
         btc.trans_volume = parseFloat(parsedData.acc_trade_volume_24h.toFixed(3));
         btc.date = currentDateTime;
     }else if(parsedData.code == "KRW-ETH") {
         eth.name = "이더리움";
+        eth.eng_name = parsedData.code;
         eth.high_price = parsedData.high_price;
         eth.low_price = parsedData.low_price;
         eth.now_price = parsedData.trade_price;
         eth.change_rate = (parsedData.signed_change_rate * 100).toFixed(2);
+        eth.change_price = parsedData.signed_change_price;
         eth.trans_price = Math.round(parsedData.acc_trade_price_24h / 1000000);
         eth.trans_volume = parseFloat(parsedData.acc_trade_volume_24h.toFixed(3));
         eth.date = currentDateTime
+    }else if(parsedData.code == "KRW-SHIB") {
+        shib.name = "시바이누";
+        shib.eng_name = parsedData.code;
+        shib.high_price = parsedData.high_price;
+        shib.low_price = parsedData.low_price;
+        shib.now_price = parsedData.trade_price;
+        shib.change_rate = (parsedData.signed_change_rate * 100).toFixed(2);
+        shib.change_price = parsedData.signed_change_price;
+        shib.trans_price = Math.round(parsedData.acc_trade_price_24h / 1000000);
+        shib.trans_volume = parseFloat(parsedData.acc_trade_volume_24h.toFixed(3));
+        shib.date = currentDateTime
     }
 });
 
@@ -78,9 +94,14 @@ const insert = () => {
     const order = { btc: btc.trans_price, eth: eth.trans_price}; 
     const sortedEntries = Object.entries(order).sort((a, b) => b[1] - a[1]);
     const sortedOrder = Object.fromEntries(sortedEntries);
-    console.log(Object.keys(sortedOrder).length); 
-    console.log(Object.keys(sortedOrder)[0]); // string
+    //console.log(Object.keys(sortedOrder).length); 
+    //console.log(Object.keys(sortedOrder)[0]); // string
+    // for(let i = 0; i < Object.keys(sortedOrder).length; i++){
 
+    // }
+    coin.push(btc);
+    coin.push(eth);
+    coin.push(shib);
     dao.insert.btc(coin);
 }
 

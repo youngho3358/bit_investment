@@ -19,3 +19,7 @@ app.set("view engine", "ejs");
 app.listen(3000, () => {
   console.log("3000 서버 구동");
 });
+
+// app.listen(3000, "192.168.35.229",  () => {
+//   console.log("3000 서버 구동");
+// });

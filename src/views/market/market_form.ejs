@@ -10,7 +10,7 @@
           padding: 0px;
         }
         div {
-          display: block;
+          /* display: block; */
         }
         a {
           text-decoration: none;
@@ -184,7 +184,7 @@
         </div>
         <div class="container">
           <section class="coin_all" style="border: 1px solid black;">
-
+            asdf
           </section>
           <section class="coin_list" style="border: 1px solid black;"> 
             <div class="search" >
@@ -192,11 +192,17 @@
               <a style="cursor: pointer; margin-top: 7px;"><img src="<%= searchDataURI %>" height="35px" ></a>
             </div>
             <hr>
+            <div class="coin_list_name" style=" font-size: 11px; color: gray; height: 28px; display: flex;">
+              <div style="padding-top: 5px; width: 85px; text-align: right;">한글명</div>
+              <div style="padding-top: 5px; width: 125px; text-align: right;">현재가</div>
+              <div style="padding-top: 5px; width: 85px; text-align: right;">전일대비</div>
+              <div style="padding-top: 5px; width: 75px; text-align: right;">거래대금</div>
+            </div>
+           <hr>
             <div class="scroll_coin_list">
               
-              <div class="coin_stock" style="height: 60px; position: relative;">
-                <div class="coin_stock_graph" style="width: 30px; padding-top: 24px; padding-left: 18px;" >
-
+              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
+                <div class="coin_stock_graph" style="width: 30px; padding-top: 24px; padding-left: 15px;" >
                   <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
                     <span class="box" style="position: absolute; display: block; background-color: blue; width: 14px; height: 1px; bottom: 0px;" ></span>
                     <span class="line" style="position: absolute; display: block; background-color: blue; width: 1px; height: 10px; margin-left: 6.3px; bottom: 0px;" ></span>
@@ -206,9 +212,24 @@
                     <span class="line" style="position: absolute; display: block; background-color: blue; width: 1px; height: 10px; margin-left: 6.3px; top: 0px;" ></span>
                   </div>
                 </div>
-              </div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
 
+                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                  <label>비트코인</label><br>
+                  <label>BTC/KRW</label>
+                </div>
+                <div class="coin_stock_price" style="width: 100px; margin-top: 19px; font-size: 13px; text-align: right;">
+                  <label>96,000,000</label>
+                </div>
+                <div class="coin_stock_change_rate" style="width: 70px; margin-top: 10px; font-size: 13px; text-align: right;">
+                  <label>+1.23%</label><br>
+                  <label>123,456</label>
+                </div>
+                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
+                  <label>123,456</label><label style="color: gray;">백만</label>
+                </div>
+              </div>
+
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
               <div class="coin_stock" style="height: 60px;">asdf</div>
               <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
               <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
