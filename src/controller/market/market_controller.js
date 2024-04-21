@@ -11,7 +11,6 @@ const views = {
         const copyrightBase64 = fs.readFileSync(path.join(__dirname, copyrightPath), 'base64');
         const copyrightDataURI = `data:image/jpeg;base64,${copyrightBase64}`;
         
-        console.log("세션 : ", req.session.member);
         let member = req.session.member;
         
         res.render("./market/market_form", {member : member, logoDataURI : logoDataURI, copyrightDataURI : copyrightDataURI});
