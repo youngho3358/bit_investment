@@ -6,8 +6,8 @@
     <title>거래소</title>
     <style>
         * {
-          margin: 0;
-          padding: 0;
+          margin: 0px;
+          padding: 0px;
         }
         div {
           display: block;
@@ -34,7 +34,7 @@
           height: 1000px;
           margin: 20px auto 0px;
           padding-bottom: 60px;
-          border: 1px solid black;
+          /* border: 1px solid black; */
           /* background: white; */
           background-color: #f1f1f3;
         } 
@@ -90,18 +90,68 @@
           color: white
         }
         .coin_all {
-          width: 830px;
-          height: 900px;
+          width: 850px;
+          height: 1060px;
           float: left;
           background-color: white;
         }
         .coin_list {
-          width: 430px;
-          height: 900px;
+          width: 410px;
+          height: 1060px;
           float: right;
           background-color: white;
         }
+        .search {
+          display: flex;
+          height: 50px;
+        }
+        .input {
+          border: 2px solid white;
+          outline: none;
+        }
+        .input:focus {
+          border: 2px solid black;
+          border-radius: 5px;
+          
+        }
+        .scroll_coin_list{
+          overflow-y: auto;
+          height: 1007px;
+        }
     </style>
+    <script>
+      window.onload = function() {
+        var input = document.querySelector(".input")
+        input.addEventListener("click", function() {
+          this.setAttribute("placeholder", "")
+        })
+        input.addEventListener("blur", function() {
+        if (this.value === "") {
+          this.setAttribute("placeholder", "코인명/심볼검색");
+        }
+        });
+        setInterval(btc, 1000);
+      }
+      const options = {
+        method: "GET",
+        headers: { accept: "application/json" },
+      };
+      const btc = () => {
+        fetch(
+          "https://api.upbit.com/v1/ticker?markets=KRW-BTC",
+          options
+        )
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response[0].trade_price); //현재가
+          console.log(response[0].opening_price); //9시 기준 가격
+          console.log(response[0].high_price); //최고가
+          console.log(response[0].low_price); //최저가
+
+        })
+        .catch((err) => console.error(err));
+      }
+    </script>
 </head>
 <body>
     <div class="wrap">
@@ -136,8 +186,39 @@
           <section class="coin_all" style="border: 1px solid black;">
 
           </section>
-          <section class="coin_list" style="border: 1px solid black;">
+          <section class="coin_list" style="border: 1px solid black;"> 
+            <div class="search" >
+              <input class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
+              <a style="cursor: pointer; margin-top: 7px;"><img src="<%= searchDataURI %>" height="35px" ></a>
+            </div>
+            <hr>
+            <div class="scroll_coin_list">
+              
+              <div class="coin_stock" style="height: 60px; position: relative;">
+                <div class="coin_stock_graph" style="width: 30px; padding-top: 24px; padding-left: 18px;" >
 
+                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
+                    <span class="box" style="position: absolute; display: block; background-color: blue; width: 14px; height: 1px; bottom: 0px;" ></span>
+                    <span class="line" style="position: absolute; display: block; background-color: blue; width: 1px; height: 10px; margin-left: 6.3px; bottom: 0px;" ></span>
+                  </div>
+                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
+                    <span class="box" style="position: absolute; display: block; background-color: blue; width: 14px; height: 1px; top:0px" ></span>
+                    <span class="line" style="position: absolute; display: block; background-color: blue; width: 1px; height: 10px; margin-left: 6.3px; top: 0px;" ></span>
+                  </div>
+                </div>
+              </div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
+              <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
+              <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
+              <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
+              <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
+              <div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div><div>asdf</div>
+
+            </div>
           </section>
         </div>
         <div class="footer">
