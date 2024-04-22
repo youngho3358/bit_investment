@@ -118,6 +118,33 @@
           overflow-y: auto;
           height: 978px;
         }
+        .coin_logo_name{
+          height: 50px;
+          border: 1px solid black;
+        }
+        .coin_high_low_now_cost{
+          height: 150px;
+          border: 1px solid black;
+        }
+        .coin_graph{
+          height: 400px;
+          width: 850px;
+          border: 1px solid black;
+        }
+        .asking_price{
+          display: inline-block;
+          margin-top: 10px;
+          width: 50%;
+          height: 430px;
+          border: 1px solid black;
+        }
+        .trade_menu{
+          display: inline-block;
+          margin-top: 10px;
+          width: 50%;
+          height: 430px;
+          border: 1px solid black;
+        }
     </style>
     <script>
       window.onload = function() {
@@ -213,7 +240,13 @@
         </div>
         <div class="container">
           <section class="coin_all" style="border: 1px solid black;">
-            asdf
+            <div class="coin_logo_name">coin_logo_name</div>
+            <div class="coin_high_low_now_cost">coin_high_low_now_cost</div>
+            <div class="coin_graph">coin_graph</div>
+            <div class="test">
+              <div class="asking_price">호가창(asking price)</div>
+              <div class="trade_menu">매수/매도(trade_menu)</div>
+            </div>
           </section>
           <section class="coin_list" style="border: 1px solid black;"> 
             <div class="search" >
