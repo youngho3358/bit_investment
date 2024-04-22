@@ -25,6 +25,8 @@ const check = {
         const con = await oracledb.getConnection(dbConfig);
         userInfo.pwd = bcrypt.hashSync(userInfo.pwd, 10);
         let result = await con.execute(`insert into member(email, name, age, phone, nickname, grade, login_type, id, password) values('${userInfo.email}', '${userInfo.name}', ${userInfo.age}, '${userInfo.phone}', '${userInfo.nickname}', ${userInfo.grade}, ${userInfo.loginType}, '${userInfo.id}', '${userInfo.pwd}')`);
+        let result2 = await con.execute(`select member_id from member where email='${userEmail}'`);
+        let result3 = await con.execute(`insert into member_account(member_id) values(${result2.rows[0].MEMBER_ID})`);
         return result.rowsAffected;
     },
     test: async (code) => {

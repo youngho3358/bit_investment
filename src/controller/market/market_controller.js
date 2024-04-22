@@ -1,3 +1,4 @@
+const service = require("../../service/market/market_service")
 const fs = require("fs");
 const path = require("path");
 
@@ -18,6 +19,10 @@ const views = {
         let member = req.session.member;
         
         res.render("./market/market_form", {member : member, logoDataURI : logoDataURI, copyrightDataURI : copyrightDataURI, searchDataURI : searchDataURI});
+    },
+    market_coin_list : async (req, res) => {
+        let data = await service.views.coin_insert();
+        res.json(data);
     }
 }
 
