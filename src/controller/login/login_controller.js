@@ -44,8 +44,48 @@ const views = {
     userInfo : (req, res) => {
         if(req.session.member){
             let member = req.session.member;
-            console.log(req.session.member);
             res.render("./login/user_info", {member, whitelogo});
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
+    },
+    changeNickname : (req, res) => {
+        if(req.session.member){
+            let member = req.session.member;
+            res.render("./login/change_nickname", {member, whitelogo});
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
+    },
+    editInfoForm : (req, res) => {
+        if(req.session.member){
+            let member = req.session.member;
+            res.render("./login/edit_info_form", {member, whitelogo});
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
+    },
+    find : (req, res) => {
+        let type = req.query.type;
+        res.render("./login/find", {type, whitelogo});
+    },
+    changePwdForm : (req, res) => {
+        if(req.session.member){
+            let member = req.session.member;
+            res.render("./login/change_pwd_form", {member, whitelogo});
+            return;
         }else{
             res.send(`<script>
                         alert("로그인 정보가 없습니다.");
@@ -70,7 +110,8 @@ const process = {
                 nickname : result.NICKNAME,
                 grade : result.GRADE,
                 login_type : result.LOGIN_TYPE,
-                id : result.ID
+                id : result.ID,
+                money : result.MONEY
             }
             req.session.member = member;
             res.redirect("/");
@@ -100,7 +141,6 @@ const process = {
     },
     success_kakao_login : (req, res) => {
         // 카카오 로그인 성공 후 세션 발급하여 루트 위치로 이동
-        console.log(req.body);
         req.session.member = req.body;
         res.redirect("/")
     },
@@ -108,6 +148,103 @@ const process = {
         // 세션 삭제 후 루트 위치로 이동
         req.session.destroy();
         res.redirect("/");
+    },
+    deleteId : (req, res) => {
+        let nickname = req.session.member.nickname;
+        res.send(`<script>if(confirm("${nickname} 님 회원탈퇴를 진행하시겠습니까?")){
+            location.href = "/login/deleteMember"
+        }else{
+            location.href = "/login/userInfo"
+        };</script>`);
+    },
+    deleteMember : async (req, res) => {
+        let member_id = req.session.member.member_id;
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.deleteMember.deleteMember(member_id);
+        if(result === 1){
+            res.send(`
+                        <script>alert("회원 삭제가 완료되었습니다.");
+                            location.href = "/login/logout";
+                        </script>
+                    `)
+        }else{
+            res.send(`
+                        <script>alert("회원 삭제를 실패하였습니다.");
+                            location.href = "/login/userInfo";
+                        </script>
+                    `)
+        }
+
+    },
+    changeNickname : async (req, res) => {
+        // 전달받은 변경 닉네임과 기존 닉네임
+        let changeNickname = req.body.nickname;
+        let originNickname = req.body.originNickname;
+
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.register.changeNickname(changeNickname, originNickname);
+
+        if(result === 1){
+            req.session.member.nickname = changeNickname;
+            res.send(`
+                        <script>alert("닉네임 변경 성공");
+                            location.href = "/login/change_nickname";
+                        </script>
+                    `)
+        }else{
+            res.send(`
+                        <script>alert("닉네임 변경을 실패하였습니다.");
+                            location.href = "/";
+                        </script>
+                    `)
+        }
+    },
+    changePhone : async (req, res) => {
+        let changePhone = req.body.changePhone;
+        let memberId = req.session.member.member_id;
+
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.register.changePhone(changePhone, memberId);
+        if(result == 1){
+            req.session.member.phone = changePhone;
+        }
+        res.json(result);
+    },
+    changeEmail : async (req, res) => {
+        let changeEmail = req.body.changeEmail;
+        let memberId = req.session.member.member_id;
+
+        // 성공 시 1 반환, 실패 시 promise 반환
+        let result = await service.register.changeEmail(changeEmail, memberId);
+        if(result == 1){
+            req.session.member.email = changeEmail;
+            return;
+        }
+        res.json(result);
+    },
+    findId : async (req, res) => {
+        let email = req.body.email;
+        let result = await service.find.id(email);
+        res.json(result);
+    },
+    findPwd : async (req, res) => {
+        let id = req.body.id;
+        let email = req.body.email;
+        let result = await service.find.pwd(id, email);
+        res.json(result);
+    },
+    changePwd : async (req, res) => {
+        let changePassword = req.body.changePassword;
+        let member_id = req.session.member.member_id;
+        
+        let result = await service.register.changePassword(member_id, changePassword);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        if(result == 1){
+            req.session.destroy();
+            res.json(result);
+            return;
+        }
+        res.json(result);
     }
 }
 

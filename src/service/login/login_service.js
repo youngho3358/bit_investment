@@ -1,6 +1,15 @@
 const dao = require("../../database/login/login_dao");
 const bcrypt = require("bcrypt");
 
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+    for (let i = 0; i < length; i++) {
+        randomString += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return randomString;
+}
+
 const memberCheck = {
     loginCheck : async (body) => {
         // id가 일치하는 정보가 db에 있다면 data에 해당 행이 담김
@@ -48,7 +57,66 @@ const register = {
     kakaoRegister : async (email, nickname) => {
         let result = await dao.register.kakaoRegister(email, nickname);
         return result;
+    },
+    changeNickname : async (changeNickname, originNickname) => {
+        let result = await dao.register.changeNickname(changeNickname, originNickname);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    },
+    changePhone : async (changePhone, memberId) => {
+        let result = await dao.register.changePhone(changePhone, memberId);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    },
+    changeEmail : async (changeEmail, memberId) => {
+        let result = await dao.register.changeEmail(changeEmail, memberId);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    },
+    changePassword : async (member_id, changePwd) => {
+        let bcrypt_changePwd = bcrypt.hashSync(changePwd, 10);
+        let result = await dao.register.changePassword(member_id, bcrypt_changePwd);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
     }
 }
 
-module.exports = {memberCheck, duplicationCheck, register}
+const deleteMember = {
+    deleteMember : async (member_id) => {
+        let result = await dao.deleteMember.deleteMember(member_id);
+        // 성공 시 1 반환, 실패 시 promise 반환
+        return result;
+    }
+}
+
+const find = {
+    id : async (email) => {
+        let result = await dao.find.id(email);
+        if(result === undefined){
+            // 아이디 없으면 0 반환
+            return 0;
+        }else if(result.ID === null){
+            return 1;
+        }else{
+            return result.ID;
+        }
+    },
+    pwd : async (id, email) => {
+        let result = await dao.find.pwd(id, email);
+        if(result === undefined){
+            return 0;
+        }else{
+            let randomPwd = generateRandomString(10);
+            let bcryptPwd = bcrypt.hashSync(randomPwd, 10);
+
+            let result = await dao.register.changePwd(id, email, bcryptPwd);
+            if(result === 1){
+                return randomPwd;
+            }else{
+                return 1;
+            }
+        }
+    }
+}
+
+module.exports = {memberCheck, duplicationCheck, register, deleteMember, find}
