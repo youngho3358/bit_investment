@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <script>
+        window.onload = function() {
+            const birthYearEl = document.querySelector('#birth-year')
+            isYearOptionExisted = false;
+            birthYearEl.addEventListener('focus', function () {
+                if(!isYearOptionExisted) {
+                    isYearOptionExisted = true
+                    for(var i = 1940; i <= 2022; i++) {
+                        const YearOption = document.createElement('option')
+                        YearOption.setAttribute('value', i)
+                        YearOption.innerText = i
+                        this.appendChild(YearOption);
+                    }
+                }
+            });
+            const birthMonthEl = document.querySelector('#birth-month')
+            isMonthOptionExisted = false;
+            birthMonthEl.addEventListener('focus', function () {
+                if(!isMonthOptionExisted) {
+                    isMonthOptionExisted = true
+                    for(var i = 1; i <= 12; i++) {
+                        const MonthOption = document.createElement('option')
+                        MonthOption.setAttribute('value', i)
+                        MonthOption.innerText = i
+                        this.appendChild(MonthOption);
+                    }   
+                }
+            });
+            const birthDayEl = document.querySelector('#birth-day')
+            isDayOptionExisted = false;
+            birthDayEl.addEventListener('focus', function () {
+                if(!isDayOptionExisted) {
+                    isDayOptionExisted = true
+                    for(var i = 1; i <= 31; i++) {
+                        const DayOption = document.createElement('option')
+                        DayOption.setAttribute('value', i)
+                        DayOption.innerText = i
+                        this.appendChild(DayOption);
+                    }   
+                }
+            });
+            const domainListEl = document.querySelector('#domain-list')
+            const domainInputEl = document.querySelector('#domain-txt')
+            domainListEl.addEventListener('change', (event) => {
+                if(event.target.value !== "type") {
+                    domainInputEl.value = event.target.value
+                    domainInputEl.disabled = true
+                } else { 
+                    domainInputEl.value = ""
+                    domainInputEl.disabled = false
+                }
+            });
+        }
+        const user_pwd_chk = () => {
+            const pwdChkMsg = document.querySelector("#pwdChkMsg");
+                
+            const userPwd = document.querySelector("#userPwd").value;
+            const userPwdChk = document.querySelector("#userPwdChk").value;
+            if (userPwd == userPwdChk) {
+                pwdChkMsg.textContent = "비밀번호가 일치합니다.";
+                pwdChkMsg.style.color = "blue";
+            }else{
+                pwdChkMsg.textContent = "비밀번호가 일치하지 않습니다.";
+                pwdChkMsg.style.color = "red";
+            }
+                        
+            //document.getElementById("userPwdChk").addEventListener("blur", userPwdChk());
+        }
+        const user_id_chk = () => {
+            let userId = document.querySelector("#userId").value;
+            if (userId == "") {
+                alert("아이디를 입력해주세요.");
+            }else{
+                let data = {userId : userId};
+                fetch("/register/idCheck",{
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result == 1) {  
+                        let idChkMsg = document.querySelector("#idChkMsg");
+                        idChkMsg.textContent = "사용 가능한 아이디입니다."
+                        idChkMsg.style.color = "blue";
+                    }else{
+                        let idChkMsg = document.querySelector("#idChkMsg");
+                        idChkMsg.textContent = "중복된 아이디입니다."
+                        idChkMsg.style.color = "red";
+                    }
+                })
+            }
+        }
+        const user_nickname_chk = () => {
+            let userNickname = document.querySelector("#userNickname").value;
+            if (userNickname == "") {
+                alert("닉네임을 입력해주세요");
+            }else{
+                let data = {userNickname : userNickname};
+                fetch("/register/nicknameCheck", {
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result == 1) {
+                        let nickChkMsg = document.querySelector("#nicknameChkMsg")
+                        nickChkMsg.textContent = "사용 가능한 닉네임입니다.";
+                        nickChkMsg.style.color = "blue";
+                    }else{
+                        let nickChkMsg = document.querySelector("#nicknameChkMsg")
+                        nickChkMsg.textContent = "중복된 닉네임입니다.";
+                        nickChkMsg.style.color = "red";
+                    }
+                })
+            }
+        }
+        const user_email_chk = () => {
+            let user_Email = document.querySelector("#userEmail").value;
+            let domain_Txt = document.querySelector("#domain-txt").value;
+            let userEmail = user_Email.concat("@",domain_Txt);
+            if ((user_Email == "") || (domain_Txt == "")) {
+                alert("이메일을 입력해주세요");
+            }else{
+                let data = {userEmail : userEmail};
+                fetch("/register/emailCheck", {
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result == 1) {
+                        let nickChkMsg = document.querySelector("#emailChkMsg")
+                        nickChkMsg.textContent = "사용 가능한 이메일입니다.";
+                        nickChkMsg.style.color = "blue";
+                    }else{
+                        let nickChkMsg = document.querySelector("#emailChkMsg")
+                        nickChkMsg.textContent = "중복된 이메일입니다.";
+                        nickChkMsg.style.color = "red";
+                    }
+                })
+            }
+        }
+        function validateNumber(event) {
+            const input = event.target;
+            const inputValue = input.value;
+            // 입력된 값이 숫자가 아닌 경우
+            if(isNaN(inputValue)) {
+                // 숫자가 아닌 입력 제거
+                input.value = inputValue.slice(0, -1);
+            }
+        }
+    </script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            min-width: 1340px;
+        }
+        .register_box{
+            width: 450px;
+            height: 970px;
+            border: 1px solid black;
+            margin: auto;
+            text-align: center;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .register_text {
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            /* background-color: #14aa1e; */
+            background-color: #14776a;
+            border-bottom: 1px solid black;
+            color: white;
+            font-size: 20px;
+        }
+        .register_input_box{
+            margin-top: 25px;
+            height: 100px;
+        }
+        .logo_box {
+            margin-top: 130px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .user_id {
+            padding-right: 300px;
+        }
+        .user_pwd {
+            padding-right: 290px;
+        }
+        .user_pwd_chk {
+            padding-right: 240px;
+        }
+        .user_name {
+            padding-right: 325px;
+        }
+        .user_gender {
+            padding-right: 325px;
+        }
+        .user_phone {
+            padding-right: 290px;
+        }
+        .user_age {
+            padding-right: 290px;
+        }
+        .user_email {
+            padding-right: 310px;
+        }
+        .user_nickname {
+            padding-right: 305px;
+        }
+
+        .info#info__birth select::-webkit-scrollbar {
+            width: 10px;
+        }
+        .info#info__birth select::-webkit-scrollbar-thumb {
+            background-color: #b6b6b6;
+            border-radius: 3px;
+        }
+        .info#info__birth select::-webkit-scrollbar-track {
+            background-color: #ebe9e9;
+            border-radius: 6px;
+        }
+        #pwdChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        #idChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        #nicknameChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        #emailChkMsg {
+            position: absolute;
+            margin-left: 50px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="logo_box">
+            <a href="/">
+                <img    
+                    src="<%=logoDataURI%>"
+                    alt="logo"
+                    style="height: 100px;">
+            </a>
+        </div>
+        <div class="register_box">
+            <form action="/register/registerCheck" method="post">
+                <div class="register_text"><b>회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입</b></div>
+                <div class="register_input_box">
+                    <span><b class="user_id">아이디</b></span><br>
+                    <input name="userId" id="userId" type="text" placeholder="아이디" minlength="5" maxlength="20" style="width: 280px; height: 40px;">
+                    <input onclick="user_id_chk()" name="userIdCheck" type="button" value="중복 확인"  style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
+                    <div id="idChkMsg"></div>   
+                    <br><br>
+                    <span><b class="user_pwd">비밀번호</b></span><br>
+                    <input name="userPwd" id="userPwd" type="password" placeholder="비밀번호" style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_pwd_chk">비밀번호 재확인</b></span><br>
+                    <input onblur="user_pwd_chk()" name="userPwdChk" id="userPwdChk" type="password" style="width: 350px; height: 40px;" >
+                    <div id="pwdChkMsg"></div>
+                    <br><br>
+                    <span><b class="user_name">이름</b></span><br>
+                    <input name="userName" type="text" placeholder="이름"  style="width: 350px; height: 40px;">
+                    <br><br>
+                    <span><b class="user_phone">휴대전화</b></span><br>
+                    <input name="userPhone_1" type="text" oninput="validateNumber(event)" maxlength="3" style="width: 101px; height: 35px;">
+                    -
+                    <input name="userPhone_2" type="text" oninput="validateNumber(event)" maxlength="4" style="width: 101px; height: 35px;">
+                    -
+                    <input name="userPhone_3" type="text" oninput="validateNumber(event)" maxlength="4" style="width: 101px; height: 35px;">
+                    <br><br>
+                    <span><b class="user_age">생년월일</b></span><br>
+                    <div class="info" id="info__birth">
+                        <select class="box" name="userAge" id="birth-year" style="width: 114px; height: 40px;">
+                          <option disabled selected>출생 연도</option>
+                        </select>
+                        <select class="box" name="userAgeMonth" id="birth-month" style="width: 114px; height: 40px;">
+                          <option disabled selected>월</option>
+                        </select>
+                        <select class="box" name="userAgeDay" id="birth-day" style="width: 114px; height: 40px;">
+                          <option disabled selected>일</option>
+                        </select>
+                    </div>
+                    <br><br>
+                    <span><b class="user_gender">성별</b></span><br>
+                    <select name="userGender" style="width: 355px; height: 45px;">
+                        <option value="">성별 선택</option>
+                        <option value="남">남자</option>
+                        <option value="여">여자</option>
+                    </select>
+                    <br><br>
+                    <span><b class="user_email">이메일</b></span><br>
+                    <input id="userEmail" name="userEmail_id" style="width: 90px; height: 35px;">
+                    @
+                    <input class="box" id="domain-txt" name="userEmail_domain_write" type="text" style="width: 75px; height: 35px;"/>
+                    <select class="box" id="domain-list" name="userEmail_domain_auto" style="width: 80px; height: 40px;">
+                        <option value="type">직접 입력</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="google.com">google.com</option>
+                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="nate.com">nate.com</option>
+                        <option value="daum.net">daum.net</option>
+                    </select>
+                    <input onclick="user_email_chk()" name="userEmailCheck" type="button" value="중복 확인" width="100px" height="50px" style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
+                    <div id="emailChkMsg"></div>
+                    <br><br>
+                    <span><b class="user_nickname">닉네임</b></span><br>
+                    <input name="userNickname" id="userNickname" type="text" placeholder="닉네임"  style="width: 280px; height: 40px;">
+                    <input onclick="user_nickname_chk()" name="userNicknameCheck" type="button" value="중복 확인" style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
+                    <div id="nicknameChkMsg"></div>
+                    <br>
+                    <br>
+                    <br>
+                    <input type="submit" value="가입 하기" style="width: 350px; height: 40px; background-color: #14776a; color: white;">
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
