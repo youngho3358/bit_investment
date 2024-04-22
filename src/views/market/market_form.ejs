@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>거래소</title>
+    <style>
+        * {
+          margin: 0px;
+          padding: 0px;
+        }
+        div {
+          /* display: block; */
+        }
+        a {
+          text-decoration: none;
+        }
+        .wrap {
+          min-width: 1340px;
+          background: #f1f1f3;
+          padding-bottom: 20px;
+        }
+        .header {
+          width: 1280px;
+          height: 100px;
+          margin: 0px auto 0px;
+          /* background-color: #14aa1e; */
+          /* background-color: #14776a; */
+          /* border-radius: 20px; */
+        }
+        .container {
+          position: relative;
+          width: 1280px;
+          height: 1000px;
+          margin: 20px auto 0px;
+          padding-bottom: 60px;
+          /* border: 1px solid black; */
+          /* background: white; */
+          background-color: #f1f1f3;
+        } 
+        .footer {
+          width: 1280px;
+          height: 100px;
+          margin: 20px auto 0px;
+          border: 1px solid black;
+          background: white;
+          display: flex;
+        }
+        .top_login_register_box {
+          display: inline-block;
+          height: 20px;
+          margin-top: 40px;
+          margin-left: 910px;
+          font-size: 17px;
+          font-weight: bolder;
+          text-align: right;
+        }
+        .top_login_button {
+          font-size: 20px;
+          margin-right: 40px;
+          color: white;
+        }
+        .top_register_button {
+          font-size: 20px;
+          margin-right: 40px;
+          color: white;
+        }
+        .top_logo {
+          position: absolute;
+          width: 150px;
+          height: 70px;
+          margin-left: 30px;
+          margin-top: 15px;
+          border: none;
+          text-align: center;
+        }
+        .top_menu {
+          position: absolute;
+          width: 700px;
+          height: 70px;
+          margin-left: 210px;
+          margin-top: 15px;
+        }
+        .top_menu_link {
+          display: inline-block;
+          height: 26px;
+          margin-top: 22px;
+          font-size: 26px;
+          font-weight: bold;
+          color: white
+        }
+        .coin_all {
+          width: 850px;
+          height: 1060px;
+          float: left;
+          background-color: white;
+        }
+        .coin_list {
+          width: 410px;
+          height: 1060px;
+          float: right;
+          background-color: white;
+        }
+        .search {
+          display: flex;
+          height: 50px;
+        }
+        .input {
+          border: 2px solid white;
+          outline: none;
+        }
+        .input:focus {
+          border: 2px solid black;
+          border-radius: 5px;
+          
+        }
+        .scroll_coin_list{
+          overflow-y: auto;
+          height: 978px;
+        }
+    </style>
+    <script>
+      window.onload = function() {
+        var input = document.querySelector(".input")
+        input.addEventListener("click", function() {
+          this.setAttribute("placeholder", "")
+        })
+        input.addEventListener("blur", function() {
+        if (this.value === "") {
+          this.setAttribute("placeholder", "코인명/심볼검색");
+        }
+        });
+
+        fetch("/market/coin_list", {
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify()
+                })
+        .then(res => res.json())
+        .then(data => {
+
+          // console.log(Number(data[0].CHANGE_RATE));
+          // console.log(Math.abs(Number(data[0].CHANGE_RATE)));
+          for(let i = 0; i <= data.length; i++) {
+            if (Number(data[0].CHANGE_RATE) > 0) { 
+              document.querySelector("#up_box").style.height=String(Math.abs(Number(data[0].CHANGE_RATE))/3.3).concat("px");
+              document.querySelector("#down_box").style.height="0px";
+              console.log(String(data[0].HIGH_PRICE));
+              console.log(String(data[0].LOW_PRICE));
+              document.querySelector("#up_line").style.height;
+              document.querySelector("#down_line").style.height;
+
+              document.querySelector("#up_box").style.background="red";
+              document.querySelector("#up_line").style.background="red";
+              document.querySelector("#down_box").style.background="red";
+              document.querySelector("#down_line").style.background="red";
+              document.querySelector(".coin_stock_price").style.color="red";
+              document.querySelector(".coin_stock_change_rate").style.color="red";
+            }else if(Number(data[0].CHANGE_RATE) == 0){
+              document.querySelector("#up_box").style.background="gray";
+              document.querySelector("#up_line").style.background="gray";
+              document.querySelector("#down_box").style.background="gray";
+              document.querySelector("#down_line").style.background="gray";
+              document.querySelector(".coin_stock_price").style.color="gray";
+              document.querySelector(".coin_stock_change_rate").style.color="gray";
+            }else if(Number(data[0].CHANGE_RATE) < 0){
+              document.querySelector("#up_box").style.background="blue";
+              document.querySelector("#up_line").style.background="blue";
+              document.querySelector("#down_box").style.background="blue";
+              document.querySelector("#down_line").style.background="blue";
+              document.querySelector(".coin_stock_price").style.color="blue";
+              document.querySelector(".coin_stock_change_rate").style.color="blue";
+            }
+            document.querySelector("#coin_stock_kor_name").textContent = data[0].COIN_NAME;
+            document.querySelector("#coin_stock_eng_name").textContent = data[0].COIN_ENG_NAME;
+            document.querySelector("#coin_stock_price").textContent = data[0].NOW_PRICE;
+            document.querySelector("#coin_stock_change_rate").textContent = data[0].CHANGE_RATE;
+            document.querySelector("#coin_stock_change_price").textContent = data[0].CHANGE_PRICE;
+            document.querySelector("#coin_stock_trans_price").textContent = data[0].TRANS_PRICE;
+          }
+        });
+      }
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div style="background-color: #14776a;">
+            <div class="header">
+                <div class="top_logo">
+                    <a href="/">
+                        <img src="<%=logoDataURI%>" 
+                            alt="logo"
+                            height="70px"
+                            >
+                    </a>
+                </div>
+                <div class="top_menu">
+                    <a href="/market" class="top_menu_link" style="margin-left: 20px;">거래소</a>
+                    <a href="" class="top_menu_link" style="margin-left: 30px;">게시판</a>
+                    <a href="" class="top_menu_link" style="margin-left: 30px;">내 코인</a>
+                    <a href="" class="top_menu_link" style="margin-left: 30px;">거래내역</a>
+                </div>
+                <div class="top_login_register_box">
+                    <% if(member) { %>
+                        <a href="/login/userInfo" class="top_login_button">MY</a>
+                        <a href="/login/logout" class="top_register_button">로그아웃</a>
+                    <%} else { %>
+                        <a href="/login" class="top_login_button">로그인</a>
+                        <a href="/register" class="top_register_button">회원가입</a>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+          <section class="coin_all" style="border: 1px solid black;">
+            asdf
+          </section>
+          <section class="coin_list" style="border: 1px solid black;"> 
+            <div class="search" >
+              <input class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
+              <a style="cursor: pointer; margin-top: 7px;"><img src="<%= searchDataURI %>" height="35px" ></a>
+            </div>
+            <hr>
+            <div class="coin_list_name" style=" font-size: 11px; color: gray; height: 28px; display: flex;">
+              <div style="padding-top: 5px; width: 90px; text-align: right;">한글명</div>
+              <div style="padding-top: 5px; width: 125px; text-align: right;">현재가</div>
+              <div style="padding-top: 5px; width: 85px; text-align: right;">전일대비</div>
+              <div style="padding-top: 5px; width: 75px; text-align: right;">거래대금</div>
+            </div>
+           <hr>
+            <div class="scroll_coin_list">
+              
+              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
+
+                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
+                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
+                    <span id="up_box" class="box" style="position: absolute; display: block; width: 14px; height: 1px; bottom: 0px;" ></span>
+                    <span id="up_line" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 6.3px; bottom: 0px;" ></span>
+                  </div>
+                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
+                    <span id="down_box" class="box" style="position: absolute; display: block; width: 14px; height: 1px; top:0px" ></span>
+                    <span id="down_line" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 6.3px; top: 0px;" ></span>
+                  </div>
+                </div>
+
+                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                  <label id="coin_stock_kor_name" style="font-weight: 600;"></label><br>
+                  <label id="coin_stock_eng_name"></label>
+                </div>
+                <div class="coin_stock_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
+                  <label id="coin_stock_price" style="font-weight: 600;"></label>
+                </div>
+                <div class="coin_stock_change_rate" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
+                  <label id="coin_stock_change_rate" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
+                  <label id="coin_stock_change_price" style="font-weight: 600;"></label>
+                </div>
+                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
+                  <label id="coin_stock_trans_price" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
+                </div>
+              </div>
+
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+              <div class="coin_stock" style="height: 60px;">asdf</div>
+              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+
+            </div>
+          </section>
+        </div>
+        <div class="footer">
+            <div id="copyright_logo" style="margin-top: 15px;">
+              <img src="<%=copyrightDataURI%>" alt="logo" height="70px">
+            </div>
+            <div style="margin-top: 7px; margin-left: 10px;">
+              고객센터 010-3858-5430 <label style="color: gray;">(평일 09:00~18:00/주말 및 공휴일 휴무) | </label>금융사고 전담 콜센터 1800-1111 <label style="color: gray;">(24시간 연중무휴)</label>
+              <br>서울특별시 종로구 돈화문로 26, 4층
+              <br><br><label style="color: gray;">Copyright 2024 coin_investment. All rights reserved.</label>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
