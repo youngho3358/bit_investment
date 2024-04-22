@@ -8,7 +8,8 @@
         nickname_check = () => {
             let userNickname = document.querySelector("#userNickname").value;
             if(userNickname === ""){
-                alert("닉네임을 입력해주세요.")
+                alert("닉네임을 입력해주세요.");
+                return;
             }else{
                 let data = {nickname : userNickname};
 
@@ -19,7 +20,6 @@
                 })
                 .then(res => res.json())
                 .then(result => {
-                    console.log("result : ", result);
                     if(result == 1){
                         let isableNickname = document.querySelector("#isableNickname");
                         isableNickname.style.color = "red";
@@ -33,9 +33,13 @@
             }
         }
         final_check = () => {
+            let nickname_check = document.querySelector("#isableNickname").textContent;
             let userNickname = document.querySelector("#userNickname").value;
             if(userNickname === ""){
                 alert("닉네임을 입력해주세요.")
+            }else if(nickname_check !== "사용 가능한 아이디입니다."){
+                alert("닉네임 중복체크를 진행해주세요");
+                return;
             }else{
                 let data = {nickname : userNickname};
 
@@ -46,7 +50,6 @@
                 })
                 .then(res => res.json())
                 .then(result => {
-                    console.log("result : ", result);
                     if(result == 1){
                         alert("닉네임 중복체크를 진행해주세요.")
                     }else{
@@ -69,7 +72,6 @@
                 })
                 .then(res => res.json())
                 .then(result => {
-                    console.log("result : ", result);
                     if(result){
                         alert("카카오톡 연동 계정 생성이 완료되었습니다.");
                         window.location.href = 'http://localhost:3000/login';
@@ -184,7 +186,7 @@
                     <input name="userNickname" id="userNickname" type="text" placeholder="닉네임"  style="width: 350px; height: 40px;">
                     <br>
                     <div class="isableNickname" id="isableNickname"></div>
-                    <input type="button" value="닉네임 중복체크" class="nickname_check" onclick="nickname_check()">
+                    <input type="button" value="닉네임 중복체크" class="nickname_check" id="nickname_check" onclick="nickname_check()">
                     <br>
                     <input class="regitster_button" type="submit" onclick="final_check()" value="가입 하기">
                     <br>

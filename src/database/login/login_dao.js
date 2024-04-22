@@ -28,6 +28,10 @@ const register = {
     kakaoRegister : async (email, nickname) => {
         const con = await oracledb.getConnection(dbConfig);
         let result = await con.execute(`insert into member(email, nickname, grade, login_type) values ('${email}', '${nickname}', 1, 1)`);
+        let member = await con.execute(`select * from member where email='${email}'`);
+        let member_id = member.rows[0].MEMBER_ID;
+        // member_account 생성
+        let member_account = await con.execute(`insert into member_account(member_id) values ('${member_id}')`);
         return result;
     },
     changeNickname : async (changeNickname, originNickname) => {
