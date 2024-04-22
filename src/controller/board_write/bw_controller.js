@@ -43,7 +43,12 @@ const board_Insert = {
             req.body, req.file, req.fileValidation
         );
             res.send( message.msg );
-    }   
+    } ,
+    cmtRegister : async (req,res) => {
+        console.log("req. body : ", req.body)
+        const result = await ser.boardInsert.cmtRegister(req.body);
+        res.json(result)
+}
 }
 
 const board_Update = {
@@ -58,8 +63,10 @@ const board_Update = {
         }
         */
         res.send(message.msg);
-    }        
-}
+    }
+
+    }       
+
 
 const board_delete = {
     delete : (req, res) => {

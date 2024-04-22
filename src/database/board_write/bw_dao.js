@@ -19,7 +19,16 @@ values(9, :title, :content, :img, :category)`;
         const result = await (await con).execute(sql, body);
 
         return result;
-    } 
+    },
+    cmtRegister : async (body) => {
+        console.log("body : ", body)
+        const sql = 
+            `insert into reply(BOARD_ID, MEMBER_ID, NICKNAME, COMMENT_CONTENT)
+            values(:comment)
+            `;
+        const result = (await con).execute( sql , body );
+        return result;
+    }
 }
 
 const boardUpdate = {

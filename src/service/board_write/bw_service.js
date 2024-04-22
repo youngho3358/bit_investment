@@ -91,6 +91,10 @@ const boardInsert = {
         }
         message.msg = getMessage(msg, url);
         return message;
+    },
+    cmtRegister : async (body) => {
+        const result = await dao.boardInsert.cmtRegister(body);
+        return result.rowsAffected;
     }
 }
 
