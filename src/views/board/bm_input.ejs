@@ -5,24 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>coin_investment</title>
     <style>
-        .left-info{
-            width : 240px;
-            padding : 18px 0px 12px;
+        .left-info {
+            width: 240px;
+            padding: 18px 0px 12px;
             display: inline-block;
             border: 1px solid black;
-            float : left;
-        }
+            float: left;
+            text-align: center; 
+        }   
         .login-btn{
+            margin : 15px;
             display: block;
-            margin : 0;
             width : 200px;
-            height : 31px;
-            line-height: 30px;
+            height : 33px;
             text-align : center;
             color : #fff;
             border : 0;
-            background-color: black;
-            background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
+            background-color:  #14776a;
         }
         .register{
             padding : 0 15px;
@@ -42,12 +41,11 @@
         .left-menu{
             font-size : 30px;
             text-align: center;
-            display: block;
             color : black;
         }
         .all{
             text-align: center;
-            font-size : 40px;
+            font-size : 30px;
             padding : 20px 0 15px;
         }
         #ul>li{
@@ -58,6 +56,27 @@
         .content{
             width : 900px;
             float : left;
+            border : 1;
+        }
+        .list{
+            list-style : none;
+            padding : 3px;
+        }
+        .newslist{
+            float : none;
+        }
+        .rows{
+            display: block;
+            cursor : pointer;
+            padding : 3px 5px;
+        }
+        .title{
+            font-weight : bold;
+            border-bottom : 1px solid black;
+
+        }
+        .content-wrap{
+
         }
     </style>
 </head>
@@ -71,7 +90,13 @@
                 <div class="log-out">   
                 <p>"로그인을 해주세요"</p>
                 <br>
-                    <a href ="/login" class="login-btn">로그인</a>  
+                    <a href ="/login" class="login-btn">
+                        <img src="<%=logoDataURI%>" 
+                        alt="logo"
+                        height="30px"
+                        width = "130px"
+                        >
+                        로그인</a>  
                     </div>
                 <div class="register">
                     <a href = "/register">회원가입</a>&nbsp;&nbsp;&nbsp;
@@ -108,10 +133,57 @@
                 </div>
             </div>
             </div>
-            <div class = "content">
-            <div class = "dummylist">
-                <a href = "/board/news">코인 게시판</a>
-                
+            <div class="content">
+                <section class="content-wrap">
+                    <article class="list-left">
+                        <div class="title">
+                            <h3 style="font-size: 23px">
+                                <a href="/board/news">뉴스 게시판</a>
+                            </h3>
+                        </div>
+                        <div class="newslist">
+                            <ul class="list">
+                                <% if (list.length === 0) { %>
+                                    <li class="rows"></li>
+                                <% } else { %>                                  
+                                    <% list.forEach(data => { %>
+                                        <li class="rows">
+                                            <a href="/board/data/<%= data.BOARD_ID %>">
+                                                <%= data.BOARD_TITLE %>
+                                            </a>
+                                            <hr>
+                                        </li>
+                                    <% }) %>
+                                <% } %> 
+
+                            </ul>
+                        </div> 
+                    </article>
+                    <article class="list-right">
+                        <div class="title">
+                            <h3 style="font-size: 23px">
+                                <a href="/board/notice">공지사항 게시판</a>
+                            </h3>
+                        </div>
+                        <div class="newslist">
+                            <ul class="list">
+                                <% if (list.length === 0) { %>
+                                    <li class="rows">공지사항이 없습니다.</li>
+                                <% } else { %>                                  
+                                    <% list.forEach(data => { %>
+                                        <li class="rows">
+                                            <a href="/board/bm_notice/<%= data.BOARD_ID %>">
+                                                <%= data.BOARD_TITLE %>
+                                            </a>
+                                            <hr>
+                                        </li>
+                                    <% }) %>
+                                <% } %> 
+                            </ul>
+                        </div> 
+                    </article>
+                </section>
+            </div>
             </div>
             </div>
             </div>

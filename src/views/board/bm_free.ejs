@@ -5,24 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>coin_investment</title>
     <style>
-        .left-info{
-            width : 240px;
-            padding : 18px 0px 12px;
+        .left-info {
+            width: 240px;
+            padding: 18px 0px 12px;
             display: inline-block;
             border: 1px solid black;
-            float : left;
-        }
+            float: left;
+            text-align: center;
+        }   
         .login-btn{
+            margin : 15px;
             display: block;
-            margin : 0;
             width : 200px;
-            height : 31px;
-            line-height: 30px;
+            height : 33px;
             text-align : center;
             color : #fff;
             border : 0;
-            background-color: black;
-            background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
+            background-color:  #14776a;
         }
         .register{
             padding : 0 15px;
@@ -42,7 +41,6 @@
         .left-menu{
             font-size : 30px;
             text-align: center;
-            display: block;
             color : black;
         }
         .all{
@@ -59,21 +57,48 @@
             width : 900px;
             float : left;
         }
+        .list{
+            list-style : none;
+            padding : 10px;
+            margin : 10px;
+
+        }
+        .newslist{
+            float : none;
+        }
+        .rows{
+            display: block;
+            cursor : pointer;
+            padding : 3px 5px;
+        }
+        .title{
+            font-weight : bold;
+            text-indent : 15px;
+        }
+        .content-wrap{
+            width : 500px;
+        }
     </style>
 </head>
 <body>
         <header><%- include("header") %></header>
 
         <div class="container" style="border: 1px solid black;">
-                <div class = "left-info">
-                    <h2>
-                        <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
-                    </h2>                
-                <div class="log-out">   
-                <p>"로그인을 해주세요"</p>
-                <br>
-                    <a href ="/login" class="login-btn">로그인</a>  
-                    </div>
+            <div class = "left-info">
+                <h2>
+                    <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
+                </h2>                
+            <div class="log-out">   
+            <p>"로그인을 해주세요"</p>
+            <br>
+                <a href ="/login" class="login-btn">
+                    <img src="<%=logoDataURI%>" 
+                    alt="logo"
+                    height="30px"
+                    width = "130px"
+                    >
+                    로그인</a>  
+                </div>
                 <div class="register">
                     <a href = "/register">회원가입</a>&nbsp;&nbsp;&nbsp;
                     <a href = "" >ID/Password 찾기</a>

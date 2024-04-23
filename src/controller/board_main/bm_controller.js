@@ -37,6 +37,7 @@ const board_views = {
     bm_free : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
         res.render("board/bm_free",{
+            data,
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
@@ -47,6 +48,7 @@ const board_views = {
     news : async (req,res)=>{
         const data = await ser.boardRead.list(req.query.start);
         res.render("board/news", {
+            data,
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
@@ -56,12 +58,24 @@ const board_views = {
     bm_notice : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
         res.render("board/bm_notice",{
+            data,
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
             logoDataURI
     })
-}
+},
+    category_id : async (req,res) =>{
+     const category_id = await ser.boardRead.category_id(req.params.category_id);
+     res.render("board/:category_id",{
+        category_id,
+        list : data.list,
+        start : data.start,
+        totalPage : data.totalPage,
+        logoDataURI
+     })   
+    }
+
 
     // rep_register : async(req,res)=>{
     //     const data = await ser.boardInsert.register(req.body);

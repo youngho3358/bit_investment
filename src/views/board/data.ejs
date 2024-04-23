@@ -16,15 +16,15 @@
             float: left;
         }
 
-        .login-btn {
-            padding: 10px 10px;
-            width: 200px;
-            height: 31px;
-            text-align: center;
-            color: #fff;
-            border: 2px;
-            background-color: gray;
-            background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
+        .login-btn{
+            margin : 15px;
+            display: block;
+            width : 200px;
+            height : 33px;
+            text-align : center;
+            color : #fff;
+            border : 0;
+            background-color:  #14776a;
         }
 
         .register {
@@ -257,14 +257,20 @@
     </script>
     <header><%- include("header") %></header>
     <div class="container" style="border: 1px solid black;">
-        <div class="left-info">
+        <div class = "left-info">
             <h2>
-                <a href="/board" title="메인 페이지로 이동">메인으로 이동</a>
-            </h2>
-            <div class="log-out">
-                <p>"로그인을 해주세요"</p>
-                <br>
-                <a href="/login" class="login-btn">로그인</a>
+                <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
+            </h2>                
+        <div class="log-out">   
+        <p>"로그인을 해주세요"</p>
+        <br>
+            <a href ="/login" class="login-btn">
+                <img src="<%=logoDataURI%>" 
+                alt="logo"
+                height="30px"
+                width = "130px"
+                >
+                로그인</a>  
             </div>
             <div class="register">
                 <a href="/register">회원가입</a>&nbsp;&nbsp;&nbsp;
@@ -350,7 +356,7 @@
                 </div>
                 <hr>
                 <div class="reply">
-                    아니 외 않돼 는 데  애러 창도 않뜨고 뭐가 문재인지는 알려저야 할 겉 아냐;ㅜ
+
                     <script>
 
                     function init(groupNum){

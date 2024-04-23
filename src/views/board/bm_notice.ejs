@@ -179,7 +179,7 @@
         </div>
         <div class="content">
             <div>
-                <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;"> 코인 게시판 </h2>
+                <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;"> 공지사항 </h2>
             </div>
             <br>
             <br>
@@ -222,7 +222,7 @@
                                         <td>
                                             <%=data.MEMBER_ID%>
                                         </td>
-                                        <td><a href="/board/data/<%=data.BOARD_ID%>">
+                                        <td><a href="/board/notice/<%=data.BOARD_ID%>">
                                                 <%= data.BOARD_TITLE%>
                                             </a></td>
 
@@ -242,14 +242,14 @@
                                                     <button disabled>이전</button>
                                                     <%}else{%>
                                                         <button type="button"
-                                                            onclick="location.href ='/board/news?start<%=nstart -1%>'">이전</button>
+                                                            onclick="location.href ='/board/news?start<%=start -1%>'">이전</button>
                                                         <% }for(let i=1 ; i <=totalPage ; i++ ){ %>
-                                                            <a href="/board/news?start=<%= i %>">
+                                                            <a href="/board/notice?start=<%= i %>">
                                                                 <%= i %>
                                                             </a>
                                                             <% }if( start < totalPage ){%>
                                                                 <button type="button" onclick="
-                                                    location.href='/board/news?start=<%=start + 1%>'">다음</button>
+                                                    location.href='/board/notice?start=<%=start + 1%>'">다음</button>
                                                                 <% }else{ %> <button disabled>다음</button>
                                                                     <% } %>
                                                                         <%= start %> / <%= totalPage %>

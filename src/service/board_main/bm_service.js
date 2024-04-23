@@ -44,7 +44,7 @@ const boardRead ={
         let list = await dao.boardRead.list(page.startNum, page.endNum);
         //console.log(data)
         data = {};
-        data.totalpage = page.totPage;
+        data.totallpage = page.totPage;
         data.start = start;
         data.list = list;
         return data;
@@ -55,6 +55,10 @@ const boardRead ={
         repData = common.timeModify(repData.rows);
         console.log("re : ", repData)
         return repData;
+    },
+    category_id : async(category_id) =>{
+        let data = await dao.boardRead.category_id(category_id);
+        return data[0];
     }
 }
 
