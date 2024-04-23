@@ -5,9 +5,7 @@ oracledb.autoCommit = true;
 
 const memberCheck = {
     loginCheck : async (id) => {
-        console.log("db 접속 시도");
         const con = await oracledb.getConnection(dbConfig);
-        console.log("db 접속 완료");
         let result = await con.execute(`select * from member where id='${id}'`);
         return result.rows[0];
     }
