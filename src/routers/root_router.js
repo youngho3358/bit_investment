@@ -16,6 +16,9 @@ module.exports = (app) => {
   const markgetRoter = require("./market/market_router")(app);
   app.use("/market", markgetRoter);
 
+  const walletRouter = require("./wallet/wallet_router")(app);
+  app.use("/wallet", walletRouter);
+
   // root경로의 router
   const router = require("express").Router();
   router.get("/", (req, res) => {
