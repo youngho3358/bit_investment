@@ -8,6 +8,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>  
     <!-- <script src="/static/js/image_read.js"></script> -->
     <script>
+function Write() {
+    var formData = new FormData(document.getElementById("NewWrite"));
+  
+    fetch('/board/write', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json()) // JSON 파싱
+    .then(message => {
+    // 서버로부터 받은 데이터를 이용하여 동적으로 동작 수행
+        alert(message.msg);
+        location.href = message.url;
+    })
+    .catch(error => {
+        console.error('문제 발생:', error);
+    });
+}
+
+
+
             //window.onscroll = function(){}
         /*
         $(document).ready(function() {
@@ -99,13 +119,13 @@
     <!-- -------------------------아래는 수정하지 말것-------------------------- -->
     
         <div class="container">
-            <form method="post" action="/board/write" enctype="multipart/form-data">
+            <form id="NewWrite" enctype="multipart/form-data">
 
             <div class="board_top">
 
                 <b style="font-size: 30px;">게시글 쓰기</b>
 
-                <input type="submit" class="button btnFade"  value="완료">
+                <input type="button" class="button btnFade" onclick="Write()" value="완료">
 
                 <input type="button" class="button btnFade" value="목록보기" 
                     onClick="location.href='/board'">
@@ -131,7 +151,7 @@
                 </select> 
                 
                 
-                <b style="color: gray;">작성자 : <%= seNick %></b>
+                <b style="color: gray;">작성자 : <%= member.nickname %></b>
                 
                 <div style="height: 5px;"></div>
                 

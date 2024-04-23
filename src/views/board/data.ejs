@@ -267,6 +267,27 @@
                     content.innerHTML = html;
             })  
         }
+
+        function submitComment() {
+    var commentInput = document.getElementById("commentInput").value;
+    var formData = new FormData();
+    formData.append("comment", commentInput);
+
+    fetch(`/board/comment/${data.BOARD_ID}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json()) 
+    .then(message => {
+        alert(message.msg);
+        location.href = message.url;
+    })
+    .catch(error => {
+        console.error('문제 발생:', error);
+    });
+}
+
+
     </script>
     <header><%- include("header") %></header>
     <div class="container" style="border: 1px solid black;">
@@ -367,10 +388,10 @@
                       </div>
                         <hr>
                         <div class="cmtcontent">
-                            <form method="post" action="/board/comment/<%= data.BOARD_ID %>">
-                                <textarea name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
-                                <button type="submit" style="padding: 25px;">등록</button>
-                            </form>
+                            <form id="NewComment">
+                                <textarea id="commentInput" name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
+                                <button type="button" style="padding: 25px;" onclick="submitComment()">등록</button>
+                            </form>                            
                         </div>
                     </div>
                 </div>

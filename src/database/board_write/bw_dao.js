@@ -7,25 +7,51 @@ const boardRead = {
         const data = await ((await con).execute(sql));
 
         return data.rows[0];
+    },
+    lastWrite : async() => {
+        const sql = `SELECT id FROM board ORDER BY id DESC LIMIT 1;`
+        const insertedId = await (await con).execute(sql);
+        console.log("마지막 : ",insertedId); 
+          
+        return
     }
 }
 
 const boardInsert = {
-    write : async ( body )=>{
+    
+    write : async ( body, member )=>{
+        console.log("DAO member.member_id : ", member.member_id)
         const sql = 
 `insert into board(MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, IMAGE_LINK, CATEGORY_ID) 
-values(9, :title, :content, :img, :category)`;
-//!!-회원번호 세션에서 받는걸로 바꿔야함
-        const result = await (await con).execute(sql, body);
+VALUES(:1, :2, :3, :4, :5)`;
+    const result = await (await con).execute(sql, [member.member_id, body.title, body.content, body.img, body.category]);
 
         return result;
     },
-    cmtRegister : async (body) => {
-        console.log("body : ", body)
+    
+/* 게시글 작성 완료하면 리스트가 아니라 방금 쓴 글을 볼 수 있게 하려고 작업하다가 실패한것, 수정예정
+    write: async (body, member) => {
+        console.log("DAO member.member_id : ", member.member_id);
+        console.log("DAO body : ", body)
+        const sql = `INSERT INTO board (MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, IMAGE_LINK, CATEGORY_ID)
+                     VALUES (${member.member_id}, :title, :content, :img, :category)`;
+                     //VALUES (${member.member_id}, ${body.title}, ${body.content}, ${body.img}, ${body.dategory})`;
+        const result = await (await con).execute(sql);
+    
+        //const lastInsertedId = result[0].insertId;
+        //console.log('Inserted board_id:', lastInsertedId);
+    
+       //return { result, lastInsertedId };
+       return result;
+    },
+    */
+
+    cmtRegister : async (body, member, BId) => {
+        console.log("dao body : ", body)
+        console.log("dao BId : ", BId)
         const sql = 
-            `insert into reply(BOARD_ID, MEMBER_ID, NICKNAME, COMMENT_CONTENT)
-            values(:comment)
-            `;
+            `insert into board_comment(BOARD_ID, MEMBER_ID, NICKNAME, COMMENT_CONTENT)
+            values(${BId}, ${member.member_id}, ${member.nickname}, :comment)`;
         const result = (await con).execute( sql , body );
         return result;
     }
@@ -59,4 +85,12 @@ const board_Delete = {
     }
 }
 
-module.exports = {boardRead, boardInsert, boardUpdate, board_Delete}
+const boardCheck = {
+    modifyCheck : async (member, BId) => {
+        const sql = `select * from board where BOARD_ID = ${BId} and MEMBER_ID = ${member.member_id}`
+        const result = await (await con).execute(sql);
+        return result;
+    }
+}
+
+module.exports = {boardRead, boardInsert, boardUpdate, board_Delete, boardCheck}

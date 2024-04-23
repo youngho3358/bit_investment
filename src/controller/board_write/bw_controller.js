@@ -7,47 +7,71 @@ const service = require("../../service/board_write/bw_service");
 session
 addr , age , email , grade , id , login_type , 
 member_id , name , nickname , phone
-*/
-const seMId = 9;
-const seNick = "일평";
 
+greade : 관리자>0 일반회원>1
+
+login type : 일반>0 카카오>1 네이버>2
+*/
 const logoPath = "../../../img/logo/banner_logo.png";
 const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
 const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
+
+
 const board_views = {
     writeForm : (req, res) => {
-
-        /*
-        const session = req.session;
-        const ID = req.session.userId;
-        const msg = service.sessionCheck( session );
+        
+        let member = req.session.member;
+       
+        const msg = service.sessionCheck( member );
         if( msg !== 0 ){
             return res.send( msg );
-        }, ID : session.id
-        */
-
+        }
         res.render("board_write/write_form",
-            {logoDataURI, seNick});
+            {logoDataURI, member});
+        
     },
     modify_form : async (req, res) => {
-        const data = await service.boardRead.modify_form(req.params.BId);
+        const BId = req.params.BId;
+        let member = req.session.member;
+       
+        const msg2 = service.modifyCheck( member, BId );
+        if( msg2 !== 1 ){
+            return res.send( msg2 );
+        }
+        const data = await service.boardRead.modify_form(BId);
        
         res.render("board_write/modify_form", {logoDataURI, data })
     }
 }
+
 const board_Insert = {
     write : async (req, res) => {
-        console.log("req.body : ", req.body)
+        let member = req.session.member;
+        console.log("ctrl member? : ", member);
         const message = await service.boardInsert.write(
-            req.body, req.file, req.fileValidation
+            req.body, req.file, req.fileValidation, member
         );
-            res.send( message.msg );
+            res.json( message);
     } ,
+    
     cmtRegister : async (req,res) => {
-        console.log("req. body : ", req.body)
-        const result = await ser.boardInsert.cmtRegister(req.body);
-        res.json(result)
+        const BId = req.params.BId;
+        console.log("BId가 있나? : ", BId)
+        let member = req.session.member;
+       
+        const msg = service.sessionCheck( member );
+        if( msg !== 0 ){
+            return res.send( msg );
+        }
+
+        console.log("댓글 쓴것 req. body : ", req.body)
+        const message = await ser.boardInsert.cmtRegister(req.body, member, BId);
+
+        console.log("컨트롤러로 온 message", message)
+        //res.send(alert(message.msg))
+        //res.render(location.href = message.url)
+        res.send(message);
 }
 }
 
@@ -70,6 +94,13 @@ const board_Update = {
 
 const board_delete = {
     delete : (req, res) => {
+        let member = req.session.member;
+       
+        const msg = service.sessionCheck( member );
+        if( msg !== 0 ){
+            return res.send( msg );
+        }
+
         board_delete.deleteImg(req.params.Img);
         const message = service.boardDelete.delete(req.params.BId);
         res.send(message.msg);
@@ -90,4 +121,4 @@ const board_delete = {
     }
 }
 
-module.exports = {seMId, seNick, board_views, board_Insert, board_Update, board_delete}
+module.exports = {board_views, board_Insert, board_Update, board_delete}
