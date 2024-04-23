@@ -183,6 +183,7 @@ const process = {
 
         // 성공 시 1 반환, 실패 시 promise 반환
         let result = await service.register.changeNickname(changeNickname, originNickname);
+        console.log(result);
 
         if(result === 1){
             req.session.member.nickname = changeNickname;
