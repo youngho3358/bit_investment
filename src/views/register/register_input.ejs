@@ -6,6 +6,40 @@
     <title>회원가입</title>
     <script>
         window.onload = function() {
+                var idButton = document.getElementById("idButton");
+                var emailButton = document.getElementById("emailButton");
+                var nicknameButton = document.getElementById("nicknameButton");
+
+                var idButtonClicked = false;
+                var emailButtonClicked = false;
+                var nicknameButtonClicked = false;
+
+                idButton.addEventListener("click", function() {
+                    idButtonClicked = true;
+                })
+                emailButton.addEventListener("click", function() {
+                    emailButtonClicked = true;
+                })
+                nicknameButton.addEventListener("click", function() {
+                    nicknameButtonClicked = true;
+                })
+                document.getElementById("register_submit").addEventListener("click", function(event) {
+                    console.log("바보야")
+                    if (!idButtonClicked) {
+                        alert("아이디 중복확인을 해주세요");
+                        document.getElementById("userId").focus();
+                        event.preventDefault();
+                    }else if (!emailButtonClicked) {
+                        alert("이메일 중복확인을 해주세요");
+                        document.getElementById("user_email").focus();
+                        event.preventDefault();
+                    }else if (!nicknameButtonClicked) {
+                        alert("닉네임 중복확인을 해주세요");
+                        document.getElementById("user_nickname").focus();
+                        event.preventDefault();
+                    }
+                });
+
             const birthYearEl = document.querySelector('#birth-year')
             isYearOptionExisted = false;
             birthYearEl.addEventListener('focus', function () {
@@ -274,12 +308,12 @@
             </a>
         </div>
         <div class="register_box">
-            <form action="/register/registerCheck" method="post">
+            <form id="register_form" action="/register/registerCheck" method="post">
                 <div class="register_text"><b>회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입</b></div>
                 <div class="register_input_box">
                     <span><b class="user_id">아이디</b></span><br>
                     <input name="userId" id="userId" type="text" placeholder="5~20자 입력" minlength="5" maxlength="20" style="width: 280px; height: 40px;">
-                    <input onclick="user_id_chk()" name="userIdCheck" type="button" value="중복 확인"  style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
+                    <input id="idButton" onclick="user_id_chk()" name="userIdCheck" type="button" value="중복 확인"  style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
                     <div id="idChkMsg"></div>   
                     <br><br>
                     <span><b class="user_pwd">비밀번호</b></span><br>
@@ -331,17 +365,17 @@
                         <option value="nate.com">nate.com</option>
                         <option value="daum.net">daum.net</option>
                     </select>
-                    <input onclick="user_email_chk()" name="userEmailCheck" type="button" value="중복 확인" width="100px" height="50px" style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
+                    <input id="emailButton" onclick="user_email_chk()" name="userEmailCheck" type="button" value="중복 확인" width="100px" height="50px" style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
                     <div id="emailChkMsg"></div>
                     <br><br>
                     <span><b class="user_nickname">닉네임</b></span><br>
                     <input name="userNickname" id="userNickname" type="text" placeholder="2~8자 입력" minlength="2" maxlength="8"  style="width: 280px; height: 40px;">
-                    <input onclick="user_nickname_chk()" name="userNicknameCheck" type="button" value="중복 확인" style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
+                    <input id="nicknameButton" onclick="user_nickname_chk()" name="userNicknameCheck" type="button" value="중복 확인" style="font-size: 12px; font-weight: bold; height: 25px; width: 60px; cursor: pointer; border-radius: 3px; border :2px solid #14776a; background-color: white; color: #14776a;">
                     <div id="nicknameChkMsg"></div>
                     <br>
                     <br>
                     <br>
-                    <input type="submit" value="가입 하기" style="width: 350px; height: 40px; background-color: #14776a; color: white;">
+                    <input type="submit" id="register_submit" value="가입 하기" style="width: 350px; height: 40px; background-color: #14776a; color: white;">
                     <br>
                 </div>
             </form>

@@ -145,7 +145,6 @@
                 })
         .then(res => res.json())
         .then(data => {
-          console.log("data : ", data);
           for(let i = 0; i < data.length; i++) {
             let num = (i).toString();
             let up_box = ("up_box").concat(num);
@@ -227,6 +226,7 @@
             document.querySelector(`#${coin_stock_change_price}`).textContent = data[i].CHANGE_PRICE;
             document.querySelector(`#${coin_stock_trans_price}`).textContent = data[i].TRANS_PRICE;
           }
+          return;
         });
       }
     </script>
@@ -290,12 +290,12 @@
                     <span id="down_line0" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name0" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name0"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price0" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price0" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price0" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -321,12 +321,12 @@
                     <span id="down_line1" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name1" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name1"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price1" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price1" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price1" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -352,12 +352,12 @@
                     <span id="down_line2" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name2" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name2"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price2" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price2" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price2" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -383,12 +383,12 @@
                     <span id="down_line3" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name3" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name3"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price3" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price3" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price3" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -414,12 +414,12 @@
                     <span id="down_line4" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name4" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name4"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price4" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price4" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price4" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -445,12 +445,12 @@
                     <span id="down_line5" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name5" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name5"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price5" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price5" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price5" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -476,12 +476,12 @@
                     <span id="down_line6" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name6" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name6"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price6" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price6" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price6" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -507,12 +507,12 @@
                     <span id="down_line7" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name7" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name7"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price7" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price7" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price7" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -538,12 +538,12 @@
                     <span id="down_line8" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name8" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name8"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price8" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price8" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price8" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -569,12 +569,12 @@
                     <span id="down_line9" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name9" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name9"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price9" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price9" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price9" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -600,12 +600,12 @@
                     <span id="down_line10" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name10" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name10"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price10" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price10" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price10" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -631,12 +631,12 @@
                     <span id="down_line11" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name11" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name11"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price11" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price11" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price11" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -662,12 +662,12 @@
                     <span id="down_line12" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name12" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name12"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price12" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price12" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price12" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -693,12 +693,12 @@
                     <span id="down_line13" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name13" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name13"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price13" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price13" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price13" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -724,12 +724,12 @@
                     <span id="down_line14" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name14" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name14"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price14" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price14" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price14" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -755,12 +755,12 @@
                     <span id="down_line15" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name15" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name15"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price15" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price15" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price15" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -786,12 +786,12 @@
                     <span id="down_line16" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name16" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name16"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price16" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price16" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price16" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -817,12 +817,12 @@
                     <span id="down_line17" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name17" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name17"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price17" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price17" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price17" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -848,12 +848,12 @@
                     <span id="down_line18" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name18" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name18"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price18" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price18" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price18" style="font-weight: 600;"></label>
                   </div>
                 </div>
@@ -879,12 +879,12 @@
                     <span id="down_line19" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
                   </div>
                 </div>
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
+                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
                   <label id="coin_stock_kor_name19" style="font-weight: 600;"></label><br>
                   <label id="coin_stock_eng_name19"></label>
                 </div>
                 <div class="show_change">
-                  <div class="coin_stock_price19" style="width: 90px; margin-top: 15px; font-size: 13px; text-align: right;">
+                  <div class="coin_stock_price19" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
                     <label id="coin_stock_price19" style="font-weight: 600;"></label>
                   </div>
                 </div>

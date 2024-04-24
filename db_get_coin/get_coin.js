@@ -296,13 +296,14 @@ const insert = async () => {
     coin.push(ong);
     coin.push(sei);
     coin.push(ont);
+    //console.log("coin : ", coin);
+    
     try {
         await dao.insert.btc(coin);
     } catch (error) {
         console.log(error);
-    }
-}
-
+    }  
+};
 setInterval(insert, 1000);
-    
+
 ws.on("close", () => console.log("closed!"));
