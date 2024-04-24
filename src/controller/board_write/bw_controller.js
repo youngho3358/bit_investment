@@ -57,21 +57,15 @@ const board_Insert = {
     
     cmtRegister : async (req,res) => {
         const BId = req.params.BId;
-        console.log("BId가 있나? : ", BId)
         let member = req.session.member;
-       
-        const msg = service.sessionCheck( member );
-        if( msg !== 0 ){
-            return res.send( msg );
+        let comment = req.body.comment;
+        if(!member){
+            res.json(0);
+            return;
         }
 
-        console.log("댓글 쓴것 req. body : ", req.body)
-        const message = await ser.boardInsert.cmtRegister(req.body, member, BId);
-
-        console.log("컨트롤러로 온 message", message)
-        //res.send(alert(message.msg))
-        //res.render(location.href = message.url)
-        res.send(message);
+        const result = await service.boardInsert.cmtRegister(comment, member, BId);
+        res.json(result);
 }
 }
 

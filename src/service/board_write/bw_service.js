@@ -68,6 +68,7 @@ const boardInsert = {
         }
 
 
+
         if( file !== undefined ){
             //body.origin_file_name = file.originalname;
             body.img = file.filename;
@@ -121,25 +122,14 @@ const boardInsert = {
         message.url = url;
         return message;
     },
-    cmtRegister : async (body, member, BId) => {
-        let msg, url;
-        let message = {};
-        const result = await dao.boardInsert.cmtRegister(body, member, BId);
+    cmtRegister : async (comment, member, BId) => {
+        const result = await dao.boardInsert.cmtRegister(comment, member, BId);
 
-        message.result = result.rowsAffected;
         if( result.rowsAffected === 1 ){
-            msg = "댓글이 등록되었습니다";
-            url = "/board/data"+BId;
-
+            return 1;
         }else{
-            msg = "문제 발생";
-            url = "/board/data"+BId;
+            return 2;
         }
-        message.msg = msg;
-        message.url = url;
-        return message;
-        //console.log("서비스에서 보내는 message : ", message)
-        //return message;
     }
 }
 

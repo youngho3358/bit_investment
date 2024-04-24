@@ -46,13 +46,13 @@ VALUES(:1, :2, :3, :4, :5)`;
     },
     */
 
-    cmtRegister : async (body, member, BId) => {
-        console.log("dao body : ", body)
+    cmtRegister : async (comment, member, BId) => {
+        console.log("dao comment : ", comment)
         console.log("dao BId : ", BId)
         const sql = 
             `insert into board_comment(BOARD_ID, MEMBER_ID, NICKNAME, COMMENT_CONTENT)
-            values(${BId}, ${member.member_id}, ${member.nickname}, :comment)`;
-        const result = (await con).execute( sql , body );
+            values('${BId}', '${member.member_id}', '${member.nickname}', '${comment}')`;
+        const result = await (await con).execute( sql );
         return result;
     }
 }

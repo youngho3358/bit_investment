@@ -16,15 +16,15 @@
             float: left;
         }
 
-        .login-btn {
-            padding: 10px 10px;
-            width: 200px;
-            height: 31px;
-            text-align: center;
-            color: #fff;
-            border: 2px;
-            background-color: gray;
-            background-image: url(../../../upload_file/KakaoTalk_20240411_144043944.png);
+        .login-btn{
+            margin : 15px;
+            display: block;
+            width : 200px;
+            height : 33px;
+            text-align : center;
+            color : #fff;
+            border : 0;
+            background-color:  #14776a;
         }
 
         .register {
@@ -269,36 +269,52 @@
         }
 
         function submitComment() {
-    var commentInput = document.getElementById("commentInput").value;
-    var formData = new FormData();
-    formData.append("comment", commentInput);
+            var commentInput = document.getElementById("commentInput").value;
+            let board_id = document.getElementById("board_id").value;
 
-    fetch(`/board/comment/${data.BOARD_ID}`, {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json()) 
-    .then(message => {
-        alert(message.msg);
-        location.href = message.url;
-    })
-    .catch(error => {
-        console.error('문제 발생:', error);
-    });
+            let data = {comment : commentInput};
+
+            fetch(`/board/comment/${board_id}`,{
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify(data)
+            })
+            .then(res => res.json()) 
+            .then(message => {
+                if(message === 0){
+                    alert("로그인이 필요합니다.");
+                    location.href = "/login";
+                    return;
+                }else if(message === 1){
+                    alert("댓글이 작성되었습니다.");
+                    location.href = `/board/data/${board_id}`;
+                }else{
+                    alert("문제 발생....!!!");
+                }
+            })
+            .catch(error => {
+                console.error('문제 발생:', error);
+            });
 }
 
 
     </script>
     <header><%- include("header") %></header>
     <div class="container" style="border: 1px solid black;">
-        <div class="left-info">
+        <div class = "left-info">
             <h2>
-                <a href="/board" title="메인 페이지로 이동">메인으로 이동</a>
-            </h2>
-            <div class="log-out">
-                <p>"로그인을 해주세요"</p>
-                <br>
-                <a href="/login" class="login-btn">로그인</a>
+                <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
+            </h2>                
+        <div class="log-out">   
+        <p>"로그인을 해주세요"</p>
+        <br>
+            <a href ="/login" class="login-btn">
+                <img src="<%=logoDataURI%>" 
+                alt="logo"
+                height="30px"
+                width = "130px"
+                >
+                로그인</a>  
             </div>
             <div class="register">
                 <a href="/register">회원가입</a>&nbsp;&nbsp;&nbsp;
@@ -385,12 +401,31 @@
                 <hr>
                 <div class="reply">
 
-                      </div>
+                    <script>
+
+                    function init(groupNum){
+                    fetch(`/board/replyData/`+groupNum)
+                    .then(res=>res.json())
+                    .then(data => {
+                        let html ="";
+                        data.forEach((d) =>{
+                            html +="<div align = 'center'>" +d.COMMENT_ID;
+                                html += d.COMMENT_CREATE_DATE + "<br>";
+                                html += d.COMMENT_CONTENT; "<hr></div>"
+                            });
+                            const content = document.querySelector(".reply")
+                            content.innerHTML = html;
+                            
+                        })  
+                    }
+                    init(groupNum);
+                    </script>
+                </div>
                         <hr>
                         <div class="cmtcontent">
                             <form id="NewComment">
                                 <textarea id="commentInput" name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
-                                <button type="button" style="padding: 25px;" onclick="submitComment()">등록</button>
+                                <button type="button" style="padding: 25px;" onclick=submitComment()>등록</button>
                             </form>                            
                         </div>
                     </div>
@@ -399,6 +434,7 @@
     <div class="footer">
     </div>
     </div>
+    <input type="text" readonly style="display: none;" value="<%=data.BOARD_ID%>" id="board_id">
 </body>
 
 </html>

@@ -16,7 +16,6 @@ const boardRead ={
     data : async(num) =>{
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD where BOARD_ID ='${num}'`;
-        console.log(num)
         const data = await con.execute(sql);
         return data;
     },
@@ -28,23 +27,30 @@ const boardRead ={
 },
     totalContent : async() =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = "select count(*) from BOARD";
+        const sql = `select count(*) from BOARD`;
         const totalContent = await con.execute(sql);
         return totalContent.rows[0]['COUNT(*)'];
     },
     replyData : async(groupNum) =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select * from BOARD_COMMENT where BOARD_ID=${groupNum}`
-        console.log("sql : " ,sql)
+        const sql = `select * from BOARD_COMMENT where BOARD_ID='${groupNum}'`;
         const result = await con.execute(sql);
+        console.log("result: " , result);
         return result;
-    }
-}
-boardUpdate ={
+    },
     Hit : async(num) =>{
         const con = await oracledb.getConnection(dbConfig);
         const sql = `update BOARD set hit = hit + 1 where BOARD_ID ='${num}'`;
-        con.execute(sql)
+        await con.execute(sql)
+    },
+    category_id : async(category_id) =>{
+        const con = await oracledb.getConnection(dbConfig);
+        const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'`;
+        const result = await con.execute(sql);
+        return result;
+
     }
+
 }
-module.exports={boardRead,boardUpdate}
+
+module.exports={boardRead}
