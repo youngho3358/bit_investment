@@ -103,7 +103,7 @@ const get = {
             sei : 0,
             ont : 0
         };
-        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pudix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
+        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pundix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
 
         for(let i=0; i<now_coin_cost_object.length; i++) {
             let coin = await now_coin_cost_object[i];
@@ -169,7 +169,6 @@ const get = {
         for(let i=0; i<coin_list.length; i++){
             let now_cost = now_coin_cost[coin_list[i]];
             let each_num = lower_have_coin_num[coin_list[i]];
-            console.log(lower_have_coin_num[coin_list[i]]);
 
             if(now_cost == 0 || each_num == 0){
                 continue;
@@ -177,7 +176,8 @@ const get = {
 
             total_buy_coin_result_cost += parseInt(now_cost * each_num);
         }
-        console.log("???? >>>", total_buy_coin_result_cost);
+
+        // 총 평가 금액이 담긴 total_buy_coin_result_cost 를 반환
         return total_buy_coin_result_cost;
     }
 }

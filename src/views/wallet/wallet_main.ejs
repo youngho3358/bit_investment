@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>coin_investment</title>
     <script>
-        onload = () => {
+      
+      onload = async () => {
           // 보유 KRW 
           let money = document.getElementById("money");
           // 총 보유자산
           let money_coin = document.getElementById("money_coin");
           // 총 매수 금액
           let total_buy_coin_cost = document.getElementById("total_buy_coin_cost");
-
+          
           // 보유 KRW 구하기
           fetch("/wallet/have_KRW",{
             method : "post",
@@ -35,11 +36,20 @@
           .then(result => {
             let total_buy_cost_result = result.toLocaleString();
             total_buy_coin_cost.innerText = total_buy_cost_result;
+            return;
           })
+          
+          // 총 평가 금액 1초 간격으로 갱신
+          await setInterval(total_buy_coin_result_cost, 1000);
+          
+          // 총 평가 손익, 총 평가 수익률 1초 간격으로 갱신
+          await setInterval(total_plus_minus, 1000);
 
-          setInterval(total_buy_coin_result_cost, 1000);
+          // 총 보유자산 1초 간격으로 갱신
+          await setInterval(total_money, 1000);
         }
 
+        // 총 평가 금액 구하는 함수
         function total_buy_coin_result_cost() {
           fetch("/wallet/total_buy_coin_result_cost",{
             method : "post",
@@ -48,9 +58,55 @@
           })
           .then(res => res.json())
           .then(result => {
-            console.log(result)
+            document.getElementById("total_buy_coin_result_cost").innerText = result.toLocaleString();
             return;
           })
+        }
+        
+        // 총 평가 손익 구하는 함수
+        function total_plus_minus() {
+          let total_result_cost = document.getElementById("total_result_cost");
+          let total_result_percent = document.getElementById("total_result_percent");
+
+          // toLocaleString 자료형을 다시 파싱하여 Int 로 변환하여 사용
+          let total_buy_string = document.getElementById("total_buy_coin_cost").innerText;
+          let total_buy_result_string = document.getElementById("total_buy_coin_result_cost").innerText;
+          
+          // 숫자 자릿 수 표현했던 , 파싱
+          let total_buy = parseInt(total_buy_string.replace(/,/g, ''), 10);
+          let total_buy_result = parseInt(total_buy_result_string.replace(/,/g, ''), 10);
+
+          if(isNaN(total_buy_result - total_buy)){
+            total_result_cost.innerText = 0;
+            total_result_percent.innerHTML = "0%";
+          }else{
+            total_result_cost.innerText = (total_buy_result - total_buy).toLocaleString();
+            total_result_percent.innerText = ((total_buy_result - total_buy) / total_buy * 100).toFixed(2) + "%";
+          }
+
+          if(total_buy_result - total_buy > 0){
+            total_result_cost.style.color = "red";
+            total_result_percent.style.color = "red";
+          }else if(total_buy_result - total_buy < 0){
+            total_result_cost.style.color = "blue";
+            total_result_percent.style.color = "blue";
+          }
+        }
+
+        function total_money() {
+          // 보유 KRW, 총 평가금액 ( 숫자 자릿 수 , 로 적혀 있어 파싱해서 써야 함 )
+          let money_toLocaleString = document.getElementById("money").innerText;
+          let total_buy_result_toLocalestring = document.getElementById("total_buy_coin_result_cost").innerText;
+
+          // 파싱한 Int 자료형
+          let money = parseInt(money_toLocaleString.replace(/,/g, ''), 10);
+          let total_buy_result = parseInt(total_buy_result_toLocalestring.replace(/,/g, ''), 10);
+          
+          if(isNaN(money + total_buy_result)){
+            document.getElementById("money_coin").textContent = ""
+          }else{
+            document.getElementById("money_coin").textContent = (money + total_buy_result).toLocaleString();
+          }
         }
     </script>
     <style>
@@ -232,7 +288,7 @@
       }
       .checkbox_hide_coin{
         display: inline-block;
-        margin-left: 730px;
+        margin-left: 800px;
       }
       .hide_coin_text:hover{
         cursor: pointer;
@@ -243,10 +299,10 @@
         width: 280px;
         color: black;
         font-size: 25px;
-        font-weight: bold;
         text-align: right;
         margin-top: -8px;
         margin-left: 110px;
+        font-family: monospace;
       }
       #total_buy_coin_result_cost{
         position: absolute;
@@ -254,10 +310,10 @@
         width: 280px;
         color: black;
         font-size: 25px;
-        font-weight: bold;
         text-align: right;
         margin-top: 8px;
         margin-left: 110px;
+        font-family: monospace;
       }
       #total_result_cost{
         position: absolute;
@@ -265,10 +321,10 @@
         width: 280px;
         color: black;
         font-size: 25px;
-        font-weight: bold;
         text-align: right;
         margin-top: -8px;
         margin-left: 140px;
+        font-family: monospace;
       }
       #total_result_percent{
         position: absolute;
@@ -276,10 +332,10 @@
         width: 280px;
         color: black;
         font-size: 25px;
-        font-weight: bold;
         text-align: right;
         margin-top: 8px;
-        margin-left: 123px;
+        margin-left: 125px;
+        font-family: monospace;
       }
     </style>
   </head>
@@ -330,7 +386,7 @@
                 </div>
                 <div class="total_asset_held_box">
                     총 보유자산
-                    <label id="money_coin">현금 + 코인 가격</label>
+                    <label id="money_coin"></label>
                     <span class="KRW_text">KRW</span>
                 </div>
             </div>
@@ -341,18 +397,18 @@
                     <label style="margin-left: 400px;">KRW</label>
                     <br>
                     <label style="display: inline-block; margin-top: 15px;">총 평가 금액</label>
-                    <div id="total_buy_coin_result_cost">13,000,000,000</div>
+                    <div id="total_buy_coin_result_cost"></div>
                     <label style="margin-left: 400px;">KRW</label>
                     <br>
                     <label style="color: black; display: inline-block; margin-top: 15px;">＊KRW로 환산한 추정값</label>
                 </div>
                 <div class="total_coin_cost2">
                     <label>총 평가 손익</label>
-                    <div id="total_result_cost">14,000,000,000</div>
+                    <div id="total_result_cost"></div>
                     <label style="margin-left: 430px;">KRW</label>
                     <br>
                     <label style="display: inline-block; margin-top: 15px;">총 평가 수익률</label>
-                    <div id="total_result_percent">15,000,000,000</div>
+                    <div id="total_result_percent"></div>
                     <label style="margin-left: 413px;">KRW</label>
                 </div>
             </div>

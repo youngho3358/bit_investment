@@ -33,7 +33,7 @@ const get = {
             sei : 0,
             ont : 0
         };
-        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pudix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
+        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pundix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
         const con = await oracledb.getConnection(dbConfig);
         for(let i=0; i<coin_list.length; i++){
             // 구매 코인의 총 갯수를 가진 DB 결과 Object
@@ -80,7 +80,7 @@ const get = {
             sei : 0,
             ont : 0
         };
-        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pudix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
+        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pundix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
         const con = await oracledb.getConnection(dbConfig);
         for(let i=0; i<coin_list.length; i++){
             // 구매 코인의 총 갯수를 가진 DB 결과 Object
