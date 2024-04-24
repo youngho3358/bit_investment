@@ -58,7 +58,7 @@ const boardRead ={
     },
     category_id : async(category_id) =>{
         let data = await dao.boardRead.category_id(category_id);
-        return data[0];
+        return data;
     }
 }
 
