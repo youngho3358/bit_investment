@@ -77,6 +77,25 @@ const process = {
         let member_id = req.session.member.member_id;
         let result = await service.get.have_KRW(member_id);
         res.json(result);
+    },
+
+    // 총 매수 금액 구하기
+    total_buy_coin_cost : async (req, res) => {
+        let member_id = req.session.member.member_id;
+        let result = await service.get.total_buy_coin_cost(member_id);
+        res.json(result);
+    },
+    
+    // 총 평가 금액 구하기
+    total_buy_coin_result_cost : async (req, res) => {
+        try{
+            let member_id = req.session.member.member_id;
+            let result = await service.get.total_buy_coin_result_cost(member_id);
+            res.json(result);
+        }catch(err){
+            console.log(err);
+            res.json(0);
+        }
     }
 }
 

@@ -11,5 +11,11 @@ module.exports = (app) => {
     // 현재 보유 KRW 확인
     router.post("/have_KRW", walletCtrl.process.have_KRW);
 
+    // 총 매수 금액 확인
+    router.post("/total_buy_coin_cost", walletCtrl.process.total_buy_coin_cost);
+
+    // 총 평가 금액 확인
+    router.post("/total_buy_coin_result_cost", walletCtrl.process.total_buy_coin_result_cost);
+
     return router;
 }

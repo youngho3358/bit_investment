@@ -6,19 +6,51 @@
     <title>coin_investment</title>
     <script>
         onload = () => {
-            let money = document.getElementById("money");
-            let money_coin = document.getElementById("money_coin");
+          // 보유 KRW 
+          let money = document.getElementById("money");
+          // 총 보유자산
+          let money_coin = document.getElementById("money_coin");
+          // 총 매수 금액
+          let total_buy_coin_cost = document.getElementById("total_buy_coin_cost");
 
-            fetch("/wallet/have_KRW",{
-                        method : "post",
-                        headers : {"Content-Type":"application/json"},
-                        body : JSON.stringify()
-                    })
-                    .then(res => res.json())
-                    .then(result => {
-                        let KRW = result.MONEY.toLocaleString();
-                        money.textContent = KRW;
-                    })
+          // 보유 KRW 구하기
+          fetch("/wallet/have_KRW",{
+            method : "post",
+            headers : {"Content-Type":"application/json"},
+            body : JSON.stringify()
+            })
+            .then(res => res.json())
+            .then(result => {
+                let KRW = result.MONEY.toLocaleString();
+                money.textContent = KRW;
+            })
+          
+          // 총 매수 금액 구하기
+          fetch("/wallet/total_buy_coin_cost",{
+            method : "post",
+            headers : {"Content-Type":"application/json"},
+            body : JSON.stringify()
+          })
+          .then(res => res.json())
+          .then(result => {
+            let total_buy_cost_result = result.toLocaleString();
+            total_buy_coin_cost.innerText = total_buy_cost_result;
+          })
+
+          setInterval(total_buy_coin_result_cost, 1000);
+        }
+
+        function total_buy_coin_result_cost() {
+          fetch("/wallet/total_buy_coin_result_cost",{
+            method : "post",
+            headers : {"Content-Type":"application/json"},
+            body : JSON.stringify()
+          })
+          .then(res => res.json())
+          .then(result => {
+            console.log(result)
+            return;
+          })
         }
     </script>
     <style>
@@ -305,7 +337,7 @@
             <div class="total_coin_cost">
                 <div class="total_coin_cost1">
                     <label>총 매수 금액</label>
-                    <div id="total_buy_coin_cost">12,000,000,000</div>
+                    <div id="total_buy_coin_cost"></div>
                     <label style="margin-left: 400px;">KRW</label>
                     <br>
                     <label style="display: inline-block; margin-top: 15px;">총 평가 금액</label>
