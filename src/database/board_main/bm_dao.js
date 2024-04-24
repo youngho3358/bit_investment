@@ -19,6 +19,12 @@ const boardRead ={
         const data = await con.execute(sql);
         return data;
     },
+    cmtdata : async(num) =>{
+        const con = await oracledb.getConnection(dbConfig);
+        const sql = `select * from BOARD_COMMENT where BOARD_ID ='${num}'`;
+        const cmtdata = await con.execute(sql);
+        return cmtdata;
+    },
     list : async (start, end) =>{
         const con = await oracledb.getConnection(dbConfig);
         const list = await con.execute(`select * from (select rownum rn, A.* from (select * from BOARD order by BOARD_ID desc)A) where rn between ${start} and ${end}`);

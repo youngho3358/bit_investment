@@ -35,7 +35,14 @@ const boardRead ={
         console.log("hit : ",num)
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
+        
         return data[0];
+    },
+    cmtdata : async (num) =>{
+        let cmtdata = await dao.boardRead.cmtdata(num);
+        cmtdata = common.timeModify(cmtdata.rows)
+        return cmtdata[0];
+
     },
     list : async (start) =>{
         const totalCounter = await dao.boardRead.totalContent();

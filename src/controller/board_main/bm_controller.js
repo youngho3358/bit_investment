@@ -25,13 +25,16 @@ const bm_input = async (req, res) => {
 const board_views = {
     data : async (req,res) => {
         const data = await ser.boardRead.data(req.params.num)
+        const cmtdata = await ser.boardRead.cmtdata(req.params.num)
         // const username = req.session.username;
+        console.log("data 잘들어와? : ", data)
+        console.log("cmtdata 잘들어와? : ", cmtdata)
         res.render("board/data",{
             data,
             // username,       
             list : data.list,
             start : data.start,
-            totalPage : data.totalPage,
+            totalPage : data.totalPage, cmtdata,
             logoDataURI
         });
     },

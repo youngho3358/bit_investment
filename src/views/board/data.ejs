@@ -253,20 +253,6 @@
         //             comment.insertAdjacentHTML("afterbegin", html);
         //         });
         // }
-        function init(groupNum){
-            fetch(`/board/replyData/`+groupNum)
-            .then(res=>res.json())
-            .then(data => {
-                let html ="";
-                data.forEach((d) =>{
-                    html +="<div align = 'center'>" +d.COMMENT_ID;
-                    html += d.COMMENT_CREATE_DATE + "<br>";
-                    html += d.COMMENT_CONTENT; "<hr></div>"
-                });
-                    const content = document.getElementById("reply")
-                    content.innerHTML = html;
-            })  
-        }
 
         function submitComment() {
             var commentInput = document.getElementById("commentInput").value;
@@ -400,26 +386,6 @@
                 </div>
                 <hr>
                 <div class="reply">
-
-                    <script>
-
-                    function init(groupNum){
-                    fetch(`/board/replyData/`+groupNum)
-                    .then(res=>res.json())
-                    .then(data => {
-                        let html ="";
-                        data.forEach((d) =>{
-                            html +="<div align = 'center'>" +d.COMMENT_ID;
-                                html += d.COMMENT_CREATE_DATE + "<br>";
-                                html += d.COMMENT_CONTENT; "<hr></div>"
-                            });
-                            const content = document.querySelector(".reply")
-                            content.innerHTML = html;
-                            
-                        })  
-                    }
-                    init(groupNum);
-                    </script>
                 </div>
                         <hr>
                         <div class="cmtcontent">
@@ -427,6 +393,12 @@
                                 <textarea id="commentInput" name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
                                 <button type="button" style="padding: 25px;" onclick=submitComment()>등록</button>
                             </form>                            
+                        </div>
+                        <div>
+                            작성자 : <%= cmtdata.NICKNAME%>
+                            <%= cmtdata.COMMENT_CONTENT%>
+                            <input type="button" value="수정">
+                            <input type="button" value="삭제">
                         </div>
                     </div>
                 </div>

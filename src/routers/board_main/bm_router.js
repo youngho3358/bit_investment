@@ -8,6 +8,6 @@ router.get("/", bmCtrl.bm_input);
 router.get("/notice", bmCtrl.board_views.bm_notice);
 router.get("/data/:num", bmCtrl.board_views.data);
 router.get("/:category_id", bmCtrl.board_views.category_id); 
-router.get("/replyData/:groupNum",bmCtrl.rep_views.replyData);
+
 // router.post("/rep_register", bmCtrl.board_views.rep_register);
 module.exports = router;
