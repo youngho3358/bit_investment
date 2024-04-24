@@ -290,17 +290,17 @@
                     <ol id="ul">
                         <li>
                             <span style="font-weight : bold">
-                                <a href="/board/free">자유게시판</a>
+                                <a href="/board/0">자유게시판</a>
                             </span>
                         </li>
                         <li>
                             <span style="font-weight : bold">
-                                <a href="/board/notice">공지사항</a>
+                                <a href="/board/1">공지사항</a>
                             </span>
                         </li>
                         <li>
                             <span style="font-weight : bold">
-                                <a href="/board/news">코인 게시판</a>
+                                <a href="/board/2">코인 게시판</a>
                             </span>
                         </li>
                     </ol>
@@ -317,7 +317,7 @@
                         <%=data.BOARD_CREATE_DATE%>
                     </div>
                     <div class="articlehit">
-                        조회 : <%=data.Hit %>
+                        조회 : <%=data.HIT %>
                     </div>
                 </div>
             </div>
@@ -342,9 +342,6 @@
             <div class="right-btn">
                 <ul class="rightmenu">
                     <li>
-                        <input type="button" id="btn2" value="목록" onclick="location.href ='/board/news'">
-                    </li>
-                    <li>
                         <input type="button" id="btn" value="글 쓰기" onclick="location.href='/board/write_form'">
                     </li>
                 </ul>
@@ -356,26 +353,6 @@
                 </div>
                 <hr>
                 <div class="reply">
-
-                    <script>
-
-                    function init(groupNum){
-                    fetch(`/board/replyData/`+groupNum)
-                    .then(res=>res.json())
-                    .then(data => {
-                        let html ="";
-                        data.forEach((d) =>{
-                            html +="<div align = 'center'>" +d.COMMENT_ID;
-                                html += d.COMMENT_CREATE_DATE + "<br>";
-                                html += d.COMMENT_CONTENT; "<hr></div>"
-                            });
-                            const content = document.querySelector(".reply")
-                            content.innerHTML = html;
-                            
-                        })  
-                    }
-                    init(groupNum);
-                    </script>
                 </div>
                         <hr>
                         <div class="cmtcontent">

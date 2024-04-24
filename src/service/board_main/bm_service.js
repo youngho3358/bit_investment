@@ -1,10 +1,11 @@
-const dao = require("../../database/board_main/bm_dao")
+const dao = require("../../database/board_main/bm_dao");
+const { search } = require("../../routers/board_main/bm_router");
 const common = require("./ser_common");
 
-boardUpdate = {
-    Hit : (num) =>{
-        dao.boardRead.Hit(num);
-    },
+// boardUpdate = {
+//     Hit : (num) =>{
+//         dao.boardRead.Hit(num);
+//     },
     // delete : (BOARD_ID) =>{
     //     dao.boardUpdate.delete(BOARD_ID);
     // },
@@ -28,11 +29,11 @@ boardUpdate = {
     //     }
     // }
 
-}
+// }
 const boardRead ={
     data : async (num)=>{
-        boardUpdate.Hit(num);
-        console.log("hit : ",num)
+        // boardUpdate.Hit(num);
+        // console.log("hit : ",num)
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
         return data[0];
@@ -59,8 +60,19 @@ const boardRead ={
     category_id : async(category_id) =>{
         let data = await dao.boardRead.category_id(category_id);
         return data;
+    },
+    searchPosts : async(keyword)=>{
+            const results = await dao.searchPosts(keyword);
+            return results;
+    },
+    incrementViews: async (BOARD_ID) => {
+        await dao.incrementViews(BOARD_ID);
+    },
+
+    getPost: async (BOARD_ID) => {
+        return await dao.getPostById(BOARD_ID);
     }
-}
+};
 
     // start = 몇번째 페이지, totalCounter = 총 게시물 개수
     // totpage = 총 페이지 개수
@@ -107,4 +119,4 @@ const  getMessage = (msg, url) =>{
     return `<script>alert('${msg}'); location.href="${url}";</script>`;
 }
 
-module.exports ={boardUpdate,boardRead,pageOperation,getMessage};
+module.exports ={boardRead,pageOperation,getMessage};

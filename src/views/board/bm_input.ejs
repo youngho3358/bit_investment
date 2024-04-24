@@ -154,7 +154,7 @@
                 <a href="">ID/Password 찾기</a>
             </div>
             <div class="search" id="main-search">
-                <form action="" method="get">
+                <form action="search" method="get">
                     <input type="text" name="keyword" placeholder="게시판 검색">
                     <button type="submit">검색</button>
                 </form>
@@ -197,7 +197,7 @@
                                 <div class="news-list">
                                     <div id="right-btn">
                                         <input type="button" id="btn2" value="목록"
-                                            onclick="location.href ='/board/news'">
+                                            onclick="location.href ='/board/0'">
                                         <input type="button" id="btn" value="글 쓰기"
                                             onclick="location.href='/board/write_form'">
                                     </div>
@@ -242,7 +242,7 @@
                                                                 <%=data.BOARD_CREATE_DATE%>
                                                             </td>
                                                             <td>
-                                                                <%=data.Hit%>
+                                                                <%=data.HIT%>
                                                             </td>
                                                         </tr>
                                                         <%}) }%>
@@ -270,7 +270,7 @@
                                             <section class="content-wrap">
                                                 <article class="list-left">
                                             <h3 style="font-size: 23px">
-                                                <a href="/board/news">자유 게시판</a>
+                                                <a href="/board/">자유 게시판</a>
                                             </h3>
                                         </div>
                                         <div class="newslist">
@@ -302,7 +302,7 @@
                                                     <div class="news-list">
                                                         <div id="right-btn">
                                                             <input type="button" id="btn2" value="목록"
-                                                                onclick="location.href ='/board/news'">
+                                                                onclick="location.href ='/board/1'">
                                                             <input type="button" id="btn" value="글 쓰기"
                                                                 onclick="location.href='/board/write_form'">
                                                         </div>
@@ -347,7 +347,7 @@
                                                                                     <%=data.BOARD_CREATE_DATE%>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <%=data.Hit%>
+                                                                                    <%=data.HIT%>
                                                                                 </td>
                                                                             </tr>
                                                                             <%}) }%>
@@ -357,11 +357,11 @@
                                                                         <% if(start <= 1){ %>
                                                                             <button disabled>이전</button>
                                                                         <%}else{%>
-                                                                            <button type="button" onclick="location.href ='/board/0?start<%=start -1%>'">이전</button>
+                                                                            <button type="button" onclick="location.href ='/board/1?start<%=start -1%>'">이전</button>
                                                                         <% }for(let i=1 ; i <= page ; i++ ){ %>
-                                                                            <a href="/board/0?start=<%= i %>"><%= i %></a>
+                                                                            <a href="/board/1?start=<%= i %>"><%= i %></a>
                                                                         <% }if( 1 < page ){%>
-                                                                            <button type="button" onclick="location.href='/board/0?start=<%=start + 1%>'">다음</button>
+                                                                            <button type="button" onclick="location.href='/board/1?start=<%=start + 1%>'">다음</button>
                                                                         <% }else{ %> <button disabled>다음</button>
                                                                         <% } %>
                                                                         <%= 1 %> / <%= page %>
@@ -382,7 +382,7 @@
                                                     <div class="news-list">
                                                         <div id="right-btn">
                                                             <input type="button" id="btn2" value="목록"
-                                                                onclick="location.href ='/board/news'">
+                                                                onclick="location.href ='/board/2'">
                                                             <input type="button" id="btn" value="글 쓰기"
                                                                 onclick="location.href='/board/write_form'">
                                                         </div>
@@ -427,7 +427,7 @@
                                                                                     <%=data.BOARD_CREATE_DATE%>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <%=data.Hit%>
+                                                                                    <%=data.HIT%>
                                                                                 </td>
                                                                             </tr>
                                                                             <%}) }%>
@@ -437,11 +437,11 @@
                                                                         <% if(start <= 1){ %>
                                                                             <button disabled>이전</button>
                                                                         <%}else{%>
-                                                                            <button type="button" onclick="location.href ='/board/0?start<%=start -1%>'">이전</button>
+                                                                            <button type="button" onclick="location.href ='/board/2?start<%=start -1%>'">이전</button>
                                                                         <% }for(let i=1 ; i <= page ; i++ ){ %>
-                                                                            <a href="/board/0?start=<%= i %>"><%= i %></a>
+                                                                            <a href="/board/2?start=<%= i %>"><%= i %></a>
                                                                         <% }if( 1 < page ){%>
-                                                                            <button type="button" onclick="location.href='/board/0?start=<%=start + 1%>'">다음</button>
+                                                                            <button type="button" onclick="location.href='/board/2?start=<%=start + 1%>'">다음</button>
                                                                         <% }else{ %> <button disabled>다음</button>
                                                                         <% } %>
                                                                         <%= 1 %> / <%= page %>

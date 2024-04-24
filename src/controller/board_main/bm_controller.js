@@ -73,7 +73,6 @@ const board_views = {
         let list;
         if(category_id == 0 ){
             list = await ser.boardRead.category_id(category_id);
-            console.log("list : ", list.length);
             num = list.length%20 == 0 ? 0 : 1;
             // console.log(num);
             page = Math.floor(list.length / 20) + num;
@@ -95,15 +94,23 @@ const board_views = {
     //     totalPage : data.totalPage,
     //     logoDataURI
     //  })   
+    },
+    search : async (req, res) => {
+            const keyword = req.query.keyword;
+            const results = await ser.searchPosts(keyword);
+            res.render('search', { results });
+    },
+    getPost: async (req, res) => {
+        const BOARD_ID = req.params.BOARD_ID;
+        try {
+            await ser.incrementViews(BOARD_ID);
+            const post = await ser.getPost(BOARD_ID); // 게시물 데이터 가져오기
+            res.render("data", { post }); // 게시물 데이터를 전달하여 data.ejs를 렌더링
+        } catch (error) {
+            console.log("조회수 증가 오류", error);
+            res.status(500).send("조회수 증가 중 오류가 발생했습니다.");
+        }
     }
-
-
-    // rep_register : async(req,res)=>{
-    //     const data = await ser.boardInsert.register(req.body);
-    //     console.log("ddd:" ,data)
-    //     res.json(data)
-    // }
-
 }
 rep_views = {
 replyData : async (req,res)=>{
