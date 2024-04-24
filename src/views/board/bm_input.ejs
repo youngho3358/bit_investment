@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,184 +12,298 @@
             display: inline-block;
             border: 1px solid black;
             float: left;
-            text-align: center; 
-        }   
-        .login-btn{
-            margin : 15px;
-            display: block;
-            width : 200px;
-            height : 33px;
-            text-align : center;
-            color : #fff;
-            border : 0;
-            background-color:  #14776a;
+            text-align: center;
         }
-        .register{
-            padding : 0 15px;
+
+        .login-btn {
+            margin: 15px;
+            display: block;
+            width: 200px;
+            height: 33px;
+            text-align: center;
+            color: #fff;
+            border: 0;
+            background-color: #14776a;
+        }
+
+        .register {
+            padding: 0 15px;
             position: relative;
             font-size: 15px;
-            color : black;
+            color: black;
         }
-        .search{
-            padding : 20px 0px 15px;
-            font-size :15px;
-            color : black;
+
+        .search {
+            padding: 20px 0px 15px;
+            font-size: 15px;
+            color: black;
         }
-        .log-out{
-            font-size :15px;
-            padding : 15px 0 12px;
+
+        .log-out {
+            font-size: 15px;
+            padding: 15px 0 12px;
         }
-        .left-menu{
-            font-size : 30px;
+
+        .left-menu {
+            font-size: 30px;
             text-align: center;
-            color : black;
+            color: black;
         }
-        .all{
+
+        .all {
             text-align: center;
-            font-size : 30px;
-            padding : 20px 0 15px;
+            font-size: 30px;
+            padding: 20px 0 15px;
         }
-        #ul>li{
-            list-style : none;
-            padding : 0px 20px 15px;
-            
-        }
-        .content{
-            width : 900px;
-            float : left;
-            border : 1;
-        }
-        .list{
-            list-style : none;
-            padding : 3px;
-        }
-        .newslist{
-            float : none;
-        }
-        .rows{
-            display: block;
-            cursor : pointer;
-            padding : 3px 5px;
-        }
-        .title{
-            font-weight : bold;
-            border-bottom : 1px solid black;
+
+        #ul>li {
+            list-style: none;
+            padding: 0px 20px 15px;
 
         }
-        .content-wrap{
+
+        .content {
+            width: 900px;
+            float: left;
+            border: 1;
+        }
+
+        .list {
+            list-style: none;
+            padding: 3px;
+        }
+
+        .newslist {
+            float: none;
+        }
+
+        .rows {
+            display: block;
+            cursor: pointer;
+            padding: 3px 5px;
+        }
+
+        .title {
+            font-weight: bold;
+            border-bottom: 1px solid black;
+
+        }
+
+        .content-wrap {}
+
+        #right-btn {
+            margin: 0px 0px 10px 0px;
+            text-align: right;
+        }
+
+        #btn {
+            display: inline-block;
+            padding: 0 25px;
+            height: 30px;
+            background: #fff;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            box-sizing: border-box;
+            color: #686868;
+            line-height: 30px;
+            text-align: center;
+            transition: .2s;
+            cursor: pointer;
+
+        }
+
+        #btn2 {
+            padding: 0 25px;
+            background: #444;
+            border: 1px solid #303030;
+            color: #fff;
+            display: inline-block;
+            height: 30px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            line-height: 30px;
+            text-align: center;
+            transition: .2s;
+            cursor: pointer;
+        }
+
+        #startbtn {
+            text-align: right;
+            cursor: pointer;
 
         }
     </style>
 </head>
+
 <body>
-        <header><%- include("header") %></header>
-        <div class="container" style="border: 1px solid black;">
-                <div class = "left-info">
-                    <h2>
-                        <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
-                    </h2>                
-                <div class="log-out">   
+    <header><%- include("header") %></header>
+    <div class="container" style="border: 1px solid black;">
+        <div class="left-info">
+            <h2>
+                <a href="/board" title="메인 페이지로 이동">메인으로 이동</a>
+            </h2>
+            <div class="log-out">
                 <p>"로그인을 해주세요"</p>
                 <br>
-                    <a href ="/login" class="login-btn">
-                        <img src="<%=logoDataURI%>" 
-                        alt="logo"
-                        height="30px"
-                        width = "130px"
-                        >
-                        로그인</a>  
-                    </div>
-                <div class="register">
-                    <a href = "/register">회원가입</a>&nbsp;&nbsp;&nbsp;
-                    <a href = "" >ID/Password 찾기</a>
-                </div>
-                <div class ="search" id="main-search">
-                    <form action ="" method="get">
-                        <input type ="text" name ="keyword" placeholder="게시판 검색">
-                        <button type ="submit">검색</button>
-                    </form>
-                </div>
-                <hr>
-                <div class ="left-menu">
+                <a href="/login" class="login-btn">
+                    <img src="<%=logoDataURI%>" alt="logo" height="30px" width="130px">
+                    로그인</a>
+            </div>
+            <div class="register">
+                <a href="/register">회원가입</a>&nbsp;&nbsp;&nbsp;
+                <a href="">ID/Password 찾기</a>
+            </div>
+            <div class="search" id="main-search">
+                <form action="" method="get">
+                    <input type="text" name="keyword" placeholder="게시판 검색">
+                    <button type="submit">검색</button>
+                </form>
+            </div>
+            <hr>
+            <div class="left-menu">
                 <br>
                 <div>
-                    <h3 class = "all">통합 게시판</h3>
-                    <ol id = "ul">
+                    <h3 class="all">통합 게시판</h3>
+                    <ol id="ul">
                         <li>
-                            <span style ="font-weight : bold">
-                                <a href ="/board/free">자유게시판</a>
+                            <span style="font-weight : bold">
+                                <a href="/board/0">자유게시판</a>
                             </span>
                         </li>
                         <li>
-                            <span style ="font-weight : bold">
-                                <a href ="/board/notice">공지사항</a>
+                            <span style="font-weight : bold">
+                                <a href="/board/1">공지사항</a>
                             </span>
                         </li>
                         <li>
-                            <span style ="font-weight : bold">
-                                <a href ="/board/news">뉴스</a>
+                            <span style="font-weight : bold">
+                                <a href="/board/2">뉴스</a>
                             </span>
                         </li>
                     </ol>
                 </div>
             </div>
-            </div>
-            <div class="content">
-                <section class="content-wrap">
-                    <article class="list-left">
-                        <div class="title">
-                            <h3 style="font-size: 23px">
-                                <a href="/board/news">뉴스 게시판</a>
-                            </h3>
-                        </div>
-                        <div class="newslist">
-                            <ul class="list">
-                                <% if (list.length === 0) { %>
-                                    <li class="rows"></li>
-                                <% } else { %>                                  
-                                    <% list.forEach(data => { %>
-                                        <li class="rows">
-                                            <a href="/board/data/<%= data.BOARD_ID %>">
-                                                <%= data.BOARD_TITLE %>
-                                            </a>
-                                            <hr>
-                                        </li>
-                                    <% }) %>
-                                <% } %> 
+        </div>
+        <div class="content">
+               <% for(let i; i < category_id.length; i++;) { %>
+                    <% if(category_id==0){ %>
+                        <%= category_id %>
+                            <div class="title">
+                                <div>
+                                    <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;">
+                                        코인 게시판 </h2>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <div class="news-list">
+                                    <div id="right-btn">
+                                        <input type="button" id="btn2" value="목록"
+                                            onclick="location.href ='/board/news'">
+                                        <input type="button" id="btn" value="글 쓰기"
+                                            onclick="location.href='/board/write_form'">
+                                    </div>
+                                    <div class="news-board">
+                                        <table style="width:100%" border="2">
+                                            <colgroup>
+                                                <col class="size01" data-alias="number">
+                                                <col class="size02" data-alias="subject">
+                                                <col class="size03" data-alias="writer">
+                                                <col class="size04" data-alias="date">
+                                                <col calss="size05" data-alias="view">
+                                            </colgroup>
+                                            <thead>
+                                                <Tr>
+                                                    <th>번호</th>
+                                                    <th>글쓴이</th>
+                                                    <th>제목</th>
+                                                    <th>등록일</th>
+                                                    <th>조회</th>
+                                                </Tr>
+                                            </thead>
 
-                            </ul>
-                        </div> 
-                    </article>
-                    <article class="list-right">
-                        <div class="title">
-                            <h3 style="font-size: 23px">
-                                <a href="/board/notice">공지사항 게시판</a>
-                            </h3>
-                        </div>
-                        <div class="newslist">
-                            <ul class="list">
-                                <% if (list.length === 0) { %>
-                                    <li class="rows">공지사항이 없습니다.</li>
-                                <% } else { %>                                  
-                                    <% list.forEach(data => { %>
-                                        <li class="rows">
-                                            <a href="/board/bm_notice/<%= data.BOARD_ID %>">
-                                                <%= data.BOARD_TITLE %>
-                                            </a>
-                                            <hr>
-                                        </li>
-                                    <% }) %>
-                                <% } %> 
-                            </ul>
-                        </div> 
-                    </article>
-                </section>
-            </div>
-            </div>
-            </div>
-            </div>
-        <div class= "footer">
+                                            <tbody style="text-align: center;">
+                                                <% if( list.length==0 ){%>
+                                                    <tr>
+                                                        <th colspan="5">아직 등록된 글이 없습니다</th>
+                                                    </tr>
+
+                                                    <%}else{ list.forEach(data=> {%>
+                                                        <tr>
+                                                            <td>
+                                                                <%=data.BOARD_ID%>
+                                                            </td>
+                                                            <td>
+                                                                <%=data.MEMBER_ID%>
+                                                            </td>
+                                                            <td><a href="/board/data/<%=data.BOARD_ID%>">
+                                                                    <%= data.BOARD_TITLE%>
+                                                                </a></td>
+
+                                                            <td>
+                                                                <%=data.BOARD_CREATE_DATE%>
+                                                            </td>
+                                                            <td>
+                                                                <%=data.Hit%>
+                                                            </td>
+                                                        </tr>
+                                                        <%}) }%>
+                                            </tbody>
+                                            <tr>
+                                                <td colspan="5" align="right">
+                                                    <% if(start <= 1){ %>
+                                                        <button disabled>이전</button>
+                                                    <%}else{%>
+                                                        <button type="button" onclick="location.href ='/board/0?start<%=start -1%>'">이전</button>
+                                                    <% }for(let i=1 ; i <= page ; i++ ){ %>
+                                                        <a href="/board/0?start=<%= i %>"><%= i %></a>
+                                                    <% }if( 1 < page ){%>
+                                                        <button type="button" onclick="location.href='/board/0?start=<%=start + 1%>'">다음</button>
+                                                    <% }else{ %> <button disabled>다음</button>
+                                                    <% } %>
+                                                    <%= 1 %> / <%= page %>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <% }else if(category_id==4){ %>
+                                    <%= category_id %>
+                                        <div class="title">
+                                            <section class="content-wrap">
+                                                <article class="list-left">
+                                            <h3 style="font-size: 23px">
+                                                <a href="/board/news">자유 게시판</a>
+                                            </h3>
+                                        </div>
+                                        <div class="newslist">
+                                            <ul class="list">
+                                                <% if (list.length===0) { %>
+                                                    <li class="rows"></li>
+                                                    <% } else { %>
+                                                        <% list.forEach(data=> { %>
+                                                            <li class="rows">
+                                                                <a href="/board/data/<%= data.BOARD_ID %>">
+                                                                    <%= data.BOARD_TITLE %>
+                                                                </a>
+                                                                <hr>
+                                                            </li>
+                                                            <% }) %>
+                                                                <% } %>
+
+                                            </ul>
+                                        </div>
+                                        <% } %>
+                                    <% } %>
+                </article>
+            </section>
         </div>
     </div>
+    </div>
+    </div>
+    <div class="footer">
+    </div>
+    </div>
 </body>
+
 </html>

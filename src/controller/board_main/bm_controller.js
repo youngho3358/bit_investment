@@ -11,8 +11,10 @@ const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
 const bm_input = async (req, res) => {
     const data = await ser.boardRead.list(req.query.start);
+
     res.render("board/bm_input",{
         data,
+        category_id : 4,
         list : data.list,
         start : data.start,
         totalPage : data.totalPage,
@@ -57,6 +59,7 @@ const board_views = {
     },
     bm_notice : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
+        console.log("list : ", data.list);
         res.render("board/bm_notice",{
             data,
             list : data.list,
@@ -66,14 +69,32 @@ const board_views = {
     })
 },
     category_id : async (req,res) =>{
-     const category_id = await ser.boardRead.category_id(req.params.category_id);
-     res.render("board/:category_id",{
-        category_id,
-        list : data.list,
-        start : data.start,
-        totalPage : data.totalPage,
-        logoDataURI
-     })   
+        let category_id = req.params.category_id;
+        let list;
+        if(category_id == 0 ){
+            list = await ser.boardRead.category_id(category_id);
+            console.log("list : ", list.length);
+            num = list.length%20 == 0 ? 0 : 1;
+            // console.log(num);
+            page = Math.floor(list.length / 20) + num;
+            // console.log(page)/;
+        }else if(category_id ==1){
+            list = await ser.boardRead.category_id(category_id)
+
+        }else if(category_id ==2){
+            list = await ser.boardRead.category_id(category_id)
+
+        }  
+        res.render("board/bm_input", {logoDataURI, list : list, category_id : category_id, page : page, start : 1});
+
+    //  const category_id = await ser.boardRead.category_id(req.params.category_id);
+    //  res.render("board/:category_id",{
+    //     category_id,
+    //     list : data.list,
+    //     start : data.start,
+    //     totalPage : data.totalPage,
+    //     logoDataURI
+    //  })   
     }
 
 

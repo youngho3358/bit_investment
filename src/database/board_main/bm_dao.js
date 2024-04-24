@@ -46,8 +46,9 @@ const boardRead ={
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'`;
         const result = await con.execute(sql);
-        return result;
 
+        //console.log("res:",result.rows.length);
+        return result.rows;
     }
 
 }
