@@ -40,8 +40,11 @@ const boardRead ={
     },
     cmtdata : async (num) =>{
         let cmtdata = await dao.boardRead.cmtdata(num);
-        cmtdata = common.timeModify(cmtdata.rows)
-        return cmtdata[0];
+        let cmt = cmtdata.rows
+        cmt = cmt.map((data) =>{
+                data.COMMENT_CREATE_DATE = data.COMMENT_CREATE_DATE.toLocaleString()});
+             
+        return cmt[0];
 
     },
     list : async (start) =>{

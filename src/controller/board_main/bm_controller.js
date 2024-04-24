@@ -25,7 +25,7 @@ const bm_input = async (req, res) => {
 const board_views = {
     data : async (req,res) => {
         const data = await ser.boardRead.data(req.params.num)
-        const cmtdata = await ser.boardRead.cmtdata(req.params.num)
+        //const cmtdata = await ser.boardRead.cmtdata(req.params.num)
         // const username = req.session.username;
         console.log("data 잘들어와? : ", data)
         console.log("cmtdata 잘들어와? : ", cmtdata)
@@ -34,7 +34,7 @@ const board_views = {
             // username,       
             list : data.list,
             start : data.start,
-            totalPage : data.totalPage, cmtdata,
+            totalPage : data.totalPage,
             logoDataURI
         });
     },
@@ -76,11 +76,11 @@ const board_views = {
         let list;
         if(category_id == 0 ){
             list = await ser.boardRead.category_id(category_id);
-            console.log("list : ", list.length);
+            console.log("list.length : ", list.length);
             num = list.length%20 == 0 ? 0 : 1;
             // console.log(num);
             page = Math.floor(list.length / 20) + num;
-            // console.log(page)/;
+            console.log("What is page? : ", page);
         }else if(category_id ==1){
             list = await ser.boardRead.category_id(category_id)
 

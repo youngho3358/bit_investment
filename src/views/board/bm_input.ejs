@@ -177,7 +177,7 @@
                         </li>
                         <li>
                             <span style="font-weight : bold">
-                                <a href="/board/2">뉴스</a>
+                                <a href="/board/2">코인 게시판</a>
                             </span>
                         </li>
                     </ol>
@@ -185,9 +185,7 @@
             </div>
         </div>
         <div class="content">
-               <% for(let i; i < category_id.length; i++) { %>
                     <% if(category_id==0){ %>
-                        <%= category_id %>
                             <div class="title">
                                 <div>
                                     <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;">
@@ -268,7 +266,6 @@
                                     </div>
                                 </div>
                                 <% }else if(category_id==4){ %>
-                                    <%= category_id %>
                                         <div class="title">
                                             <section class="content-wrap">
                                                 <article class="list-left">
@@ -293,8 +290,168 @@
 
                                             </ul>
                                         </div>
-                                        <% } %>
-                                    <% } %>
+                                        <% }else if (category_id== 1){ %>
+                                                <div class="title">
+                                                    <div>
+                                                        <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;">
+                                                            질문 게시판 </h2>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <div class="news-list">
+                                                        <div id="right-btn">
+                                                            <input type="button" id="btn2" value="목록"
+                                                                onclick="location.href ='/board/news'">
+                                                            <input type="button" id="btn" value="글 쓰기"
+                                                                onclick="location.href='/board/write_form'">
+                                                        </div>
+                                                        <div class="news-board">
+                                                            <table style="width:100%" border="2">
+                                                                <colgroup>
+                                                                    <col class="size01" data-alias="number">
+                                                                    <col class="size02" data-alias="subject">
+                                                                    <col class="size03" data-alias="writer">
+                                                                    <col class="size04" data-alias="date">
+                                                                    <col calss="size05" data-alias="view">
+                                                                </colgroup>
+                                                                <thead>
+                                                                    <Tr>
+                                                                        <th>번호</th>
+                                                                        <th>글쓴이</th>
+                                                                        <th>제목</th>
+                                                                        <th>등록일</th>
+                                                                        <th>조회</th>
+                                                                    </Tr>
+                                                                </thead>
+                    
+                                                                <tbody style="text-align: center;">
+                                                                    <% if( list.length==0 ){%>
+                                                                        <tr>
+                                                                            <th colspan="5">아직 등록된 글이 없습니다</th>
+                                                                        </tr>
+                    
+                                                                        <%}else{ list.forEach(data=> {%>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%=data.BOARD_ID%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=data.MEMBER_ID%>
+                                                                                </td>
+                                                                                <td><a href="/board/data/<%=data.BOARD_ID%>">
+                                                                                        <%= data.BOARD_TITLE%>
+                                                                                    </a></td>
+                    
+                                                                                <td>
+                                                                                    <%=data.BOARD_CREATE_DATE%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=data.Hit%>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <%}) }%>
+                                                                </tbody>
+                                                                <tr>
+                                                                    <td colspan="5" align="right">
+                                                                        <% if(start <= 1){ %>
+                                                                            <button disabled>이전</button>
+                                                                        <%}else{%>
+                                                                            <button type="button" onclick="location.href ='/board/0?start<%=start -1%>'">이전</button>
+                                                                        <% }for(let i=1 ; i <= page ; i++ ){ %>
+                                                                            <a href="/board/0?start=<%= i %>"><%= i %></a>
+                                                                        <% }if( 1 < page ){%>
+                                                                            <button type="button" onclick="location.href='/board/0?start=<%=start + 1%>'">다음</button>
+                                                                        <% }else{ %> <button disabled>다음</button>
+                                                                        <% } %>
+                                                                        <%= 1 %> / <%= page %>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                        <%}else if(category_id == 2){%>
+                                                <div class="title">
+                                                    <div>
+                                                        <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;">
+                                                            코인 게시판 </h2>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <div class="news-list">
+                                                        <div id="right-btn">
+                                                            <input type="button" id="btn2" value="목록"
+                                                                onclick="location.href ='/board/news'">
+                                                            <input type="button" id="btn" value="글 쓰기"
+                                                                onclick="location.href='/board/write_form'">
+                                                        </div>
+                                                        <div class="news-board">
+                                                            <table style="width:100%" border="2">
+                                                                <colgroup>
+                                                                    <col class="size01" data-alias="number">
+                                                                    <col class="size02" data-alias="subject">
+                                                                    <col class="size03" data-alias="writer">
+                                                                    <col class="size04" data-alias="date">
+                                                                    <col calss="size05" data-alias="view">
+                                                                </colgroup>
+                                                                <thead>
+                                                                    <Tr>
+                                                                        <th>번호</th>
+                                                                        <th>글쓴이</th>
+                                                                        <th>제목</th>
+                                                                        <th>등록일</th>
+                                                                        <th>조회</th>
+                                                                    </Tr>
+                                                                </thead>
+                    
+                                                                <tbody style="text-align: center;">
+                                                                    <% if( list.length==0 ){%>
+                                                                        <tr>
+                                                                            <th colspan="5">아직 등록된 글이 없습니다</th>
+                                                                        </tr>
+                    
+                                                                        <%}else{ list.forEach(data=> {%>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%=data.BOARD_ID%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=data.MEMBER_ID%>
+                                                                                </td>
+                                                                                <td><a href="/board/data/<%=data.BOARD_ID%>">
+                                                                                        <%= data.BOARD_TITLE%>
+                                                                                    </a></td>
+                    
+                                                                                <td>
+                                                                                    <%=data.BOARD_CREATE_DATE%>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%=data.Hit%>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <%}) }%>
+                                                                </tbody>
+                                                                <tr>
+                                                                    <td colspan="5" align="right">
+                                                                        <% if(start <= 1){ %>
+                                                                            <button disabled>이전</button>
+                                                                        <%}else{%>
+                                                                            <button type="button" onclick="location.href ='/board/0?start<%=start -1%>'">이전</button>
+                                                                        <% }for(let i=1 ; i <= page ; i++ ){ %>
+                                                                            <a href="/board/0?start=<%= i %>"><%= i %></a>
+                                                                        <% }if( 1 < page ){%>
+                                                                            <button type="button" onclick="location.href='/board/0?start=<%=start + 1%>'">다음</button>
+                                                                        <% }else{ %> <button disabled>다음</button>
+                                                                        <% } %>
+                                                                        <%= 1 %> / <%= page %>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                        <%}%>
+                                        
                 </article>
             </section>
         </div>
