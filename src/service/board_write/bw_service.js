@@ -2,7 +2,8 @@ const dao = require("../../database/board_write/bw_dao");
 const con = require("../../database/root_dao");
 
 const sessionCheck = (member) => {
-    if( !member || !member.id ){
+    if( !member || !member.member_id ){
+        console.log(member);
         msg = "로그인이 필요합니다";
         url = "/login";
         return getMessage(msg, url);
