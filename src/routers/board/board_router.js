@@ -17,5 +17,7 @@ router.post("/data/:BId",upload.single("img"), bwCtrl.board_Update.modify)
 router.get("/delete/:BId/:Img", bwCtrl.board_delete.delete)
 
 router.post("/comment/:BId", bwCtrl.board_Insert.cmtRegister)
+router.post("/cmtModify_form/:CId/:MId", bwCtrl.board_views.cmtModify_form)
+router.post("/cmtDelete/:CId/:MId", bwCtrl.board_delete.cmtDelete)
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const express = require("express");
-const ejs = require("ejs");
 const app = express();
 
 const sessionConfig = require("./config/cookie_session/cookie_session_config");

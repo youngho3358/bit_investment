@@ -17,13 +17,15 @@ const boardRead ={
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD where BOARD_ID ='${num}'`;
         const data = await con.execute(sql);
+        console.log("data는 들어와요? : ", data.rows)
         return data;
     },
     cmtdata : async(num) =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select * from BOARD_COMMENT where BOARD_ID ='${num}'`;
+        const sql = `select * from BOARD_COMMENT where BOARD_ID ='${num}' order by COMMENT_ID desc`;
         const cmtdata = await con.execute(sql);
-        return cmtdata;
+        console.log("DAO What is cmtdata.rows : ", cmtdata.rows)
+        return cmtdata.rows;
     },
     list : async (start, end) =>{
         const con = await oracledb.getConnection(dbConfig);

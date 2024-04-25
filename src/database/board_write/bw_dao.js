@@ -11,16 +11,20 @@ const boardRead = {
     lastWrite : async() => {
         const sql = `SELECT id FROM board ORDER BY id DESC LIMIT 1;`
         const insertedId = await (await con).execute(sql);
-        console.log("마지막 : ",insertedId); 
           
         return
+    },
+    cmtmodify_form : async ( CId )=>{
+    const sql = `select * from board_comment where COMMENT_ID ='${CId}'`;
+    const data = await ((await con).execute(sql));
+
+    return data.rows[0];
     }
 }
 
 const boardInsert = {
     
     write : async ( body, member )=>{
-        console.log("DAO member.member_id : ", member.member_id)
         const sql = 
 `insert into board(MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, IMAGE_LINK, CATEGORY_ID) 
 VALUES(:1, :2, :3, :4, :5)`;
@@ -28,27 +32,9 @@ VALUES(:1, :2, :3, :4, :5)`;
 
         return result;
     },
-    
-/* 게시글 작성 완료하면 리스트가 아니라 방금 쓴 글을 볼 수 있게 하려고 작업하다가 실패한것, 수정예정
-    write: async (body, member) => {
-        console.log("DAO member.member_id : ", member.member_id);
-        console.log("DAO body : ", body)
-        const sql = `INSERT INTO board (MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, IMAGE_LINK, CATEGORY_ID)
-                     VALUES (${member.member_id}, :title, :content, :img, :category)`;
-                     //VALUES (${member.member_id}, ${body.title}, ${body.content}, ${body.img}, ${body.dategory})`;
-        const result = await (await con).execute(sql);
-    
-        //const lastInsertedId = result[0].insertId;
-        //console.log('Inserted board_id:', lastInsertedId);
-    
-       //return { result, lastInsertedId };
-       return result;
-    },
-    */
 
     cmtRegister : async (comment, member, BId) => {
-        console.log("dao comment : ", comment)
-        console.log("dao BId : ", BId)
+
         const sql = 
             `insert into board_comment(BOARD_ID, MEMBER_ID, NICKNAME, COMMENT_CONTENT)
             values('${BId}', '${member.member_id}', '${member.nickname}', '${comment}')`;
@@ -75,11 +61,20 @@ const boardUpdate = {
 
         const result = await (await con).execute(sql, body)
         return result;
+    },
+    cmtmodify : async ( CId )=>{
+    const sql = `up`
     }
 }
 const board_Delete = {
     delete : async (BId) => {
-        const sql = `delete from board where BOARD_ID = ${BId}`
+        const sql = `delete from board where BOARD_ID = ${BId}`;
+            `delete from board_comment where BOARD_ID = ${BId}`;
+        const result = await (await con).execute(sql);
+        return result;
+    },
+    cmtDelete : async (CId)=>{
+        const sql = `delete from board_comment where COMMENT_ID = ${CId}`
         const result = await (await con).execute(sql);
         return result;
     }

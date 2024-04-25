@@ -224,36 +224,21 @@
         .cmtcontent {
             display: flex;
         }
+
+        .cmtBox {
+            font-size: 12px;
+            color: #aaa;            
+        }
+      hr{
+        background-color: #f8f8f8;
+
+      }
+  
     </style>
 </head>
 
 <body>
     <script>
-        // function rep() {
-        //     let form = {};
-        //     let arr = $("#frm").serializeArray();
-        //     arr.forEach(d => { form[d.username] = d.value; })
-        //     console.log("form : ", form)
-        //     fetch("/board/rep_register", {
-        //         method: "post",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify(form)
-        //     })
-        //         .then(res => res.json())
-        //         .then(result => {
-        //             if (result === 1)
-        //                 alert("댓글이 달렸습니다");
-
-        //             let html = "아이디 : " + form["id"] + " / ";
-        //             html += "작성일 : " + new Date().toLocaleString() + "<br>"
-        //             html += "제목 : " + form["title"] + "<br>";
-        //             html += "내용 : " + form["content"] + "<hr>"
-
-        //             const comment = document.getElementById("comment");
-        //             comment.insertAdjacentHTML("afterbegin", html);
-        //         });
-        // }
-
         function submitComment() {
             var commentInput = document.getElementById("commentInput").value;
             let board_id = document.getElementById("board_id").value;
@@ -275,7 +260,7 @@
                     alert("댓글이 작성되었습니다.");
                     location.href = `/board/data/${board_id}`;
                 }else{
-                    alert("문제 발생....!!!");
+                    alert("댓글 작성 문제발생\n댓글을 작성하지 못했습니다");
                 }
             })
             .catch(error => {
@@ -284,6 +269,98 @@
 }
 
 
+//어차피 각 댓글에 해당하는 댓글 고유넘버를 알기때문에, 그걸 가지고 모달창을 띄워서 수정하게 하고 update 하면 되겠다.
+;
+    function cmtModify(formElement) {
+        let comment_id = formElement.querySelector("#COMMENT_ID").value;
+        let member_id = formElement.querySelector("#MEMBER_ID").value;
+        let board_id = formElement.querySelector("#BOARD_ID").value;
+        let data = {
+            comment_id : comment_id,
+            member_id : member_id,
+            board_id : board_id
+        };
+       
+
+        fetch(`/board/cmtModify_form/${comment_id}/${member_id}`,{
+                method : "post",
+                headers : {"Content-Type":"application/json"},
+                body : JSON.stringify(data)
+        })
+        
+
+        .then(res => res.json()) 
+        .then(message => {
+            if(message === 0){
+                alert("로그인이 필요합니다.");
+                    location.href = "/login";
+                    return;
+            }else if(message === 1){
+                    alert("댓글 작성자만 수정이 가능합니다");
+                    location.href = `/board/data/${board_id}`;
+                    return;
+            }else if(message === 2){
+                
+            // type 속성이 없는 div 태그를 textarea로 변경하고 추가 속성 설정
+            var element = document.getElementById('cmtarea');
+            
+            var textarea = document.createElement('textarea');// 새로운 textarea 요소 생성
+            textarea.textContent = cmt.COMMENT_CONTENT;// textarea에 텍스트 내용 설정
+
+            // textarea의 속성 설정
+            textarea.rows = 5; // 행 수 설정
+            textarea.cols = 30; // 열 수 설정
+
+            // 원래 요소를 새로운 textarea로 대체
+            element.parentNode.replaceChild(textarea, element);
+            }else{
+                alert("댓글 수정 문제발생\n댓글을 수정하지 못했습니다");
+            }
+        })
+            .catch(error => {
+                console.error('문제 발생:', error);
+            });
+        }
+
+    function cmtDelete() {
+        let comment_id = document.getElementById("COMMENT_ID").value;
+        let member_id = document.getElementById("MEMBER_ID").value;
+        let board_id = document.getElementById("board_id").value;
+        let data = {
+            comment_id : comment_id,
+            member_id : member_id,
+            board_id : board_id
+        };
+
+        fetch(`/board/cmtDelete/${comment_id}/${member_id}`,{
+                method : "post",
+                headers : {"Content-Type":"application/json"},
+                body : JSON.stringify(data)
+        })
+        
+
+        .then(res => res.json()) 
+        .then(message => {
+            if(message === 0){
+                alert("로그인이 필요합니다.");
+                    location.href = "/login";
+                    return;
+            }else if(message === 1){
+                    alert("댓글 작성자만 삭제가 가능합니다");
+                    location.href = `/board/data/${board_id}`;
+                    return;
+            }else if(message === 2){
+                    alert("댓글이 삭제되었습니다");
+                    location.href = `/board/data/${board_id}`;
+                    return;
+            }else{
+                alert("댓글 삭제 문제발생\n댓글을 삭제하지 못했습니다");
+            }
+        })
+        .catch(error => {
+                console.error('문제 발생:', error);
+            });
+        }
     </script>
     <header><%- include("header") %></header>
     <div class="container" style="border: 1px solid black;">
@@ -389,25 +466,47 @@
                 </div>
                         <hr>
                         <div class="cmtcontent">
-                            <form id="NewComment">
+                            <form>
                                 <textarea id="commentInput" name="comment" rows="5" cols="80" placeholder="댓글을 입력해주세요"></textarea>
                                 <button type="button" style="padding: 25px;" onclick=submitComment()>등록</button>
                             </form>                            
                         </div>
+
                         <div>
-                            작성자 : <%= cmtdata.NICKNAME%><br>
-                            <%= cmtdata.COMMENT_CREATE_DATE%>
-                            <%= cmtdata.COMMENT_CONTENT%>
-                            <input type="button" value="수정">
-                            <input type="button" value="삭제">
-                        </div>
+                        <% if (cmtdata == undefined) { %>
+                            <script>
+                                var cmtBox = document.getElementById('cmtBox');
+                                cmtBox.style.display = 'none';
+                            </script>
+                        <% } else { %>
+                            <script>
+                                var cmtBox = document.getElementById('cmtBox');
+                                cmtBox.style.display = 'block';
+                            </script>
+                        
+                            <% for (let i = 0; i < cmtdata.length; i++) { %>
+                                <% let cmt = cmtdata[i]; %>
+                                <form id="cmt_<%= i %>">
+                                    <input type="hidden" id="COMMENT_ID" value="<%= cmt.COMMENT_ID %>">
+                                    <input type="hidden" id="MEMBER_ID" value="<%= cmt.MEMBER_ID %>">
+                                    <b><%= cmt.NICKNAME %></b><br>
+                                    <n id="cmtarea"><%= cmt.COMMENT_CONTENT %></n>
+                                    <br>
+                                    <span class="cmtBox"><%= cmt.COMMENT_CREATE_DATE %></span>
+                                    <input type="button" onclick="cmtModify('cmt_<%= i %>')" value="수정">
+                                    <input type="button" onclick="cmtDelete()" value="삭제">
+                                </form>
+                                <hr />
+                            <% } %>
+                        <% } %>
+                    </div>
+                        <input type="hidden" id="board_id" value="<%=data.BOARD_ID%>">
                     </div>
                 </div>
     </div>
     <div class="footer">
     </div>
     </div>
-    <input type="text" readonly style="display: none;" value="<%=data.BOARD_ID%>" id="board_id">
 </body>
 
 </html>

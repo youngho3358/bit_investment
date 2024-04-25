@@ -40,12 +40,13 @@ const boardRead ={
     },
     cmtdata : async (num) =>{
         let cmtdata = await dao.boardRead.cmtdata(num);
-        let cmt = cmtdata.rows
-        cmt = cmt.map((data) =>{
-                data.COMMENT_CREATE_DATE = data.COMMENT_CREATE_DATE.toLocaleString()});
-             
-        return cmt[0];
-
+        
+        for(let i =0 ; i < cmtdata.length ; i++){
+            cmtdata[i].COMMENT_CREATE_DATA = common.formatDate(cmtdata[i].COMMENT_CREATE_DATA);
+            console.log("Again Service What is cmtdata? : ", cmtdata)
+        }
+        
+        return cmtdata;
     },
     list : async (start) =>{
         const totalCounter = await dao.boardRead.totalContent();

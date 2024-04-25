@@ -7,7 +7,6 @@ const sessionCheck = (member) => {
         url = "/login";
         return getMessage(msg, url);
     }
-    console.log("세션 memeber_id 확인 완료")
     return 0;
 }
 const modifyCheck = (member, BId) => {
@@ -17,7 +16,6 @@ const modifyCheck = (member, BId) => {
         return getMessage(msg, url);
     }
     const result = dao.boardCheck.modifyCheck(member, BId)
-    console.log("세션멤버와 게시글작성멤버 동일한지 확인 완료")
 
     if(result != 0)
         return 1;
@@ -44,40 +42,28 @@ const boardRead = {
 
         //data = timeModify(data.rows);
         return data;
+    },
+    cmtmodify_form : async (CId)=>{
+        const result = await dao.boardRead.cmtmodify_form(CId);
+        return result;
     }
 }
 const boardInsert = {
     write : async (body, file, fileValidation, member) => {
-      
-        
+    
         let msg, url;
-        let message = {};
-        /*
-        if (!session.member_id) {
-            msg = "로그인이 필요합니다";
-            url = "/board/login";
-            return getMessage(msg, url);
-        }
-        */
-       
+        let message = {}; 
 
         if( fileValidation ){
             msg = fileValidation;
             url = "/board/write_form";
             return getMessage(msg, url);
         }
-
-
-
         if( file !== undefined ){
-            //body.origin_file_name = file.originalname;
             body.img = file.filename;
         }else{
-            //body.origin_file_name = "non";
             body.img  = "non";
         }
-
-        console.log("ser body : ", body)
 
         if(body.category == 5){
            msg = '카테고리를 선택해주세요';
@@ -103,12 +89,9 @@ const boardInsert = {
             message.url = url;
             return message;      
         }
-
-        
+  
         const result = await dao.boardInsert.write( body, member );
-        console.log("dao에서 나온 result : ", result)
 
-    
         message.result = result.rowsAffected;
         if( result.rowsAffected === 1 ){
             msg = "등록되었습니다!!!";
@@ -163,7 +146,6 @@ const boardUpdate = {
 }
 const boardDelete = {
     delete : (BId) => {
-        console.log("너는 아니? BId : ", BId)
         const result = dao.board_Delete.delete(BId);
 
         let msg, url;
@@ -178,6 +160,10 @@ const boardDelete = {
         }
         message.msg = getMessage(msg, url);
         return message;
+    },
+    cmtDelete : async (CId)=>{
+        const result = await dao.board_Delete.cmtDelete(CId);
+        return result;
     }
 }
 

@@ -42,17 +42,31 @@ const board_views = {
         const data = await service.boardRead.modify_form(BId);
        
         res.render("board_write/modify_form", {logoDataURI, data })
+    },
+    cmtModify_form : async (req,res) => {
+        const CId = req.params.CId;
+        const MId = req.params.MId;
+        let member = req.session.member;
+        if(!member){
+            res.json(0);
+            return;
+        }
+        if(member.member_id !== MId){
+            res.json(1);
+            return;
+        }
+        const message = await service.boardRead.cmtmodify_form(CId);
+        res.json(message)
     }
 }
 
 const board_Insert = {
     write : async (req, res) => {
         let member = req.session.member;
-        console.log("ctrl member? : ", member);
         const message = await service.boardInsert.write(
             req.body, req.file, req.fileValidation, member
         );
-            res.json( message);
+            res.json( message );
     } ,
     
     cmtRegister : async (req,res) => {
@@ -71,15 +85,9 @@ const board_Insert = {
 
 const board_Update = {
     modify : async (req,res) => {
-
-        //const deleteFile = req.body.img;
       
         const message = await service.boardUpdate.modify(req.body, req.file);
-        /*
-        if(req.file !== undefined && message.result === 1) {
-           this.file_process.delete(deleteFile);
-        }
-        */
+
         res.send(message.msg);
     }
 
@@ -106,12 +114,34 @@ const board_delete = {
         console.log("이미지 삭제 가동")
         if(Img !== 'non'){
             try{
-                console.log("이미지 이름 : ", Img)
             fs.unlinkSync(`./upload_file/${Img}`)
             }catch(err){
                 console.log(err)
             }
         }
+    },
+    cmtDelete : async (req, res) => {
+        const CId = req.params.CId;
+        const MId = req.params.MId;
+        let member = req.session.member;
+        if(!member){
+            res.json(0);
+            return;
+        }
+        if(member.member_id != MId){
+            res.json(1);
+            return;
+        }
+        const result = await service.boardDelete.cmtDelete(CId);
+        if( result.rowsAffected === 1 ){
+            res.json(2);
+            return;
+        }else{
+            res.json(9);
+            return;
+        }
+        
+
     }
 }
 
