@@ -59,7 +59,6 @@ const board_views = {
     },
     bm_notice : async (req,res)=> {
         const data = await ser.boardRead.list(req.query.start);
-        console.log("list : ", data.list);
         res.render("board/bm_notice",{
             data,
             list : data.list,
@@ -73,18 +72,27 @@ const board_views = {
         let list;
         if(category_id == 0 ){
             list = await ser.boardRead.category_id(category_id);
-            num = list.length%20 == 0 ? 0 : 1;
-            // console.log(num);
+        
+            num = list.length%30 == 0 ? 0 : 1;
             page = Math.floor(list.length / 20) + num;
-            // console.log(page)/;
         }else if(category_id ==1){
             list = await ser.boardRead.category_id(category_id)
 
+            num = list.length%30 == 0 ? 0 : 1;
+            page = Math.floor(list.length / 20) + num;
         }else if(category_id ==2){
             list = await ser.boardRead.category_id(category_id)
 
+            num = list.length%30 == 0 ? 0 : 1;
+            page = Math.floor(list.length / 20) + num;
         }  
-        res.render("board/bm_input", {logoDataURI, list : list, category_id : category_id, page : page, start : 1});
+        res.render("board/bm_input", {
+            start : 1,
+            page : page,
+            logoDataURI, 
+            list,
+            category_id : category_id, });
+        // page : page, start : 1
 
     //  const category_id = await ser.boardRead.category_id(req.params.category_id);
     //  res.render("board/:category_id",{

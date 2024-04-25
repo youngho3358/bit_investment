@@ -34,10 +34,9 @@ const boardRead ={
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD_COMMENT where BOARD_ID='${groupNum}'`;
         const result = await con.execute(sql);
-        console.log("result: " , result);
         return result;
     },
-    category_id : async(category_id) =>{
+    categoryById : async(category_id) =>{
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'`;
         const result = await con.execute(sql);

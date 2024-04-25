@@ -32,15 +32,13 @@ const common = require("./ser_common");
 // }
 const boardRead ={
     data : async (num)=>{
-        // boardUpdate.Hit(num);
-        // console.log("hit : ",num)
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
         return data[0];
     },
     list : async (start) =>{
         const totalCounter = await dao.boardRead.totalContent();
-        start = (start && start >1)?Number(start) :1;
+        start = (start && start > 1)?Number(start) : 1;
         const page = pageOperation(start, totalCounter);
         let list = await dao.boardRead.list(page.startNum, page.endNum);
         //console.log(data)
@@ -58,7 +56,8 @@ const boardRead ={
         return repData;
     },
     category_id : async(category_id) =>{
-        let data = await dao.boardRead.category_id(category_id);
+        let data = await dao.boardRead.categoryById(category_id);
+        // data = common.timeModify(data.rows);
         return data;
     },
     searchPosts : async(keyword)=>{
@@ -80,8 +79,8 @@ const boardRead ={
     // endNum = start가 알려준 페이지의 마지막 게시물 번호
     const pageOperation = (start, totalCounter)=>{
         let page = {};
-        const pageNum = 20;
-        const num = (totalCounter % pageNum === 0)?0:1;
+        const pageNum = 30;
+        const num = (totalCounter % pageNum === 0)? 0 : 1;
 
         page.totPage = parseInt(totalCounter/pageNum)+num;
 

@@ -38,7 +38,6 @@
             padding: 20px 0px 15px;
             font-size: 15px;
             color: black;
-            text-align: left;
         }
 
         .log-out {
@@ -229,30 +228,19 @@
 
 <body>
     <script>
-        // function rep() {
-        //     let form = {};
-        //     let arr = $("#frm").serializeArray();
-        //     arr.forEach(d => { form[d.username] = d.value; })
-        //     console.log("form : ", form)
-        //     fetch("/board/rep_register", {
-        //         method: "post",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify(form)
-        //     })
-        //         .then(res => res.json())
-        //         .then(result => {
-        //             if (result === 1)
-        //                 alert("댓글이 달렸습니다");
-
-        //             let html = "아이디 : " + form["id"] + " / ";
-        //             html += "작성일 : " + new Date().toLocaleString() + "<br>"
-        //             html += "제목 : " + form["title"] + "<br>";
-        //             html += "내용 : " + form["content"] + "<hr>"
-
-        //             const comment = document.getElementById("comment");
-        //             comment.insertAdjacentHTML("afterbegin", html);
-        //         });
-        // }
+const readURL = (input) => {
+    console.log( input )
+    console.log( input.files[0] )
+    const file = input.files[0];
+    if( file != "" ){
+        let reader = new FileReader();
+        reader.readAsDataURL( file )
+        reader.onload = (e) => {
+            console.log( e.target.result );
+            document.getElementById("img").src = e.target.result;
+        }
+    }
+}
 
     </script>
     <header><%- include("header") %></header>
@@ -315,6 +303,8 @@
                     </div>
                     <div class="articledate">
                         <%=data.BOARD_CREATE_DATE%>
+                        <Br>
+                        <%=data.imgage_link%>
                     </div>
                     <div class="articlehit">
                         조회 : <%=data.HIT %>
@@ -322,10 +312,12 @@
                 </div>
             </div>
             <div class = "headbtn">
-                <input type ="button" id="modibtn" value ="수정" 
-                    onclick="location.href='/board/modify_form/<%= data.BOARD_ID%>'">
-                <input type ="button" id="delbtn" value ="삭제" 
-                    onclick="location.href='/board/delete/<%= data.BOARD_ID%>/<%= data.IMAGE_LINK%>'">
+                <% if(data.MEMBER_ID ){%>
+                    <input type ="button" id="modibtn" value ="수정" 
+                        onclick="location.href='/board/modify_form/<%= data.BOARD_ID%>'">
+                    <input type ="button" id="delbtn" value ="삭제" 
+                        onclick="location.href='/board/delete/<%= data.BOARD_ID%>/<%= data.IMAGE_LINK%>'">
+               <%}%>
             </div>
             <br>
             <br>
@@ -334,7 +326,7 @@
             </div>
             <div class="content">
                 <div class="subview">
-                    <%= data.BOARD_CONTENT %>
+                <%= data.BOARD_CONTENT %>
                 </div>
                 <br>
                 <bR>
