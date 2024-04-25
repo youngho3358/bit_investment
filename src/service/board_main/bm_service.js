@@ -1,10 +1,11 @@
-const dao = require("../../database/board_main/bm_dao")
+const dao = require("../../database/board_main/bm_dao");
+const { search } = require("../../routers/board_main/bm_router");
 const common = require("./ser_common");
 
-boardUpdate = {
-    Hit : (num) =>{
-        dao.boardRead.Hit(num);
-    },
+// boardUpdate = {
+//     Hit : (num) =>{
+//         dao.boardRead.Hit(num);
+//     },
     // delete : (BOARD_ID) =>{
     //     dao.boardUpdate.delete(BOARD_ID);
     // },
@@ -28,11 +29,9 @@ boardUpdate = {
     //     }
     // }
 
-}
+// }
 const boardRead ={
     data : async (num)=>{
-        boardUpdate.Hit(num);
-        console.log("hit : ",num)
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
         
@@ -50,7 +49,7 @@ const boardRead ={
     },
     list : async (start) =>{
         const totalCounter = await dao.boardRead.totalContent();
-        start = (start && start >1)?Number(start) :1;
+        start = (start && start > 1)?Number(start) : 1;
         const page = pageOperation(start, totalCounter);
         let list = await dao.boardRead.list(page.startNum, page.endNum);
         //console.log(data)
@@ -68,10 +67,22 @@ const boardRead ={
         return repData;
     },
     category_id : async(category_id) =>{
-        let data = await dao.boardRead.category_id(category_id);
+        let data = await dao.boardRead.categoryById(category_id);
+        // data = common.timeModify(data.rows);
         return data;
+    },
+    searchPosts : async(keyword)=>{
+            const results = await dao.searchPosts(keyword);
+            return results;
+    },
+    incrementViews: async (BOARD_ID) => {
+        await dao.incrementViews(BOARD_ID);
+    },
+
+    getPost: async (BOARD_ID) => {
+        return await dao.getPostById(BOARD_ID);
     }
-}
+};
 
     // start = 몇번째 페이지, totalCounter = 총 게시물 개수
     // totpage = 총 페이지 개수
@@ -79,8 +90,8 @@ const boardRead ={
     // endNum = start가 알려준 페이지의 마지막 게시물 번호
     const pageOperation = (start, totalCounter)=>{
         let page = {};
-        const pageNum = 20;
-        const num = (totalCounter % pageNum === 0)?0:1;
+        const pageNum = 30;
+        const num = (totalCounter % pageNum === 0)? 0 : 1;
 
         page.totPage = parseInt(totalCounter/pageNum)+num;
 
@@ -118,4 +129,4 @@ const  getMessage = (msg, url) =>{
     return `<script>alert('${msg}'); location.href="${url}";</script>`;
 }
 
-module.exports ={boardUpdate,boardRead,pageOperation,getMessage};
+module.exports ={boardRead,pageOperation,getMessage};
