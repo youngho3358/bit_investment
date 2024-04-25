@@ -40,11 +40,7 @@ const boardRead ={
 
     categoryById : async(category_id) =>{
         const con = await oracledb.getConnection(dbConfig);
-<<<<<<< HEAD
-        const sql = `select * from BOARD where CATEGORY_ID ='${category_id}' order by BOARD_ID desc`;
-=======
         const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'order by BOARD_ID desc`;
->>>>>>> cjdvhen
         const result = await con.execute(sql);
         //console.log("res:",result.rows.length);
         return result.rows;
