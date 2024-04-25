@@ -49,9 +49,25 @@
         </div>
   
         <div class="toolbox_title">
-            <select id="CateVal" name="category" class="combobox" 
-                style="margin: auto;" onchange="category()">
+            <select id="CateVal" name="category" class="combobox" style="margin: auto;" onchange="category()">
+                <!--
+              <script>
+                var cate = [{ id: 0, title: '자유'}, { id: 1, title: '공지'},
+                            { id: 2, title: '코인'}];
+                var tag = '';
+                console.log("cate.length", cate.length)
+              </script>
+                <% for (let i = 0; i < cate.length; i++) { %>
+                    <% if (cate[i][0] == data.CATEGORY_ID) { %>
+                        <% tag += `<option value="${cate[i].id}" selected>${cate[i].title}</option>`; %>
+                    <% } else { %>
+                        <% tag += `<option value="${cate[i].id}">${cate[i].title}</option>`; %>
+                    <% } %>
+                <% } %>
+                <%= tag %>
+                    -->
             </select>
+    
            
 
             <b style="color: gray;">작성자 : <%=data.MEMBER_ID%></b>
@@ -88,30 +104,26 @@
 </div>
 <div class="footer"></div>
 <script>
-    window.onload = () =>{
-            var cate = [{ id: 0, title: '자유'}, { id: 1, title: '질문'},
-                        { id: 2, title: '뉴스'}, { id: 3, title: '공지'}];
+   window.onload = () =>{
+            var cate = [{ id: 0, title: '자유'}, { id: 1, title: '공지'},
+                        { id: 2, title: '코인'}];
     
             var tag;
-            for(var i=0; i<cate.length; i++){
-                if(cate[i][0] == '<%=data.CATEGORY_ID%>') {
+            for(var i=0 ; i < cate.length ; i++){
+                if(cate[i][0] == `${data.CATEGORY_ID}`) {
                     tag += `<option value=${cate[i].id} selected>${cate[i].title}</option>`;
                 };
                 tag += `<option value=${cate[i].id}>${cate[i].title}</option>`;
             };
-            $('#CateVal').append(tag);}
-            //document.querySelector("#nav").innerHTML = tag;        
+            $('#CateVal').append(tag);
+        }
       
-    
             const readURL = (input) => {
-                console.log( input )
-                console.log( input.files[0] )
                 const file = input.files[0];
                 if( file != "" ){
                     let reader = new FileReader();
                     reader.readAsDataURL( file )
                     reader.onload = (e) => {
-                    console.log( e.target.result );
                     document.getElementById("img").src = e.target.result;
                     }
                 }

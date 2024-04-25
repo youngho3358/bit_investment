@@ -73,6 +73,15 @@ const boardInsert = {
             message.url = url;
             return message;
         }
+        if(body.category == 1){
+            if(member.gread != 0)
+            msg = '공지는 관리자 계정만 작성할 수 있습니다';
+            url = "/board/write_form"
+ 
+             message.msg = msg;
+             message.url = url;
+             return message;
+         }
         if(body.title == ''){
             msg = '제목을 입력해주세요';
             url = "/board/write_form"
