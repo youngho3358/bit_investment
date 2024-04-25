@@ -30,7 +30,8 @@
         .register {
             padding: 0 15px;
             position: relative;
-            font-size: 15px;
+            font-size: 20px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             color: black;
         }
 
@@ -66,14 +67,6 @@
 
         .content {
             display: block;
-        }
-
-        .view {
-            font-size: 100%;
-            margin: 0px;
-            padding: 0px;
-            display: block;
-            float: none;
         }
 
         .Headview {
@@ -230,15 +223,33 @@
         }
       hr{
         background-color: #f8f8f8;
-
       }
-  
     </style>
 </head>
 
 <body>
     <script>
-        const readURL = (input) => {
+        window.onload = () =>{
+        let msg ="";
+        if(document.cookie.indexOf("Login=true") !== -1){
+            msg += `
+                <p>"나메님"</p>
+                <br>
+                <a href="/logout" class="login-btn">
+                    <img src="<%=logoDataURI%>" alt="logo" height="30px" width="130px">
+                    로그아웃</a>`
+        }else{
+            msg += `
+                <p>"로그인을 해주세요"</p>
+                <br>
+                <a href="/login" class="login-btn">
+                    <img src="<%=logoDataURI%>" alt="logo" height="30px" width="130px">
+                    로그인</a>`
+        }
+        document.querySelector(".log-out").innerHTML = msg;
+    }
+
+    const readURL = (input) => {
     console.log( input )
     console.log( input.files[0] )
     const file = input.files[0];
@@ -250,10 +261,7 @@
             document.getElementById("img").src = e.target.result;
         }
     }
-}
-        
-        
-        
+}        
         function submitComment() {
             var commentInput = document.getElementById("commentInput").value;
             let board_id = document.getElementById("board_id").value;
@@ -384,19 +392,9 @@
                 <a href ="/board" title ="메인 페이지로 이동">메인으로 이동</a>
             </h2>                
         <div class="log-out">   
-        <p>"로그인을 해주세요"</p>
-        <br>
-            <a href ="/login" class="login-btn">
-                <img src="<%=logoDataURI%>" 
-                alt="logo"
-                height="30px"
-                width = "130px"
-                >
-                로그인</a>  
             </div>
             <div class="register">
                 <a href="/register">회원가입</a>&nbsp;&nbsp;&nbsp;
-                <a href="">ID/Password 찾기</a>
             </div>
             <div class="search" id="main-search">
                 <form action="" method="get">

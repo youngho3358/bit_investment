@@ -6,11 +6,6 @@ const session = (session) =>{
     }
     return 0;
 }
-const getMesaage = (msg,url) =>{
-    return `<script> alert('${msg}');
-    location.href ="${url}";
-    </script>`;
-}
 const timeModify = (list) =>{
    list = list.map((data) => {
         data.BOARD_CREATE_DATE = data.BOARD_CREATE_DATE.toLocaleString();
@@ -35,4 +30,4 @@ var formattedDate = date.getFullYear() + '.' +
 // HTML의 요소에 삽입
 return formattedDate;
 }
-module.exports ={timeModify,session, getMesaage, formatDate};
+module.exports ={timeModify,session, formatDate};

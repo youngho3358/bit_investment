@@ -109,7 +109,6 @@ const board_delete = {
 
     },
     deleteImg : (Img) => {
-        console.log("이미지 삭제 가동")
         if(Img !== 'non'){
             try{
             fs.unlinkSync(`./upload_file/${Img}`)
