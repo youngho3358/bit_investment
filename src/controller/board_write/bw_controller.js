@@ -39,7 +39,7 @@ const board_views = {
         }
         const data = await service.boardRead.modify_form(BId);
        
-        res.render("board_write/modify_form", {logoDataURI, data })
+        res.render("board_write/modify_form", {logoDataURI, data})
     },
     cmtModify_form : async (req,res) => {
         const CId = req.params.CId;

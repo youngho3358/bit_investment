@@ -62,10 +62,13 @@ function Write() {
                 <a href="" class="top_menu_link" style="margin-left: 30px;">거래내역</a>
             </div>
             <div class="top_login_register_box">
-                <!--
-                <a href="/login" class="top_login_button">로그인</a>
-                <a href="" class="top_register_button">회원가입</a>
-                -->
+                <% if(member) { %>
+                    <a href="/login/userInfo" class="top_login_button">MY</a>
+                    <a href="/login/logout" class="top_register_button">로그아웃</a>
+                <%} else{ %>
+                    <a href="/login" class="top_login_button">로그인</a>
+                    <a href="/register" class="top_register_button">회원가입</a>
+                <%}%>
             </div>
         </div>
     </div>

@@ -19,9 +19,3 @@ app.use(express.static("public"));
 app.listen(3000, () => {
   console.log("3000 서버 구동");
 });
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> xodud5080
