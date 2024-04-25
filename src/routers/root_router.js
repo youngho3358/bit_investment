@@ -20,6 +20,12 @@ module.exports = (app) => {
   const registerRouter = require("./register/register_router")(app);
   app.use("/register", registerRouter);
 
+  const markgetRoter = require("./market/market_router")(app);
+  app.use("/market", markgetRoter);
+
+  const walletRouter = require("./wallet/wallet_router")(app);
+  app.use("/wallet", walletRouter);
+
   // root경로의 router
   const router = require("express").Router();
   router.get("/", (req, res) => {
@@ -27,15 +33,24 @@ module.exports = (app) => {
     const logoPath = "../../img/logo/banner_logo.png";
     const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
     const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
+
+    const copyrightPath = "../../img/logo/logo.png";
+    const copyrightBase64 = fs.readFileSync(path.join(__dirname, copyrightPath), 'base64');
+    const copyrightURI = `data:image/jpeg;base64,${copyrightBase64}`;
+
+    const mainPath = "../../img/main/main2.png";
+    const mainBase64 = fs.readFileSync(path.join(__dirname, mainPath), 'base64');
+    const mainURI = `data:image/jpeg;base64,${mainBase64}`;
     
     // 로그인 세션 정보를 로고 정보와 같이 보냄
     const sessionValue = {
       member : req.session.member,
-      logoDataURI : logoDataURI
+      logoDataURI : logoDataURI,
+      copyrightURI : copyrightURI,
+      mainURI : mainURI
     };
 
     res.render("root", sessionValue);
   })
-
   return router;
 };

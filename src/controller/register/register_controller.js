@@ -9,43 +9,54 @@ const views = {
         const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
         res.render("./register/register_input", {logoDataURI : logoDataURI});
-    },
+    }, 
 }
 
 const process = {
     register_check : async (req, res) => {
+        console.log("Req.body :", req.body);
         if (req.body.userId == "") {
-            res.send(`<script>alert("아이디를 입력해주세요");location.href="/register"</script>`);
+            res.send(`<script>alert("아이디를 입력해주세요");location.href="/register"</script>`); 
+            return;
         }
         if (req.body.userPwd == "") {
             res.send(`<script>alert("비밀번호를 입력해주세요");location.href="/register"</script>`);
+            return;
         }
         if (req.body.userPwdChk == "") {
             res.send(`<script>alert("비밀번호 재확인을 입력해주세요");location.href="/register"</script>`);
+            return;
         }
         if (req.body.userName == "") {
             res.send(`<script>alert("이름을 입력해주세요");location.href="/register"</script>`);
+            return;
         }
         if ((req.body.userPhone_1 == "") || (req.body.userPhone_2 == "") || (req.body.userPhone_3 == "")) {
             res.send(`<script>alert("휴대전화를 입력해주세요");location.href="/register"</script>`);
+            return;
         }
         if ((req.body.userAge == "NaN") || (req.body.userAgeMonth == undefined) || (req.body.userAgeDay == undefined)) {
             res.send(`<script>alert("생년월일을 입력해주세요");location.href="/register"</script>`);
+            return;
         }
         if (req.body.userGender == "") {
             res.send(`<script>alert("성별을 입력해주세요");location.href="/register"</script>`);
+            return;
         }
         if ((req.body.userEmail_id == "")) {
             res.send(`<script>alert("이메일을 입력해주세요");location.href="/register"</script>`);
+            return;
         }else{
             if ((req.body.userEmail_domain_auto != "type") || (req.body.userEmail_domain_write != "")) {
-                //console.log("이메일 입력했구나!!")
+
             }else{
                 res.send(`<script>alert("이메일을 입력해주세요");location.href="/register"</script>`);
+                return;
             }
         }
         if (req.body.userNickname == "") {
             res.send(`<script>alert("닉네임을 입력해주세요");location.href="/register"</script>`);
+            return;
         }
 
         let register_member = {};
@@ -74,7 +85,6 @@ const process = {
         register_member.loginType = 0;
         register_member.grade = 1;
 
-        // console.log(register_member);
 
         let result_id = await service.check.id_check(register_member.id);
         if (result_id == 1) {

@@ -110,7 +110,8 @@ const process = {
                 nickname : result.NICKNAME,
                 grade : result.GRADE,
                 login_type : result.LOGIN_TYPE,
-                id : result.ID
+                id : result.ID,
+                money : result.MONEY
             }
             req.session.member = member;
             res.redirect("/");
@@ -182,6 +183,7 @@ const process = {
 
         // 성공 시 1 반환, 실패 시 promise 반환
         let result = await service.register.changeNickname(changeNickname, originNickname);
+        console.log(result);
 
         if(result === 1){
             req.session.member.nickname = changeNickname;
