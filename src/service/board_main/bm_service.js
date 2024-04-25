@@ -49,12 +49,6 @@ const boardRead ={
         return data;
     },
 
-    replyData : async (groupNum) =>{
-        let repData = await dao.boardRead.replyData(groupNum);
-        repData = common.timeModify(repData.rows);
-        console.log("re : ", repData)
-        return repData;
-    },
     category_id : async(category_id) =>{
         let data = await dao.boardRead.categoryById(category_id);
         // data = common.timeModify(data.rows);

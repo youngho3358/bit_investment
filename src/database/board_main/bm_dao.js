@@ -30,12 +30,7 @@ const boardRead ={
         const totalContent = await con.execute(sql);
         return totalContent.rows[0]['COUNT(*)'];
     },
-    replyData : async(groupNum) =>{
-        const con = await oracledb.getConnection(dbConfig);
-        const sql = `select * from BOARD_COMMENT where BOARD_ID='${groupNum}'`;
-        const result = await con.execute(sql);
-        return result;
-    },
+
     categoryById : async(category_id) =>{
         const con = await oracledb.getConnection(dbConfig);
         const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'`;

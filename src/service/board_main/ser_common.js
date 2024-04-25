@@ -6,11 +6,6 @@ const session = (session) =>{
     }
     return 0;
 }
-const getMesaage = (msg,url) =>{
-    return `<script> alert('${msg}');
-    location.href ="${url}";
-    </script>`;
-}
 const timeModify = (list) =>{
    list = list.map((data) => {
         data.BOARD_CREATE_DATE = data.BOARD_CREATE_DATE.toLocaleString();
@@ -18,4 +13,4 @@ const timeModify = (list) =>{
     })
     return list;
 }
-module.exports ={timeModify,session, getMesaage};
+module.exports ={timeModify,session};

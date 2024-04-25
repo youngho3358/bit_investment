@@ -120,10 +120,5 @@ const board_views = {
         }
     }
 }
-rep_views = {
-replyData : async (req,res)=>{
-    const result = await ser.boardRead.replyData(req.params.groupNum);
-    res.json(result);
-}
-}
-module.exports ={bm_input,board_views,rep_views}
+
+module.exports ={bm_input,board_views}
