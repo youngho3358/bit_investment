@@ -148,6 +148,27 @@
             })
           }
         }
+
+        function hide_coin_button() {
+          // 테이블 행의 갯수 확인
+          let tr_num = document.querySelectorAll('#tr_num');
+
+          // 체크박스에 체크가 되었는지 확인
+          let checkbox = document.getElementById("hide_coin");
+          
+          for(let i=0; i<tr_num.length; i++){
+            let total_buy_result_toLocalestring = document.getElementById(`each_now_coin_cost_${i}`).textContent;
+
+            let total_buy_result = parseInt(total_buy_result_toLocalestring.replace(/,/g, ''), 10);
+            if(checkbox.checked){
+              if(total_buy_result < 10000){
+                document.querySelector(`.tr_num_${i}`).style.display = "none";
+              }
+            }else{
+              document.querySelector(`.tr_num_${i}`).style.display = "";
+            }
+          }
+        }
     </script>
     <style>
       * {
@@ -477,7 +498,7 @@
                 <div class="have_coin_list_text">
                     보유자산 목록
                     <div class="checkbox_hide_coin">
-                        <input type="checkbox" id="hide_coin">
+                        <input type="checkbox" id="hide_coin" onclick="hide_coin_button()">
                         <label for="hide_coin" class="hide_coin_text">거래미지원/소액 자산 숨기기 (평가금액 1만원 미만)</label>
                     </div>
                 </div>
@@ -534,7 +555,7 @@
                       <%}else if(Object.keys(have_coin_num)[i] == "ont"){%>
                         <%coin_name = "온톨로지"%>
                       <%}%>
-                      <tr id="tr_num">
+                      <tr id="tr_num" class="tr_num_<%=i%>">
                         <td id="coin_name_<%=i%>"><%=coin_name%></td>
                         <td id="coin_num_<%=i%>"><%=have_coin_num[(Object.keys(have_coin_num)[i])]%></td>
                         <td id="each_coin_buy_cost_<%=i%>"><%=(Number((each_coin_had_cost[(Object.keys(have_coin_num)[i])] * have_coin_num[(Object.keys(have_coin_num)[i])]).toFixed(0))).toLocaleString()%></td>

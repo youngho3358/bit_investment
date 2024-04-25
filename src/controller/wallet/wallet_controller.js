@@ -15,20 +15,19 @@ const blacklogo = `data:image/jpeg;base64,${blacklogoBase64}`;
 
 const views = {
     wallet_main : async (req, res) => {
-        // if(req.session.member){
+        if(req.session.member){
             let member = req.session.member;
             let have_coin_num = await service.get.have_coin_num(member.member_id);
             let each_coin_had_cost = await service.get.each_coin_had_cost(member.member_id);
-        //     res.render("./wallet/wallet_main", {member, whitelogo, blacklogo});
-        // }else{
-        //     res.send(`<script>
-        //                 alert("로그인 정보가 없습니다.");
-        //                 location.href = "/";
-        //                 </script>`);
-        //     return;
-        // }
+            res.render("./wallet/wallet_main", {member, whitelogo, blacklogo, have_coin_num, each_coin_had_cost});
+        }else{
+            res.send(`<script>
+                        alert("로그인 정보가 없습니다.");
+                        location.href = "/";
+                        </script>`);
+            return;
+        }
 
-        res.render("./wallet/wallet_main", {member, whitelogo, blacklogo, have_coin_num, each_coin_had_cost});
     },
     income : (req, res) => {
         // if(req.session.member){
