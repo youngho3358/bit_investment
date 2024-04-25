@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coin_investment</title>
+    <link rel="stylesheet" href="/css/bw_stylesheet.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>  
+
+    <script>
+
+function Write() {
+    var formData = new FormData(document.getElementById("NewWrite"));
+
+    fetch('/board/write', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json()) // JSON 파싱
+    .then(message => {
+    // 서버로부터 받은 데이터를 이용하여 동적으로 동작 수행
+        alert(message.msg);
+        location.href = message.url;
+    })
+    .catch(error => {
+        console.error('문제 발생:', error);
+    });
+}
+
+        function category(n) {
+                const CaVal = n.value;
+                document.getElementById(CateVal) = CaVal;
+            }
+
+
+       const readURL = (input) => {
+          const file = input.files[0];
+          if( file != "" ){
+              let reader = new FileReader();
+              reader.readAsDataURL( file )
+              reader.onload = (e) => {
+            document.getElementById("img").src = e.target.result;
+        }
+    }
+}
+
+        </script>
+</head>
+<body>
+<div class="wrap">
+    <div style="background-color: #14776a;">
+        <div class="header">
+            <div class="top_logo">
+                <a href="/">
+                    <img src="<%=logoDataURI%>" alt="logo" height="70px">
+                </a>
+            </div>
+            <div class="top_menu">
+                <a href="/market" class="top_menu_link" style="margin-left: 20px;">거래소</a>
+                <a href="/board" class="top_menu_link" style="margin-left: 30px;">게시판</a>
+                <a href="/wallet" class="top_menu_link" style="margin-left: 30px;">내 코인</a>
+                <a href="/history" class="top_menu_link" style="margin-left: 30px;">거래내역</a>
+            </div>
+            <div class="top_login_register_box">
+                <% if(member) { %>
+                    <a href="/login/userInfo" class="top_login_button">MY</a>
+                    <a href="/login/logout" class="top_register_button">로그아웃</a>
+                <%} else{ %>
+                    <a href="/login" class="top_login_button">로그인</a>
+                    <a href="/register" class="top_register_button">회원가입</a>
+                <%}%>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- -------------------------아래는 수정하지 말것-------------------------- -->
+    
+        <div class="container">
+            <form id="NewWrite" enctype="multipart/form-data">
+
+            <div class="board_top">
+
+                <b style="font-size: 30px;">게시글 쓰기</b>
+
+                <input type="button" class="button btnFade" onclick="Write()" value="완료">
+
+                <input type="button" class="button btnFade" value="목록보기" 
+                    onClick="location.href='/board'">
+                    
+            </div>
+            
+            <div class="toolbox_title">
+                <!--
+                    카테고리 : category
+                    자유게시판 : 0 / 공지게시판 : 1 / 코인게시판 : 2
+                    선택이 안되었을때 : 9 (글 등록이 안되게 한다)
+
+                    작성자 : id / 제목 : title / 이미지 : img / 내용 : content
+                -->
+                <select id="CateVal" name="category" class="combobox" 
+                style="margin: auto;" onchange="category()">
+                    <option value="9" selected>카테고리를 선택해주세요</option>
+                    <option value="0">자유</option>
+                    <option value="1">공지</option>
+                    <option value="2">코인</option>
+                </select> 
+                
+                
+                <b style="color: gray;">작성자 : <%= member.nickname %></b>
+                
+                <div style="height: 5px;"></div>
+                
+                <input type="text" class="titlebox" 
+                placeholder="제목을 입력해주세요" name="title" />
+                
+                <div style="height: 5px;"></div>
+                
+            </div>
+
+            <div class="toolbox_image">
+
+            
+                <div style="height: 30px;"> <b>이미지</b> </div> 
+
+                <div class="filebox">
+                <table>
+                    <td> <label for="file">파일찾기</label>  </td>
+                    <td> <input type="file" id= "file" name="img" onchange="readURL(this);"/> </td>
+                    <td> <img id="img" src="#" width=100 alt="선택된 이미지가 없습니다" /> </td>
+                </table>
+                  
+                </div>
+                </div>
+    
+                <textarea class="textarea" placeholder="내용을 입력하세요" 
+                    name="content"></textarea>
+ 
+            </form>              
+            </div>
+            <div class="footer"></div>
+</body>
+</html>
