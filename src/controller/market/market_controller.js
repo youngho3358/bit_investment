@@ -1,6 +1,7 @@
-const service = require("../../service/market/market_service")
+const service = require("../../service/market/market_service");
 const fs = require("fs");
 const path = require("path");
+
 
 const views = {
     market_form : (req, res) => {
@@ -23,7 +24,8 @@ const views = {
     market_coin_list : async (req, res) => {
         let data = await service.views.coin_insert();
         res.json(data);
-    }
+    },
+    
 }
 
 module.exports = {views};

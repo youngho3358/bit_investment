@@ -151,19 +151,69 @@
         .asking_trade_box{
           display: flex;
         }
+        #show_change{
+          margin-top: 4px; 
+          margin-bottom: 4px;
+          border: 1px solid white;
+        }
     </style>
     <script>
+      let coin_price0;
+      let coin_price1;
+      let coin_price2;
+      let coin_price3;
+      let coin_price4;
+      let coin_price5;
+      let coin_price6;
+      let coin_price7;
+      let coin_price8;
+      let coin_price9;
+      let coin_price10;
+      let coin_price11;
+      let coin_price12;
+      let coin_price13;
+      let coin_price14;
+      let coin_price15;
+      let coin_price16;
+      let coin_price17;
+      let coin_price18;
+      let coin_price19;
       window.onload = function() {
+
         var input = document.querySelector(".input")
         input.addEventListener("click", function() {
           this.setAttribute("placeholder", "")
         })
         input.addEventListener("blur", function() {
-        if (this.value === "") {
-          this.setAttribute("placeholder", "코인명/심볼검색");
-        }
+          if (this.value === "") {
+            this.setAttribute("placeholder", "코인명/심볼검색");
+          }
         });
+        setInterval(coin_change, 1000);
+        
+        const inputElement = document.querySelector('#input');
+        const coin_input = document.querySelectorAll('.coin_input');
+        const coin_kor_name = document.querySelectorAll('.coin_kor_name');
+        inputElement.addEventListener('input', function(event) {
+          const inputValue = event.target.value;
+          if (inputValue == "") {
+            for (let i = 0; i < coin_input.length; i++) {
+              coin_input[i].style.display="";
+            }
+          }else {
+            for(let i = 0; i < coin_kor_name.length; i++){
+              if ((coin_kor_name[i].textContent).includes(inputValue)) {
 
+                coin_input[i].style.display="";
+              }else{
+
+                coin_input[i].style.display="none";
+              }
+            }
+          }
+        });
+      }
+      const coin_change = () => {
         fetch("/market/coin_list", {
                     method : "post",
                     headers : {"Content-Type":"application/json"},
@@ -171,46 +221,312 @@
                 })
         .then(res => res.json())
         .then(data => {
+          for(let i = 0; i < data.length; i++) {
+            let num = (i).toString();
+            let up_box = ("up_box").concat(num);
+            let down_box = ("down_box").concat(num);
+            let up_line = ("up_line").concat(num);
+            let down_line = ("down_line").concat(num);
+            let coin_stock_price = ("coin_stock_price").concat(num);
+            let coin_stock_change_rate = ("coin_stock_change_rate").concat(num);
+            let coin_stock_kor_name = ("coin_stock_kor_name").concat(num);
+            let coin_stock_eng_name = ("coin_stock_eng_name").concat(num);
+            let coin_stock_change_price = ("coin_stock_change_price").concat(num);
+            let coin_stock_trans_price = ("coin_stock_trans_price").concat(num);
 
-          // console.log(Number(data[0].CHANGE_RATE));
-          // console.log(Math.abs(Number(data[0].CHANGE_RATE)));
-          for(let i = 0; i <= data.length; i++) {
-            if (Number(data[0].CHANGE_RATE) > 0) { 
-              document.querySelector("#up_box").style.height=String(Math.abs(Number(data[0].CHANGE_RATE))/3.3).concat("px");
-              document.querySelector("#down_box").style.height="0px";
-              console.log(String(data[0].HIGH_PRICE));
-              console.log(String(data[0].LOW_PRICE));
-              document.querySelector("#up_line").style.height;
-              document.querySelector("#down_line").style.height;
-
-              document.querySelector("#up_box").style.background="red";
-              document.querySelector("#up_line").style.background="red";
-              document.querySelector("#down_box").style.background="red";
-              document.querySelector("#down_line").style.background="red";
-              document.querySelector(".coin_stock_price").style.color="red";
-              document.querySelector(".coin_stock_change_rate").style.color="red";
-            }else if(Number(data[0].CHANGE_RATE) == 0){
-              document.querySelector("#up_box").style.background="gray";
-              document.querySelector("#up_line").style.background="gray";
-              document.querySelector("#down_box").style.background="gray";
-              document.querySelector("#down_line").style.background="gray";
-              document.querySelector(".coin_stock_price").style.color="gray";
-              document.querySelector(".coin_stock_change_rate").style.color="gray";
-            }else if(Number(data[0].CHANGE_RATE) < 0){
-              document.querySelector("#up_box").style.background="blue";
-              document.querySelector("#up_line").style.background="blue";
-              document.querySelector("#down_box").style.background="blue";
-              document.querySelector("#down_line").style.background="blue";
-              document.querySelector(".coin_stock_price").style.color="blue";
-              document.querySelector(".coin_stock_change_rate").style.color="blue";
+            if (Number(data[i].CHANGE_RATE) > 0) {
+              document.querySelector(`#${up_box}`).style.height=String(Math.abs(Number(data[i].CHANGE_RATE))/2.5).concat("px");
+              document.querySelector(`#${down_box}`).style.height="1px";
+              
+              if (((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${up_line}`).style.height=((((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[0].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${up_line}`).style.height="2px";
+              }
+              if (((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${down_line}`).style.height=((((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[0].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${down_line}`).style.height="2px";
+              }
+              document.querySelector(`#${up_box}`).style.background="red";
+              document.querySelector(`#${up_line}`).style.background="red";
+              document.querySelector(`#${down_box}`).style.background="red";
+              document.querySelector(`#${down_line}`).style.background="red";
+              document.querySelector(`.${coin_stock_price}`).style.color="red";
+              document.querySelector(`.${coin_stock_change_rate}`).style.color="red";
+            }else if(Number(data[i].CHANGE_RATE) == 0){
+              document.querySelector(`#${up_box}`).style.height=String(Math.abs(Number(data[i].CHANGE_RATE))/2.5).concat("px");
+              document.querySelector(`#${down_box}`).style.height="1px";
+              
+              if (((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${up_line}`).style.height=((((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${up_line}`).style.height="2px";
+              }
+              if (((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${down_line}`).style.height=((((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${down_line}`).style.height="2px";
+              }
+              document.querySelector(`#${up_box}`).style.background="gray";
+              document.querySelector(`#${up_line}`).style.background="gray";
+              document.querySelector(`#${down_box}`).style.background="gray";
+              document.querySelector(`#${down_line}`).style.background="gray";
+              document.querySelector(`.${coin_stock_price}`).style.color="gray";
+              document.querySelector(`.${coin_stock_change_rate}`).style.color="gray";
+            }else if(Number(data[i].CHANGE_RATE) < 0){
+              document.querySelector(`#${up_box}`).style.height=String(Math.abs(Number(data[i].CHANGE_RATE))/2.5).concat("px");
+              document.querySelector(`#${down_box}`).style.height="1px";
+              
+              if (((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${up_line}`).style.height=((((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${up_line}`).style.height="2px";
+              }
+              if (((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${down_line}`).style.height=((((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${down_line}`).style.height="2px";
+              }
+              document.querySelector(`#${up_box}`).style.background="blue";
+              document.querySelector(`#${up_line}`).style.background="blue";
+              document.querySelector(`#${down_box}`).style.background="blue";
+              document.querySelector(`#${down_line}`).style.background="blue";
+              document.querySelector(`.${coin_stock_price}`).style.color="blue";
+              document.querySelector(`.${coin_stock_change_rate}`).style.color="blue";
             }
-            document.querySelector("#coin_stock_kor_name").textContent = data[0].COIN_NAME;
-            document.querySelector("#coin_stock_eng_name").textContent = data[0].COIN_ENG_NAME;
-            document.querySelector("#coin_stock_price").textContent = data[0].NOW_PRICE;
-            document.querySelector("#coin_stock_change_rate").textContent = data[0].CHANGE_RATE;
-            document.querySelector("#coin_stock_change_price").textContent = data[0].CHANGE_PRICE;
-            document.querySelector("#coin_stock_trans_price").textContent = data[0].TRANS_PRICE;
+            document.querySelector(`#${coin_stock_kor_name}`).textContent = data[i].COIN_NAME;
+            document.querySelector(`#${coin_stock_eng_name}`).textContent = data[i].COIN_ENG_NAME;
+            document.querySelector(`#${coin_stock_price}`).textContent = data[i].NOW_PRICE;
+            document.querySelector(`#${coin_stock_change_rate}`).textContent = data[i].CHANGE_RATE;
+            document.querySelector(`#${coin_stock_change_price}`).textContent = data[i].CHANGE_PRICE;
+            document.querySelector(`#${coin_stock_trans_price}`).textContent = data[i].TRANS_PRICE;
           }
+
+          for(let i = 0; i < data.length; i++) {
+            if (i == 0) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price0 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price0 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price0 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price0 = data[i].NOW_PRICE;
+            }else if (i == 1) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price1 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price1 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price1 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price1 = data[i].NOW_PRICE;
+            }else if (i == 2) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price2 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price2 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price2 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price2 = data[i].NOW_PRICE;
+            }else if (i == 3) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price3 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price3 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price3 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price3 = data[i].NOW_PRICE;
+            }else if (i == 4) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price4 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price4 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price4 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price4 = data[i].NOW_PRICE;
+            }else if (i == 5) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price5 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price5 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price5 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price5 = data[i].NOW_PRICE;
+            }else if (i == 6) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price6 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price6 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price6 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price6 = data[i].NOW_PRICE;
+            }else if (i == 7) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price7 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price7 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price7 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price7 = data[i].NOW_PRICE;
+            }else if (i == 8) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price8 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price8 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price8 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price8 = data[i].NOW_PRICE;
+            }else if (i == 9) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price9 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price9 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price9 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price9 = data[i].NOW_PRICE;
+            }else if (i == 10) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price10 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price10 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price10 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price10 = data[i].NOW_PRICE;
+            }else if (i == 11) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price11 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price11 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price11 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price11 = data[i].NOW_PRICE;
+            }else if (i == 12) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price12 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price12 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price12 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price12 = data[i].NOW_PRICE;
+            }else if (i == 13) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price13 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price13 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price13 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price13 = data[i].NOW_PRICE;
+            }else if (i == 14) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price14 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price14 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price14 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price14 = data[i].NOW_PRICE;
+            }else if (i == 15) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price15 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price15 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price15 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price15 = data[i].NOW_PRICE;
+            }else if (i == 16) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price16 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price16 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price16 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price16 = data[i].NOW_PRICE;
+            }else if (i == 17) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price17 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price17 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price17 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price17 = data[i].NOW_PRICE;
+            }else if (i == 18) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price18 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price18 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price18 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price18 = data[i].NOW_PRICE;
+            }else if (i == 19) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price19 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price19 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price19 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price19 = data[i].NOW_PRICE;
+            }
+          }
+          return;
         });
       }
     </script>
@@ -256,7 +572,7 @@
           </section>
           <section class="coin_list" style="border: 1px solid black;"> 
             <div class="search" >
-              <input class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
+              <input id="input" class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
               <a style="cursor: pointer; margin-top: 7px;"><img src="<%= searchDataURI %>" height="35px" ></a>
             </div>
             <hr>
@@ -268,74 +584,41 @@
             </div>
            <hr>
             <div class="scroll_coin_list">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box" class="box" style="position: absolute; display: block; width: 14px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 6.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box" class="box" style="position: absolute; display: block; width: 14px; height: 1px; top:0px" ></span>
-                    <span id="down_line" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 6.3px; top: 0px;" ></span>
-                  </div>
+              <% for(let i = 0; i < 20; i++){ %>
+                <a id="coin_block_<%= i %>" style="cursor: pointer;">
+                  <div class="coin_input">
+                    <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
+                      <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
+                        <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
+                          <span id="up_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
+                          <span id="up_line<%= i %>" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
+                        </div>
+                        <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
+                          <span id="down_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
+                          <span id="down_line<%= i %>" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
+                        </div>
+                      </div>
+                      <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
+                        <label id="coin_stock_kor_name<%= i %>" class="coin_kor_name" style="font-weight: 600;"></label><br>
+                        <label id="coin_stock_eng_name<%= i %>"></label>
+                      </div>
+                      <div class="show_change<%= i %>" id="show_change">
+                        <div class="coin_stock_price<%= i %>" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
+                          <label id="coin_stock_price<%= i %>" class="coin_price" style="font-weight: 600;"></label>
+                        </div>
+                      </div>
+                      <div class="coin_stock_change_rate<%= i %>" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
+                        <label id="coin_stock_change_rate<%= i %>" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
+                        <label id="coin_stock_change_price<%= i %>" style="font-weight: 600;"></label>
+                      </div>
+                      <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
+                        <label id="coin_stock_trans_price<%= i %>" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
+                      </div>
+                    </div>
+                  </a>
+                  <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
                 </div>
-
-                <div class="coin_stock_name" style="width: 80px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name"></label>
-                </div>
-                <div class="coin_stock_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_price" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_change_rate" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              <div class="coin_stock" style="height: 60px;">asdf</div>
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-
+              <% } %>
             </div>
           </section>
         </div>
