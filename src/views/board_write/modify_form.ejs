@@ -50,22 +50,7 @@
   
         <div class="toolbox_title">
             <select id="CateVal" name="category" class="combobox" style="margin: auto;" onchange="category()">
-                <!--
-              <script>
-                var cate = [{ id: 0, title: '자유'}, { id: 1, title: '공지'},
-                            { id: 2, title: '코인'}];
-                var tag = '';
-                console.log("cate.length", cate.length)
-              </script>
-                <% for (let i = 0; i < cate.length; i++) { %>
-                    <% if (cate[i][0] == data.CATEGORY_ID) { %>
-                        <% tag += `<option value="${cate[i].id}" selected>${cate[i].title}</option>`; %>
-                    <% } else { %>
-                        <% tag += `<option value="${cate[i].id}">${cate[i].title}</option>`; %>
-                    <% } %>
-                <% } %>
-                <%= tag %>
-                    -->
+                
             </select>
     
            
@@ -89,7 +74,7 @@
             <table>
                 <td> <label for="file">파일찾기</label>  </td>
                 <td> <input type="file" id= "file" name="img" onchange="readURL(this);"/> </td>
-                <td> <img id="img" src="#" width=100 src="/upload_file/<%=data.IMAGE_LINK%>" /> </td>
+                <td> <img id="img" src="#" width=100 /> </td>
             </table>
               
             </div>
@@ -109,14 +94,21 @@
                         { id: 2, title: '코인'}];
     
             var tag;
-            for(var i=0 ; i < cate.length ; i++){
-                if(cate[i][0] == `${data.CATEGORY_ID}`) {
+            for(var i=0; i<cate.length; i++){
+                if(cate[i][0] == '<%=data.CATEGORY_ID%>') {
                     tag += `<option value=${cate[i].id} selected>${cate[i].title}</option>`;
                 };
                 tag += `<option value=${cate[i].id}>${cate[i].title}</option>`;
             };
             $('#CateVal').append(tag);
+        
+        
+            let reader = new FileReader();
+            reader.readAsDataURL( data.IMAGE_LINK )
+            reader.onload = (e) => {
+            document.getElementById("img").src = e.target.result;
         }
+    }
       
             const readURL = (input) => {
                 const file = input.files[0];
@@ -128,6 +120,7 @@
                     }
                 }
             }
+                
     
          function category(n) {
                         const CaVal = n.value;

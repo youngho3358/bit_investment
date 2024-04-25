@@ -103,11 +103,11 @@ const boardInsert = {
 
         message.result = result.rowsAffected;
         if( result.rowsAffected === 1 ){
-            msg = "등록되었습니다!!!";
+            msg = "게시글이 등록되었습니다";
             url = "/board";
 
         }else{
-            msg = "문제 발생!!!";
+            msg = "게시글 등록 문제 발생";
             url = "/board/write_form";
         }
         message.msg = msg;
@@ -142,10 +142,10 @@ const boardUpdate = {
         let message = {};
         message.result = result.rowsAffected;
         if(result !== 0){
-            msg = "수정 되었습니다";
+            msg = "게시글이 수정되었습니다";
             url = `/board/data/${body.BOARD_ID}`
         }else {
-            msg = "문제 발생"
+            msg = "게시글 수정 문제 발생"
             url = `/board/modify_form/${body.BOARD_ID}`
         }
         message.msg = getMessage(msg, url);
@@ -161,10 +161,10 @@ const boardDelete = {
         let message = {};
         message.result = result.rowsAffected;
         if(result !== 0){
-            msg = "삭제 되었습니다";
+            msg = "게시글이 삭제되었습니다";
             url = `/board/news`
         }else {
-            msg = "문제 발생"
+            msg = "게시글 삭제 문제 발생"
             url = `/board/data/${body.BOARD_ID}`
         }
         message.msg = getMessage(msg, url);
