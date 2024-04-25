@@ -240,7 +240,7 @@ const get = {
         return each_coin_had_cost;
     },
     each_now_coin_cost : async (coin) => {
-        let result = dao.get.each_now_coin_cost(coin);
+        let result = await dao.get.each_now_coin_cost(coin);
         return result;
     }
 }

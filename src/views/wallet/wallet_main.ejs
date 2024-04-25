@@ -114,7 +114,7 @@
           if(isNaN(money + total_buy_result)){
             document.getElementById("money_coin").textContent = ""
           }else{
-            document.getElementById("money_coin").textContent = (money + total_buy_result).toLocaleString();
+            document.getElementById("money_coin").textContent = (Number((money + total_buy_result).toFixed(0))).toLocaleString();
           }
         }
 
@@ -138,7 +138,7 @@
               let each_coin_buy_cost = parseInt(each_coin_buy_cost_toLocaleString.replace(/,/g, ''), 10);
 
               // 평가 손익 표현 부분
-              document.getElementById(`each_now_coin_result_${i}`).textContent = (each_coin_buy_cost - result).toLocaleString();
+              document.getElementById(`each_now_coin_result_${i}`).textContent = (Number((each_coin_buy_cost - result).toFixed(0))).toLocaleString();
 
               if((each_coin_buy_cost - result) > 0){
                 document.getElementById(`each_now_coin_result_${i}`).style.color = "red";
@@ -343,6 +343,7 @@
         margin-top: -8px;
         margin-left: 110px;
         font-family: monospace;
+        font-weight: bold;
       }
       #total_buy_coin_result_cost{
         position: absolute;
@@ -354,6 +355,7 @@
         margin-top: 8px;
         margin-left: 110px;
         font-family: monospace;
+        font-weight: bold;
       }
       #total_result_cost{
         position: absolute;
@@ -365,6 +367,7 @@
         margin-top: -8px;
         margin-left: 140px;
         font-family: monospace;
+        font-weight: bold;
       }
       #total_result_percent{
         position: absolute;
@@ -376,6 +379,7 @@
         margin-top: 8px;
         margin-left: 125px;
         font-family: monospace;
+        font-weight: bold;
       }
       .have_coin_list{
         position: relative;
@@ -533,7 +537,7 @@
                       <tr id="tr_num">
                         <td id="coin_name_<%=i%>"><%=coin_name%></td>
                         <td id="coin_num_<%=i%>"><%=have_coin_num[(Object.keys(have_coin_num)[i])]%></td>
-                        <td id="each_coin_buy_cost_<%=i%>"><%=(each_coin_had_cost[(Object.keys(have_coin_num)[i])] * have_coin_num[(Object.keys(have_coin_num)[i])]).toLocaleString()%></td>
+                        <td id="each_coin_buy_cost_<%=i%>"><%=(Number((each_coin_had_cost[(Object.keys(have_coin_num)[i])] * have_coin_num[(Object.keys(have_coin_num)[i])]).toFixed(0))).toLocaleString()%></td>
                         <td id="each_now_coin_cost_<%=i%>"></td>
                         <td id="each_now_coin_result_<%=i%>"></td>
                       </tr>
