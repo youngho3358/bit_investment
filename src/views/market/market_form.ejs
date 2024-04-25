@@ -118,24 +118,67 @@
           overflow-y: auto;
           height: 978px;
         }
-        .show_change{
+        #show_change{
           margin-top: 4px; 
           margin-bottom: 4px;
           border: 1px solid white;
         }
     </style>
     <script>
+      let coin_price0;
+      let coin_price1;
+      let coin_price2;
+      let coin_price3;
+      let coin_price4;
+      let coin_price5;
+      let coin_price6;
+      let coin_price7;
+      let coin_price8;
+      let coin_price9;
+      let coin_price10;
+      let coin_price11;
+      let coin_price12;
+      let coin_price13;
+      let coin_price14;
+      let coin_price15;
+      let coin_price16;
+      let coin_price17;
+      let coin_price18;
+      let coin_price19;
       window.onload = function() {
+
         var input = document.querySelector(".input")
         input.addEventListener("click", function() {
           this.setAttribute("placeholder", "")
         })
         input.addEventListener("blur", function() {
-        if (this.value === "") {
-          this.setAttribute("placeholder", "코인명/심볼검색");
-        }
+          if (this.value === "") {
+            this.setAttribute("placeholder", "코인명/심볼검색");
+          }
         });
         setInterval(coin_change, 1000);
+        
+        const inputElement = document.querySelector('#input');
+        const coin_input = document.querySelectorAll('.coin_input');
+        const coin_kor_name = document.querySelectorAll('.coin_kor_name');
+        inputElement.addEventListener('input', function(event) {
+          const inputValue = event.target.value;
+          if (inputValue == "") {
+            for (let i = 0; i < coin_input.length; i++) {
+              coin_input[i].style.display="";
+            }
+          }else {
+            for(let i = 0; i < coin_kor_name.length; i++){
+              if ((coin_kor_name[i].textContent).includes(inputValue)) {
+
+                coin_input[i].style.display="";
+              }else{
+
+                coin_input[i].style.display="none";
+              }
+            }
+          }
+        });
       }
       const coin_change = () => {
         fetch("/market/coin_list", {
@@ -226,6 +269,230 @@
             document.querySelector(`#${coin_stock_change_price}`).textContent = data[i].CHANGE_PRICE;
             document.querySelector(`#${coin_stock_trans_price}`).textContent = data[i].TRANS_PRICE;
           }
+
+          for(let i = 0; i < data.length; i++) {
+            if (i == 0) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price0 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price0 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price0 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price0 = data[i].NOW_PRICE;
+            }else if (i == 1) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price1 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price1 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price1 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price1 = data[i].NOW_PRICE;
+            }else if (i == 2) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price2 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price2 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price2 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price2 = data[i].NOW_PRICE;
+            }else if (i == 3) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price3 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price3 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price3 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price3 = data[i].NOW_PRICE;
+            }else if (i == 4) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price4 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price4 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price4 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price4 = data[i].NOW_PRICE;
+            }else if (i == 5) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price5 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price5 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price5 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price5 = data[i].NOW_PRICE;
+            }else if (i == 6) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price6 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price6 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price6 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price6 = data[i].NOW_PRICE;
+            }else if (i == 7) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price7 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price7 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price7 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price7 = data[i].NOW_PRICE;
+            }else if (i == 8) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price8 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price8 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price8 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price8 = data[i].NOW_PRICE;
+            }else if (i == 9) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price9 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price9 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price9 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price9 = data[i].NOW_PRICE;
+            }else if (i == 10) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price10 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price10 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price10 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price10 = data[i].NOW_PRICE;
+            }else if (i == 11) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price11 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price11 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price11 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price11 = data[i].NOW_PRICE;
+            }else if (i == 12) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price12 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price12 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price12 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price12 = data[i].NOW_PRICE;
+            }else if (i == 13) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price13 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price13 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price13 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price13 = data[i].NOW_PRICE;
+            }else if (i == 14) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price14 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price14 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price14 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price14 = data[i].NOW_PRICE;
+            }else if (i == 15) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price15 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price15 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price15 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price15 = data[i].NOW_PRICE;
+            }else if (i == 16) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price16 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price16 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price16 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price16 = data[i].NOW_PRICE;
+            }else if (i == 17) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price17 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price17 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price17 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price17 = data[i].NOW_PRICE;
+            }else if (i == 18) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price18 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price18 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price18 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price18 = data[i].NOW_PRICE;
+            }else if (i == 19) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price19 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price19 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price19 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price19 = data[i].NOW_PRICE;
+            }
+          }
           return;
         });
       }
@@ -262,11 +529,11 @@
         </div>
         <div class="container">
           <section class="coin_all" style="border: 1px solid black;">
-            asdf
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx6ErK84daUWmeB3jMquXDJSemwYAQIIqw-XntHP4hPw&s" style="width: 60px;">
           </section>
           <section class="coin_list" style="border: 1px solid black;"> 
             <div class="search" >
-              <input class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
+              <input id="input" class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
               <a style="cursor: pointer; margin-top: 7px;"><img src="<%= searchDataURI %>" height="35px" ></a>
             </div>
             <hr>
@@ -278,625 +545,41 @@
             </div>
            <hr>
             <div class="scroll_coin_list">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box0" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line0" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box0" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line0" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name0" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name0"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price0" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price0" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate0" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate0" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price0" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price0" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box1" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line1" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box1" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line1" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name1" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name1"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price1" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price1" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate1" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate1" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price1" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price1" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box2" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line2" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box2" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line2" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name2" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name2"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price2" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price2" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate2" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate2" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price2" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price2" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box3" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line3" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box3" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line3" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name3" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name3"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price3" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price3" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate3" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate3" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price3" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price3" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box4" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line4" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box4" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line4" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name4" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name4"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price4" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price4" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate4" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate4" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price4" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price4" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box5" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line5" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box5" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line5" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name5" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name5"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price5" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price5" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate5" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate5" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price5" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price5" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box6" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line6" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box6" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line6" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name6" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name6"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price6" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price6" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate6" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate6" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price6" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price6" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box7" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line7" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box7" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line7" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name7" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name7"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price7" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price7" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate7" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate7" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price7" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price7" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box8" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line8" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box8" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line8" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name8" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name8"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price8" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price8" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate8" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate8" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price8" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price8" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box9" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line9" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box9" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line9" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name9" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name9"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price9" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price9" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate9" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate9" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price9" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price9" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box10" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line10" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box10" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line10" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name10" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name10"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price10" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price10" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate10" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate10" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price10" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price10" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box11" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line11" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box11" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line11" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name11" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name11"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price11" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price11" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate11" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate11" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price11" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price11" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box12" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line12" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box12" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line12" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name12" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name12"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price12" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price12" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate12" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate12" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price12" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price12" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box13" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line13" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box13" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line13" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name13" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name13"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price13" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price13" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate13" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate13" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price13" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price13" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box14" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line14" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box14" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line14" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name14" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name14"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price14" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price14" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate14" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate14" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price14" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price14" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box15" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line15" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box15" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line15" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name15" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name15"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price15" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price15" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate15" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate15" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price15" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price15" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box16" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line16" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box16" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line16" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name16" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name16"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price16" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price16" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate16" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate16" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price16" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price16" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box17" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line17" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box17" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line17" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name17" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name17"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price17" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price17" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate17" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate17" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price17" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price17" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box18" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line18" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box18" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line18" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name18" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name18"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price18" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price18" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate18" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate18" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price18" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price18" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
-              <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
-              
-              <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
-                <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
-                  <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
-                    <span id="up_box19" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
-                    <span id="up_line19" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
-                  </div>
-                  <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
-                    <span id="down_box19" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
-                    <span id="down_line19" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
-                  </div>
-                </div>
-                <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
-                  <label id="coin_stock_kor_name19" style="font-weight: 600;"></label><br>
-                  <label id="coin_stock_eng_name19"></label>
-                </div>
-                <div class="show_change">
-                  <div class="coin_stock_price19" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
-                    <label id="coin_stock_price19" style="font-weight: 600;"></label>
-                  </div>
-                </div>
-                <div class="coin_stock_change_rate19" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_change_rate19" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
-                  <label id="coin_stock_change_price19" style="font-weight: 600;"></label>
-                </div>
-                <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
-                  <label id="coin_stock_trans_price19" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
-                </div>
-              </div>
-
+              <% for(let i = 0; i < 20; i++){ %>
+                <a id="coin_block_<%= i %>" style="cursor: pointer;">
+                  <div class="coin_input">
+                    <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
+                      <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
+                        <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
+                          <span id="up_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
+                          <span id="up_line<%= i %>" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
+                        </div>
+                        <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
+                          <span id="down_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
+                          <span id="down_line<%= i %>" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
+                        </div>
+                      </div>
+                      <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
+                        <label id="coin_stock_kor_name<%= i %>" class="coin_kor_name" style="font-weight: 600;"></label><br>
+                        <label id="coin_stock_eng_name<%= i %>"></label>
+                      </div>
+                      <div class="show_change<%= i %>" id="show_change">
+                        <div class="coin_stock_price<%= i %>" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
+                          <label id="coin_stock_price<%= i %>" class="coin_price" style="font-weight: 600;"></label>
+                        </div>
+                      </div>
+                      <div class="coin_stock_change_rate<%= i %>" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
+                        <label id="coin_stock_change_rate<%= i %>" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
+                        <label id="coin_stock_change_price<%= i %>" style="font-weight: 600;"></label>
+                      </div>
+                      <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
+                        <label id="coin_stock_trans_price<%= i %>" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
+                      </div>
+                    </div>
+                  </a>
+                  <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+                </div>
+              <% } %>
             </div>
           </section>
         </div>

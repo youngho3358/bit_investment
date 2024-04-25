@@ -239,7 +239,7 @@ ws.on("message", async (data) => {
         sbd.trans_price = Math.round(parsedData.acc_trade_price_24h / 1000000);
         sbd.trans_volume = parseFloat(parsedData.acc_trade_volume_24h.toFixed(3));
     }else if(parsedData.code == "KRW-ONG") {
-        ong.name = "온돌로지가스";
+        ong.name = "온톨로지가스";
         ong.eng_name = parsedData.code;
         ong.high_price = parsedData.high_price;
         ong.low_price = parsedData.low_price;
@@ -261,7 +261,7 @@ ws.on("message", async (data) => {
         sei.trans_price = Math.round(parsedData.acc_trade_price_24h / 1000000);
         sei.trans_volume = parseFloat(parsedData.acc_trade_volume_24h.toFixed(3));
     }else if(parsedData.code == "KRW-ONT") {
-        ont.name = "온돌로지";
+        ont.name = "온톨로지";
         ont.eng_name = parsedData.code;
         ont.high_price = parsedData.high_price;
         ont.low_price = parsedData.low_price;
