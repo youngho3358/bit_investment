@@ -179,6 +179,69 @@ const get = {
 
         // 총 평가 금액이 담긴 total_buy_coin_result_cost 를 반환
         return total_buy_coin_result_cost;
+    },
+    // 현재 가지고 있는 코인만 Object 형으로 반환
+    have_coin_num : async (member_id) => {
+        let have_coin_num = await dao.get.have_coin_num(member_id);
+        let lower_have_coin_num = {};
+
+        // 소문자로 변환
+        for (let key in have_coin_num) {
+            lower_have_coin_num[key.toLowerCase()] = have_coin_num[key];
+        }
+
+        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pundix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
+
+        // 코인의 갯수가 없는 경우 
+        for(let i=0; i<coin_list.length; i++){
+            if(lower_have_coin_num[coin_list[i]] == 0){
+                delete lower_have_coin_num[coin_list[i]];
+            }
+        }
+
+        return lower_have_coin_num;
+    },
+    // 코인 1개 구매 당 평균 매수가를 담는 함수
+    each_coin_had_cost : async (member_id) => {
+        let had_coin_cost = await dao.get.had_coin_cost(member_id);
+        let had_coin_num = await dao.get.had_coin_num(member_id);
+
+        let each_coin_had_cost = {
+            btc : 0,
+            eth : 0,
+            shib : 0,
+            bch : 0,
+            etc : 0,
+            btg : 0,
+            sol : 0,
+            doge : 0,
+            xrp : 0,
+            id : 0,
+            pundix : 0,
+            stx : 0,
+            aave : 0,
+            dot : 0,
+            avax : 0,
+            gas : 0,
+            sbd : 0,
+            ong : 0,
+            sei : 0,
+            ont : 0
+        };
+        let coin_list = ["btc","eth","shib","bch","etc","btg","sol","doge","xrp","id","pundix","stx","aave","dot","avax","gas","sbd","ong","sei","ont"];
+
+        for(let i=0; i<coin_list.length; i++){
+            if(isNaN(had_coin_cost[coin_list[i]] / had_coin_num[coin_list[i]])){
+                delete each_coin_had_cost[coin_list[i]];
+            }else{
+                each_coin_had_cost[coin_list[i]] = had_coin_cost[coin_list[i]] / had_coin_num[coin_list[i]];
+            }
+        }
+        return each_coin_had_cost;
+    },
+    each_now_coin_cost : async (coin) => {
+        let result = dao.get.each_now_coin_cost(coin);
+        return result;
     }
 }
 

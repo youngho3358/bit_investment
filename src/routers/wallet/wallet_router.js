@@ -17,5 +17,8 @@ module.exports = (app) => {
     // 총 평가 금액 확인
     router.post("/total_buy_coin_result_cost", walletCtrl.process.total_buy_coin_result_cost);
 
+    // 요청 코인 당 현재 가격 반환
+    router.post("/now_coin_cost", walletCtrl.process.now_coin_cost)
+
     return router;
 }

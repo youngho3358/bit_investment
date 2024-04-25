@@ -6,6 +6,7 @@
     <title>coin_investment</title>
     <script>
       
+      
       onload = async () => {
           // 보유 KRW 
           let money = document.getElementById("money");
@@ -47,7 +48,12 @@
 
           // 총 보유자산 1초 간격으로 갱신
           await setInterval(total_money, 1000);
+
+          // 평가 금액, 평가 손익 1초 간격으로 갱신
+          await setInterval(each_now_coin_cost, 1000);
+
         }
+        
 
         // 총 평가 금액 구하는 함수
         function total_buy_coin_result_cost() {
@@ -67,6 +73,7 @@
           })
         }
         
+
         // 총 평가 손익 구하는 함수
         function total_plus_minus() {
           let total_result_cost = document.getElementById("total_result_cost");
@@ -81,8 +88,6 @@
           let total_buy_result = parseInt(total_buy_result_string.replace(/,/g, ''), 10);
 
           if(isNaN(total_buy_result - total_buy)){
-            // total_result_cost.innerText = 0;
-            // total_result_percent.innerHTML = "0%";
           }else{
             total_result_cost.innerText = (total_buy_result - total_buy).toLocaleString();
             total_result_percent.innerText = ((total_buy_result - total_buy) / total_buy * 100).toFixed(2) + "%";
@@ -110,6 +115,37 @@
             document.getElementById("money_coin").textContent = ""
           }else{
             document.getElementById("money_coin").textContent = (money + total_buy_result).toLocaleString();
+          }
+        }
+
+        function each_now_coin_cost() {
+          let tr_num = document.querySelectorAll('#tr_num');
+
+          for(let i=0; i<tr_num.length; i++){
+            let coin_name = document.getElementById(`coin_name_${i}`).textContent;
+            let coin_num = document.getElementById(`coin_num_${i}`).textContent;
+
+            let data = {coin : coin_name};
+            fetch("/wallet/now_coin_cost",{
+              method : "post",
+              headers : {"Content-Type":"application/json"},
+              body : JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(result => {
+              document.getElementById(`each_now_coin_cost_${i}`).textContent = (result * coin_num).toLocaleString();
+              let each_coin_buy_cost_toLocaleString = document.getElementById(`each_coin_buy_cost_${i}`).textContent;
+              let each_coin_buy_cost = parseInt(each_coin_buy_cost_toLocaleString.replace(/,/g, ''), 10);
+
+              // 평가 손익 표현 부분
+              document.getElementById(`each_now_coin_result_${i}`).textContent = (each_coin_buy_cost - result).toLocaleString();
+
+              if((each_coin_buy_cost - result) > 0){
+                document.getElementById(`each_now_coin_result_${i}`).style.color = "red";
+              }else if((each_coin_buy_cost - result) < 0){
+                document.getElementById(`each_now_coin_result_${i}`).style.color = "blue";
+              }
+            })
           }
         }
     </script>
@@ -282,11 +318,11 @@
         width: 50%;
       }
       .have_coin_list_box{
-        border: 1px solid black;
         height: 657px;
       }
       .have_coin_list_text{
-        border: 1px solid black;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
         padding: 10px 20px;
         font-weight: bold;
       }
@@ -340,6 +376,23 @@
         margin-top: 8px;
         margin-left: 125px;
         font-family: monospace;
+      }
+      .have_coin_list{
+        position: relative;
+        height: 597px;
+        overflow: auto;
+      }
+      th{
+        background: lightgray;
+        border-bottom: 1px solid black;
+        height: 50px;
+      }
+      td{
+        /* background: rgba(211, 211, 211, 0.2); */
+        border-bottom: 1px solid black;
+        height: 90px;
+        text-align: center;
+        font-weight: bold;
       }
     </style>
   </head>
@@ -423,6 +476,70 @@
                         <input type="checkbox" id="hide_coin">
                         <label for="hide_coin" class="hide_coin_text">거래미지원/소액 자산 숨기기 (평가금액 1만원 미만)</label>
                     </div>
+                </div>
+                <div class="have_coin_list">
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                      <th>보유자산</th>
+                      <th>보유수량</th>
+                      <th>매수금액</th>
+                      <th>평가금액</th>
+                      <th>평가손익</th>
+                    </thead>
+                    <% let numOfKeys = Object.keys(have_coin_num).length %>
+                    <%for(let i = 0; i < numOfKeys; i++){%>
+                      <%let coin_name;%>
+                      <%if(Object.keys(have_coin_num)[i] == "btc"){%>
+                        <%coin_name = "비트코인"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "eth"){%>
+                        <%coin_name = "이더리움"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "shib"){%>
+                        <%coin_name = "시바이누"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "bch"){%>
+                        <%coin_name = "비트코인캐시"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "etc"){%>
+                        <%coin_name = "이더리움클래식"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "btg"){%>
+                        <%coin_name = "비트코인골드"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "sol"){%>
+                        <%coin_name = "솔라나"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "doge"){%>
+                        <%coin_name = "도지코인"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "xrp"){%>
+                        <%coin_name = "리플"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "id"){%>
+                        <%coin_name = "스페이스아이디"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "pundix"){%>
+                        <%coin_name = "펀디엑스"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "stx"){%>
+                        <%coin_name = "스택스"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "aave"){%>
+                        <%coin_name = "에이브"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "dot"){%>
+                        <%coin_name = "폴카닷"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "avax"){%>
+                        <%coin_name = "아발란체"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "gas"){%>
+                        <%coin_name = "가스"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "sbd"){%>
+                        <%coin_name = "스팀달러"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "ong"){%>
+                        <%coin_name = "온톨로지가스"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "sei"){%>
+                        <%coin_name = "세이"%>
+                      <%}else if(Object.keys(have_coin_num)[i] == "ont"){%>
+                        <%coin_name = "온톨로지"%>
+                      <%}%>
+                      <tr id="tr_num">
+                        <td id="coin_name_<%=i%>"><%=coin_name%></td>
+                        <td id="coin_num_<%=i%>"><%=have_coin_num[(Object.keys(have_coin_num)[i])]%></td>
+                        <td id="each_coin_buy_cost_<%=i%>"><%=(each_coin_had_cost[(Object.keys(have_coin_num)[i])] * have_coin_num[(Object.keys(have_coin_num)[i])]).toLocaleString()%></td>
+                        <td id="each_now_coin_cost_<%=i%>"></td>
+                        <td id="each_now_coin_result_<%=i%>"></td>
+                      </tr>
+                    <%}%>
+                  </table>
+                  <div id="have_coin_num" style="display: none;"><%=numOfKeys%></div>
                 </div>
             </div>
         </div>
