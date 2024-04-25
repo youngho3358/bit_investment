@@ -35,7 +35,7 @@ const boardRead ={
 },
     totalContent : async() =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select count(*) from BOARD`;
+        const sql = `select count(*) from BOARD order by BOARD_ID desc`;
         const totalContent = await con.execute(sql);
         return totalContent.rows[0]['COUNT(*)'];
     },
@@ -47,7 +47,7 @@ const boardRead ={
     },
     categoryById : async(category_id) =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'`;
+        const sql = `select * from BOARD where CATEGORY_ID ='${category_id}' order by BOARD_ID desc`;
         const result = await con.execute(sql);
         //console.log("res:",result.rows.length);
         return result.rows;
