@@ -58,8 +58,12 @@
           })
           .then(res => res.json())
           .then(result => {
-            document.getElementById("total_buy_coin_result_cost").innerText = result.toLocaleString();
-            return;
+            if(result.toLocaleString() == 0){
+              return;
+            }else{
+              document.getElementById("total_buy_coin_result_cost").innerText = result.toLocaleString();
+              return;
+            }
           })
         }
         
@@ -77,8 +81,8 @@
           let total_buy_result = parseInt(total_buy_result_string.replace(/,/g, ''), 10);
 
           if(isNaN(total_buy_result - total_buy)){
-            total_result_cost.innerText = 0;
-            total_result_percent.innerHTML = "0%";
+            // total_result_cost.innerText = 0;
+            // total_result_percent.innerHTML = "0%";
           }else{
             total_result_cost.innerText = (total_buy_result - total_buy).toLocaleString();
             total_result_percent.innerText = ((total_buy_result - total_buy) / total_buy * 100).toFixed(2) + "%";
@@ -288,7 +292,7 @@
       }
       .checkbox_hide_coin{
         display: inline-block;
-        margin-left: 800px;
+        margin-left: 732px;
       }
       .hide_coin_text:hover{
         cursor: pointer;
