@@ -9,6 +9,7 @@
     "ejs": "^3.1.9",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "hangul-js": "^0.2.6",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.4",
