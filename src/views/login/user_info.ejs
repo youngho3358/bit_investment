@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coin_investment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            display: block;
+        }
+        a {
+            text-decoration: none;
+        }
+        .wrap {
+            min-width: 1340px;
+            min-height: 1100px;
+            background: #f1f1f3;
+            padding-bottom: 20px;
+        }
+        .header {
+            width: 1280px;
+            height: 100px;
+            margin: 0px auto 0px;
+        }
+        .container_1 {
+            position: relative;
+            height: 100px;
+            width: 800px;
+            margin: 10px auto 0px;
+            border: 1px solid black;
+            background: rgb(255, 255, 255);
+        }
+        .container_2 {
+            position: relative;
+            display: flex;
+            height: 100px;
+            width: 800px;
+            margin: 0px auto 0px;
+            border: 1px solid black;
+            background: rgb(255, 255, 255);
+        }
+        .container_3 {
+            position: relative;
+            display: flex;
+            height: 300px;
+            width: 800px;
+            margin: 0px auto 0px;
+            border: 1px solid black;
+            background: rgb(255, 255, 255);
+        }
+        .top_login_register_box {
+            display: inline-block;
+            height: 20px;
+            margin-top: 40px;
+            margin-left: 910px;
+            font-size: 17px;
+            font-weight: bolder;
+            text-align: right;
+        }
+        .top_login_button {
+            font-size: 20px;
+            margin-right: 40px;
+            color: white;
+        }
+        .top_register_button {
+            font-size: 20px;
+            margin-right: 40px;
+            color: white;
+        }
+        .top_logo {
+            position: absolute;
+            width: 150px;
+            height: 70px;
+            margin-left: 30px;
+            margin-top: 15px;
+            border: none;
+            text-align: center;
+        }
+        .top_menu{
+            position: absolute;
+            width: 700px;
+            height: 70px;
+            margin-left: 210px;
+            margin-top: 15px;
+        }
+        .top_menu_link{
+            display: inline-block;
+            height: 26px;
+            margin-top: 22px;
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+        }
+        .myPage_box{
+            position: relative;
+            width: 800px;
+            margin: 60px auto 20px;
+        }
+        .trade_status_text_box{
+            margin-top: 38px;
+            margin-left: 20px;
+        }
+        .nickname{
+            display: inline-block;
+        }
+        .trade_status{
+            display: inline-block;
+            color: blue;
+        }
+        .text_userInfo_box{
+            position: relative;
+            width: 800px;
+            margin: 60px auto 15px;
+        }
+        .info_change_box{
+            position: absolute;
+            display: inline-block;
+            height: 30px;
+            margin-left: 550px;
+            margin-top: 41px;
+        }
+        .nickname_change{
+            background: #14776a;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 7px;
+            border-radius: 5px;
+        }
+        .info_change{
+            background: #14776a;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 7px;
+            border-radius: 5px;
+        }
+        .user_image_box{
+            position: absolute;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+        .user_image{
+            height: 80px;
+            border-radius: 100px;
+        }
+        .userInfo_1{
+            position: absolute;
+            margin-left: 130px;
+            margin-top: 28px;
+        }
+        .can_modify_text{
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        td{
+            text-align: center;
+        }
+        #bgcolor_sig{
+            background: #14776a;
+            color: white;
+        }
+        #bgcolor_sig2{
+            background: rgb(20, 119, 106, 0.6);
+            color: white;
+        }
+        .delete_id_box{
+            position: relative;
+            margin: 100px auto;
+            height: 30px;
+            width: 80px;
+            text-align: center;
+        }
+        .delete_id{
+            background: #14776a;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 7px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div style="background-color: #14776a;">
+            <div class="header">
+                <div class="top_logo">
+                    <a href="/">
+                        <img src="<%=whitelogo%>" 
+                            alt="logo"
+                            height="70px"
+                            >
+                    </a>
+                </div>
+                <div class="top_menu">
+                    <a href="" class="top_menu_link" style="margin-left: 20px;">거래소</a>
+                    <a href="" class="top_menu_link" style="margin-left: 30px;">게시판</a>
+                    <a href="" class="top_menu_link" style="margin-left: 30px;">내 코인</a>
+                    <a href="" class="top_menu_link" style="margin-left: 30px;">거래내역</a>
+                </div>
+                <div class="top_login_register_box">
+                    <% if(member) { %>
+                        <a href="/login/userInfo" class="top_login_button">MY</a>
+                        <a href="/login/logout" class="top_register_button">로그아웃</a>
+                    <%} else{ %>
+                        <a href="/login" class="top_login_button">로그인</a>
+                        <a href="/register" class="top_register_button">회원가입</a>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div class="myPage_box">
+            <h1>마이페이지</h1>
+        </div>
+        <div class="container_1">
+            <div class="trade_status_text_box">
+                <h4 class="nickname"><%=member.nickname%>&nbsp;님은</h4>
+                <h4 class="trade_status">가상 거래 및 입출금이 가능한</h4>
+                <h4 class="nickname">&nbsp;회원입니다.</h4>
+            </div>
+        </div>
+        <div class="text_userInfo_box">
+            <h3>내 정보</h3>
+        </div>
+        <div class="container_2">
+            <div class="user_image_box">
+                <img src="https://www.studiopeople.kr/common/img/default_profile.png" alt="내정보 이미지" class="user_image">
+            </div>
+            <div class="userInfo_1">
+                <h4><%=member.nickname%>&nbsp;님</h4>
+                <div class="can_modify_text">닉네임 및 기본정보 등을 수정하실 수 있습니다.</div>
+            </div>
+            <div class="info_change_box">
+                <a href="change_nickname" class="nickname_change">닉네임 변경</a>
+                <a href="edit_info_form" class="info_change">회원정보 수정</a>
+            </div>
+        </div>
+        <div class="text_userInfo_box">
+            <h3><%=member.nickname%>&nbsp;님의 현재 거래수수료</h3>
+        </div>
+        <div class="container_3">
+            <table border="1px" style="border-collapse: collapse; font-weight: bold;">
+                <tr id="bgcolor_sig">
+                    <th rowspan="2" style="width: 100px;"></th>
+                    <th colspan="2" style="width: 500px; height: 40px;">일반주문</th>
+                    <th rowspan="2" style="width: 200px;">예약주문</th>
+                </tr>
+                <tr id="bgcolor_sig">
+                    <th style="height: 40px;">Marker</th>
+                    <th>Taker</th>
+                </tr>
+                <tr>
+                    <td id="bgcolor_sig2">KRW 마켓</td>
+                    <td>0.05%</td>
+                    <td>0.05%</td>
+                    <td>0.139%</td>
+                </tr>
+                <tr>
+                    <td id="bgcolor_sig2">BTC 마켓</td>
+                    <td>0.25%</td>
+                    <td>0.25%</td>
+                    <td>0.25%</td>
+                </tr>
+                <tr>
+                    <td id="bgcolor_sig2">USDT 마켓</td>
+                    <td>0.25%</td>
+                    <td>0.25%</td>
+                    <td>0.25%</td>
+                </tr>
+            </table>
+        </div>
+        <div class="delete_id_box">
+            <a href="/login/delete_id" class="delete_id">회원 탈퇴</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -30,7 +30,8 @@
         .register {
             padding: 0 15px;
             position: relative;
-            font-size: 15px;
+            font-size: 20px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             color: black;
         }
 
@@ -138,7 +139,7 @@
 <script>
     window.onload = () =>{
         let msg ="";
-        if(document.cookie.indexOf("isLogin=true") !== -1){
+        if(document.cookie.indexOf("Login=true") !== -1){
             msg += `
                 <p>"나메님"</p>
                 <br>
@@ -165,18 +166,12 @@
                 <a href="/board" title="메인 페이지로 이동">메인으로 이동</a>
             </h2>
             <div class="log-out">
-                <p>"로그인을 해주세요"</p>
-                <br>
-                <a href="/login" class="login-btn">
-                    <img src="<%=logoDataURI%>" alt="logo" height="30px" width="130px">
-                    로그인</a>
             </div>
             <div class="register">
                 <a href="/register">회원가입</a>&nbsp;&nbsp;&nbsp;
-                <a href="">ID/Password 찾기</a>
             </div>
             <div class="search" id="main-search">
-                <form action="search" method="get">
+                <form action="/board/search" method="get">
                     <input type="text" name="keyword" placeholder="게시판 검색">
                     <button type="submit">검색</button>
                 </form>
@@ -185,7 +180,8 @@
             <div class="left-menu">
                 <br>
                 <div>
-                    <h3 class="all">통합 게시판</h3>
+                    <h3 class="all">
+                        통합 게시판 </h3>
                     <ol id="ul">
                         <li>
                             <span style="font-weight : bold">
@@ -211,7 +207,7 @@
                             <div class="title">
                                 <div>
                                     <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;">
-                                        코인 게시판 </h2>
+                                        자유 게시판 </h2>
                                 </div>
                                 <br>
                                 <br>
@@ -278,7 +274,7 @@
                                                         <button type="button" onclick="location.href ='/board/0?start=<%=start -1%>'">이전</button>
                                                     <% }for(let i=1 ; i <= page ; i++ ){ %>
                                                         <a href="/board/0?start=<%= i %>"></a>
-                                                        <%= i %>
+                                                
                                                     <% }if( start < page ){%>
                                                         <button type="button" onclick="location.href='/board/0?start=<%=start + 1%>'">다음</button>
                                                     <% }else{ %> <button disabled>다음</button>
@@ -294,7 +290,7 @@
                                             <section class="content-wrap">
                                                 <article class="list-left">
                                             <h3 style="font-size: 23px">
-                                                <a href="/board/">자유 게시판</a>
+                                                <a href="/board/0">통합 게시판</a>
                                             </h3>
                                         </div>
                                         <div class="newslist">
@@ -311,14 +307,16 @@
                                                             </li>
                                                             <% }) %>
                                                                 <% } %>
-
                                             </ul>
+                                        
+                                            </article>
+                                            </section>
                                         </div>
-                                        <% }else if (category_id== 1){ %>
-                                                <div class="title">
+                                        <% }else if (category_id==1){ %>
+                                            <div class="title">
                                                     <div>
                                                         <h2 style="background-color: rgb(0, 26, 255); color:antiquewhite; margin : auto;">
-                                                            질문 게시판 </h2>
+                                                            공지사항 </h2>
                                                     </div>
                                                     <br>
                                                     <br>
@@ -385,7 +383,7 @@
                                                                             <button type="button" onclick="location.href ='/board/1?start=<%=start -1%>'">이전</button>
                                                                         <% }for(let i=1 ; i <= page ; i++ ){ %>
                                                                             <a href="/board/1?start=<%= i %>"></a>
-                                                                            <%= i %>
+                                                                 
                                                                         <% }if( 1 < page ){%>
                                                                             <button type="button" onclick="location.href='/board/1?start=<%=start + 1%>'">다음</button>
                                                                         <% }else{ %> <button disabled>다음</button>
@@ -467,7 +465,7 @@
                                                                             <button type="button" onclick="location.href ='/board/2?start=<%=start -1%>'">이전</button>
                                                                         <% }for(let i=1 ; i <= page ; i++ ){ %>
                                                                             <a href="/board/2?start=<%= i %>"></a>
-                                                                            <%= i %>
+                                                                  
                                                                         <% }if( 1 < page ){%>
                                                                             <button type="button" onclick="location.href='/board/2?start=<%=start + 1%>'">다음</button>
                                                                         <% }else{ %> <button disabled>다음</button>
@@ -479,12 +477,11 @@
                                                         </div>
                                                     </div>
                                         <%}%>
-                                        
-                </article>
-            </section>
+
         </div>
     </div>
     </div>
+
     </div>
     <div class="footer">
     </div>

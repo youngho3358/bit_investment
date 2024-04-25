@@ -24,71 +24,41 @@ const bm_input = async (req, res) => {
 
 const board_views = {
     data : async (req,res) => {
+
         const data = await ser.boardRead.data(req.params.num)
+        const cmtdata = await ser.boardRead.cmtdata(req.params.num)
         // const username = req.session.username;
+
         res.render("board/data",{
             data,
             // username,       
             list : data.list,
             start : data.start,
             totalPage : data.totalPage,
+            cmtdata : cmtdata,
             logoDataURI
-        });
+        })
     },
-
-    bm_free : async (req,res)=> {
-        const data = await ser.boardRead.list(req.query.start);
-        res.render("board/bm_free",{
-            data,
-            list : data.list,
-            start : data.start,
-            totalPage : data.totalPage,
-            logoDataURI
-            
-    });
-},
-    news : async (req,res)=>{
-        const data = await ser.boardRead.list(req.query.start);
-        res.render("board/news", {
-            data,
-            list : data.list,
-            start : data.start,
-            totalPage : data.totalPage,
-            logoDataURI
-    });
-    },
-    bm_notice : async (req,res)=> {
-        const data = await ser.boardRead.list(req.query.start);
-        res.render("board/bm_notice",{
-            data,
-            list : data.list,
-            start : data.start,
-            totalPage : data.totalPage,
-            logoDataURI
-    })
-},
     category_id : async (req,res) =>{
         let category_id = req.params.category_id;
         let list;
         if(category_id == 0 ){
             list = await ser.boardRead.category_id(category_id);
-        
             num = list.length%30 == 0 ? 0 : 1;
             page = Math.floor(list.length / 20) + num;
         }else if(category_id ==1){
             list = await ser.boardRead.category_id(category_id)
-
             num = list.length%30 == 0 ? 0 : 1;
             page = Math.floor(list.length / 20) + num;
         }else if(category_id ==2){
             list = await ser.boardRead.category_id(category_id)
-
             num = list.length%30 == 0 ? 0 : 1;
             page = Math.floor(list.length / 20) + num;
         }  
+
         res.render("board/bm_input", {
             start : 1,
-            page : page,
+            page,
             logoDataURI, 
             list,
             category_id : category_id, });
@@ -106,7 +76,8 @@ const board_views = {
     search : async (req, res) => {
             const keyword = req.query.keyword;
             const results = await ser.searchPosts(keyword);
-            res.render('search', { results });
+
+            res.render('board/search', { results });
     },
     getPost: async (req, res) => {
         const BOARD_ID = req.params.BOARD_ID;

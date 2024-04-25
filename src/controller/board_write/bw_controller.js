@@ -7,79 +7,141 @@ const service = require("../../service/board_write/bw_service");
 session
 addr , age , email , grade , id , login_type , 
 member_id , name , nickname , phone
-*/
-const seMId = 9;
-const seNick = "일평";
 
+greade : 관리자>0 일반회원>1
+
+login type : 일반>0 카카오>1 네이버>2
+*/
 const logoPath = "../../../img/logo/banner_logo.png";
 const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
 const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
+
+
 const board_views = {
     writeForm : (req, res) => {
-
-        /*
-        const session = req.session;
-        const ID = req.session.userId;
-        const msg = service.sessionCheck( session );
+        
+        let member = req.session.member;
+       
+        const msg = service.sessionCheck( member );
         if( msg !== 0 ){
             return res.send( msg );
-        }, ID : session.id
-        */
-
+        }
         res.render("board_write/write_form",
-            {logoDataURI, seNick});
+            {logoDataURI, member});
+        
     },
     modify_form : async (req, res) => {
-        const data = await service.boardRead.modify_form(req.params.BId);
+        const BId = req.params.BId;
+        let member = req.session.member;
+       
+        const msg2 = service.modifyCheck( member, BId );
+        if( msg2 !== 1 ){
+            return res.send( msg2 );
+        }
+        const data = await service.boardRead.modify_form(BId);
        
         res.render("board_write/modify_form", {logoDataURI, data })
+    },
+    cmtModify_form : async (req,res) => {
+        const CId = req.params.CId;
+        const MId = req.params.MId;
+        let member = req.session.member;
+        if(!member){
+            res.json(0);
+            return;
+        }
+        if(member.member_id !== MId){
+            res.json(1);
+            return;
+        }
+        const message = await service.boardRead.cmtmodify_form(CId);
+        res.json(message)
     }
 }
+
 const board_Insert = {
     write : async (req, res) => {
-        const msg = await service.boardInsert.write(
-            req.body, req.file, req.fileValidation
+        let member = req.session.member;
+        const message = await service.boardInsert.write(
+            req.body, req.file, req.fileValidation, member
         );
-        res.send( msg );
-    }
+            res.json( message );
+    } ,
     
+    cmtRegister : async (req,res) => {
+        const BId = req.params.BId;
+        let member = req.session.member;
+        let comment = req.body.comment;
+        if(!member){
+            res.json(0);
+            return;
+        }
+
+        const result = await service.boardInsert.cmtRegister(comment, member, BId);
+        res.json(result);
+}
 }
 
 const board_Update = {
     modify : async (req,res) => {
-
-        //const deleteFile = req.body.img;
       
         const message = await service.boardUpdate.modify(req.body, req.file);
-        /*
-        if(req.file !== undefined && message.result === 1) {
-           this.file_process.delete(deleteFile);
-        }
-        */
-        let data = req.body
+
         res.send(message.msg);
-    }        
-}
+    }
+
+    }       
+
 
 const board_delete = {
     delete : (req, res) => {
-        board_delete.deleteImg(req.params.img);
-        service.boardDelete.delete(req.params.BId);
+        let member = req.session.member;
+       
+        const msg = service.sessionCheck( member );
+        if( msg !== 0 ){
+            return res.send( msg );
+        }
+
+        board_delete.deleteImg(req.params.Img);
+        const message = service.boardDelete.delete(req.params.BId);
         res.send(message.msg);
-        res.redirect("/board")
+
 
 
     },
-    deleteImg : (img) => {
-        if(img !== 'non'){
+    deleteImg : (Img) => {
+        if(Img !== 'non'){
             try{
-            fs.unlinkSync(`./upload_file/${img}`)
+            fs.unlinkSync(`./upload_file/${Img}`)
             }catch(err){
                 console.log(err)
             }
         }
+    },
+    cmtDelete : async (req, res) => {
+        const CId = req.params.CId;
+        const MId = req.params.MId;
+        let member = req.session.member;
+        if(!member){
+            res.json(0);
+            return;
+        }
+        if(member.member_id != MId){
+            res.json(1);
+            return;
+        }
+        const result = await service.boardDelete.cmtDelete(CId);
+        if( result.rowsAffected === 1 ){
+            res.json(2);
+            return;
+        }else{
+            res.json(9);
+            return;
+        }
+        
+
     }
 }
 
-module.exports = {seMId, seNick, board_views, board_Insert, board_Update, board_delete}
+module.exports = {board_views, board_Insert, board_Update, board_delete}

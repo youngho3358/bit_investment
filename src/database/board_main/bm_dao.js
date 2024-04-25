@@ -15,36 +15,41 @@ oracledb.autoCommit = true;
 const boardRead ={
     data : async(num) =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select * from BOARD where BOARD_ID ='${num}'`;
+        const sql = `select * from BOARD where BOARD_ID ='${num}' order by BOARD_ID desc`;
         const data = await con.execute(sql);
         return data;
+    },
+    cmtdata : async(num) =>{
+        const con = await oracledb.getConnection(dbConfig);
+        const sql = `select * from BOARD_COMMENT where BOARD_ID ='${num}' order by COMMENT_ID desc`;
+        const cmtdata = await con.execute(sql);
+        return cmtdata.rows;
     },
     list : async (start, end) =>{
         const con = await oracledb.getConnection(dbConfig);
         const list = await con.execute(`select * from (select rownum rn, A.* from (select * from BOARD order by BOARD_ID desc)A) where rn between ${start} and ${end}`);
+        //console.log("list : ", list.rows);
         return list.rows;
 },
     totalContent : async() =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select count(*) from BOARD`;
+        const sql = `select count(*) from BOARD order by BOARD_ID desc`;
         const totalContent = await con.execute(sql);
         return totalContent.rows[0]['COUNT(*)'];
     },
 
     categoryById : async(category_id) =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'`;
+        const sql = `select * from BOARD where CATEGORY_ID ='${category_id}'order by BOARD_ID desc`;
         const result = await con.execute(sql);
         //console.log("res:",result.rows.length);
         return result.rows;
     },
     searchPosts : async(keyword) =>{
         const con = await oracledb.getConnection(dbConfig);
-        const sql = `SELECT * FROM BOARD WHERE BOARD_TITLE LIKE ? OR BOARD_CONTENT LIKE ?`;
-        const params =[`%${keyword}%`,`%${keyword}%`];
-        const results = await con.execute(sql,params);
-        console.log("asdf : " ,sql,params)
-        return results.rows;
+        const query = `SELECT * FROM posts WHERE title LIKE '%${keyword}%' OR content LIKE '%${keyword}%'`;
+        const [rows] = await con.query(query);
+        return rows;
     },
     incrementViews: async (BOARD_ID) => {
         try{

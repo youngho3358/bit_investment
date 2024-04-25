@@ -6,68 +6,43 @@
     <title>coin_investment</title>
     <link rel="stylesheet" href="/css/bw_stylesheet.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>  
-    <!-- <script src="/static/js/image_read.js"></script> -->
-    <script>
-            //window.onscroll = function(){}
-        /*
-        $(document).ready(function() {
-        $(window).scroll(function() {
-            if ($(document).scrollTop() > 118) {
-                $("p").addClass("board_top01");
-                $("nav").addClass("space");
-            } else {
-                $("p").removeClass("board_top01");
-                $("nav").removeClass("space");
-            }
-            if ($(document).scrollLeft() >= 1) {
-                $("p").removeClass("board_top01");
-                $("nav").removeClass("space");
-            }
-        });
-        });
-        */
 
+    <script>
+
+function Write() {
+    var formData = new FormData(document.getElementById("NewWrite"));
+
+    fetch('/board/write', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json()) // JSON 파싱
+    .then(message => {
+    // 서버로부터 받은 데이터를 이용하여 동적으로 동작 수행
+        alert(message.msg);
+        location.href = message.url;
+    })
+    .catch(error => {
+        console.error('문제 발생:', error);
+    });
+}
 
         function category(n) {
                 const CaVal = n.value;
                 document.getElementById(CateVal) = CaVal;
             }
 
-        /*
-        function setThumbnail(event) {
-            console.log("event : ", event);
-            for (var image of event.target.files) {
-                var reader = new FileReader();
-                
-                reader.onload = function(event) {
-                    console.log("event : ", event);
-                    var img = document.createElement("img");
-                    img.setAttribute("src", event.target.result);
-                    document.querySelector("div#image_container").appendChild(img);
-                };
-                
-                console.log(image);
-                reader.readAsDataURL(image);
-            }
-        }
-        */
 
-
-          
-      const readURL = (input) => {
-          console.log( input )
-          console.log( input.files[0] )
+       const readURL = (input) => {
           const file = input.files[0];
           if( file != "" ){
               let reader = new FileReader();
               reader.readAsDataURL( file )
               reader.onload = (e) => {
-            console.log( e.target.result );
             document.getElementById("img").src = e.target.result;
         }
     }
 }
-
 
         </script>
 </head>
@@ -99,21 +74,20 @@
     <!-- -------------------------아래는 수정하지 말것-------------------------- -->
     
         <div class="container">
-            <form method="post" action="/board/write" enctype="multipart/form-data">
+            <form id="NewWrite" enctype="multipart/form-data">
 
             <div class="board_top">
 
                 <b style="font-size: 30px;">게시글 쓰기</b>
 
-                <input type="submit" class="button btnFade"  value="완료">
+                <input type="button" class="button btnFade" onclick="Write()" value="완료">
 
                 <input type="button" class="button btnFade" value="목록보기" 
                     onClick="location.href='/board'">
                     
             </div>
-      
+            
             <div class="toolbox_title">
-                
                 <!--
                     카테고리 : category
                     자유게시판 : 0 / 질문게시판 : 1 / 뉴스게시판 : 2 / 공지게시판 : 3
@@ -131,7 +105,7 @@
                 </select> 
                 
                 
-                <b style="color: gray;">작성자 : <%= seNick %></b>
+                <b style="color: gray;">작성자 : <%= member.nickname %></b>
                 
                 <div style="height: 5px;"></div>
                 
@@ -143,13 +117,7 @@
             </div>
 
             <div class="toolbox_image">
-                <script>
-                $("#file").on('change',function(){
-                    var fileName = $("#file").val();
-                    $(".upload-name").val(fileName);
-                  });
-                </script>
-                  
+
             
                 <div style="height: 30px;"> <b>이미지</b> </div> 
 
@@ -161,25 +129,11 @@
                 </table>
                   
                 </div>
-                <!-- 
-                <input class="upload-name" value="첨부파일" placeholder="첨부파일">
-                    <input type="file" name="img" onchange="readURL(this);"/> <br>
-                    
-                    on multiple
-                <input type="file" name="image" accept="image/*" onchange="setThumbnail(event);" multiple/>
-                <div id="image_container" class="thumbnail" alt="선택된 이미지가 없습니다">
-                    <div class="XBox">X</div> 
                 </div>
-            -->
-                </div>
-
-         
-                
+    
                 <textarea class="textarea" placeholder="내용을 입력하세요" 
                     name="content"></textarea>
-
-     
-             
+ 
             </form>              
             </div>
             <div class="footer"></div>

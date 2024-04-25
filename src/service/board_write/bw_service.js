@@ -1,11 +1,24 @@
 const dao = require("../../database/board_write/bw_dao");
+const con = require("../../database/root_dao");
 
-const sessionCheck = (session) => {
-    if( !session || !session.id ){
+const sessionCheck = (member) => {
+    if( !member || !member.id ){
         msg = "로그인이 필요합니다";
-        url = "../routers/login/login_router";
+        url = "/login";
         return getMessage(msg, url);
     }
+    return 0;
+}
+const modifyCheck = (member, BId) => {
+    if( !member || !member.id ){
+        msg = "로그인이 필요합니다";
+        url = "/login";
+        return getMessage(msg, url);
+    }
+    const result = dao.boardCheck.modifyCheck(member, BId)
+
+    if(result != 0)
+        return 1;
     return 0;
 }
 
@@ -29,45 +42,77 @@ const boardRead = {
 
         //data = timeModify(data.rows);
         return data;
+    },
+    cmtmodify_form : async (CId)=>{
+        const result = await dao.boardRead.cmtmodify_form(CId);
+        return result;
     }
 }
-
 const boardInsert = {
-    write : async (body, file, fileValidation ) => {
+    write : async (body, file, fileValidation, member) => {
+    
         let msg, url;
-        /*
-        if (!session.member_id) {
-            msg = "로그인이 필요합니다";
-            url = "/board/login";
-            return getMessage(msg, url);
-        }
-        */
+        let message = {}; 
 
         if( fileValidation ){
             msg = fileValidation;
             url = "/board/write_form";
             return getMessage(msg, url);
         }
-
-
-
         if( file !== undefined ){
-            //body.origin_file_name = file.originalname;
             body.img = file.filename;
         }else{
-            //body.origin_file_name = "non";
             body.img  = "non";
         }
 
-        const result = await dao.boardInsert.write( body );
+        if(body.category == 5){
+           msg = '카테고리를 선택해주세요';
+           url = "/board/write_form"
+
+            message.msg = msg;
+            message.url = url;
+            return message;
+        }
+        if(body.title == ''){
+            msg = '제목을 입력해주세요';
+            url = "/board/write_form"
+
+            message.msg = msg;
+            message.url = url;
+             return message;
+        }
+        if(body.content == ''){
+            msg = '내용을 입력해주세요';
+            url = "/board/write_form"
+
+            message.msg = msg;
+            message.url = url;
+            return message;      
+        }
+  
+        const result = await dao.boardInsert.write( body, member );
+
+        message.result = result.rowsAffected;
         if( result.rowsAffected === 1 ){
             msg = "등록되었습니다!!!";
             url = "/board";
+
         }else{
             msg = "문제 발생!!!";
-            url = "board_write/write_form";
+            url = "/board/write_form";
         }
-        return getMessage(msg, url);
+        message.msg = msg;
+        message.url = url;
+        return message;
+    },
+    cmtRegister : async (comment, member, BId) => {
+        const result = await dao.boardInsert.cmtRegister(comment, member, BId);
+
+        if( result.rowsAffected === 1 ){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 }
 
@@ -81,10 +126,8 @@ const boardUpdate = {
        }else{
            body.img  = "non";
        }
-   
 
         const result = await dao.boardUpdate.modify(body);
-        
 
         let msg, url;
         let message = {};
@@ -103,25 +146,26 @@ const boardUpdate = {
 }
 const boardDelete = {
     delete : (BId) => {
-      
-
-        dao.board_Delete.delete(BId);
-
+        const result = dao.board_Delete.delete(BId);
 
         let msg, url;
         let message = {};
         message.result = result.rowsAffected;
         if(result !== 0){
             msg = "삭제 되었습니다";
-            url = `/board`
+            url = `/board/news`
         }else {
             msg = "문제 발생"
             url = `/board/data/${body.BOARD_ID}`
         }
         message.msg = getMessage(msg, url);
         return message;
+    },
+    cmtDelete : async (CId)=>{
+        const result = await dao.board_Delete.cmtDelete(CId);
+        return result;
     }
 }
 
 module.exports = {boardRead, boardInsert, boardUpdate, boardDelete, 
-    timeModify, sessionCheck, getMessage}
+    timeModify, sessionCheck, getMessage, modifyCheck}

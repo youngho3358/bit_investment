@@ -34,7 +34,18 @@ const boardRead ={
     data : async (num)=>{
         let data = await dao.boardRead.data(num);
         data = common.timeModify(data.rows);
+        
         return data[0];
+    },
+    cmtdata : async (num) =>{
+        let cmtdata = await dao.boardRead.cmtdata(num);
+        
+        for(let i =0 ; i < cmtdata.length ; i++){
+            cmtdata[i].COMMENT_CREATE_DATA = common.formatDate(cmtdata[i].COMMENT_CREATE_DATA);
+
+        }
+        
+        return cmtdata;
     },
     list : async (start) =>{
         const totalCounter = await dao.boardRead.totalContent();
@@ -55,8 +66,7 @@ const boardRead ={
         return data;
     },
     searchPosts : async(keyword)=>{
-            const results = await dao.searchPosts(keyword);
-            return results;
+        return await dao.searchPosts(keyword);
     },
     incrementViews: async (BOARD_ID) => {
         await dao.incrementViews(BOARD_ID);
