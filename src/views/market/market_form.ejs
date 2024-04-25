@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>거래소</title>
+    <style>
+        * {
+          margin: 0px;
+          padding: 0px;
+        }
+        div {
+          /* display: block; */
+        }
+        a {
+          text-decoration: none;
+        }
+        .wrap {
+          min-width: 1340px;
+          background: #f1f1f3;
+          padding-bottom: 20px;
+        }
+        .header {
+          width: 1280px;
+          height: 100px;
+          margin: 0px auto 0px;
+          /* background-color: #14aa1e; */
+          /* background-color: #14776a; */
+          /* border-radius: 20px; */
+        }
+        .container {
+          position: relative;
+          width: 1280px;
+          height: 1000px;
+          margin: 20px auto 0px;
+          padding-bottom: 60px;
+          /* border: 1px solid black; */
+          /* background: white; */
+          background-color: #f1f1f3;
+        } 
+        .footer {
+          width: 1280px;
+          height: 100px;
+          margin: 20px auto 0px;
+          border: 1px solid black;
+          background: white;
+          display: flex;
+        }
+        .top_login_register_box {
+          display: inline-block;
+          height: 20px;
+          margin-top: 40px;
+          margin-left: 910px;
+          font-size: 17px;
+          font-weight: bolder;
+          text-align: right;
+        }
+        .top_login_button {
+          font-size: 20px;
+          margin-right: 40px;
+          color: white;
+        }
+        .top_register_button {
+          font-size: 20px;
+          margin-right: 40px;
+          color: white;
+        }
+        .top_logo {
+          position: absolute;
+          width: 150px;
+          height: 70px;
+          margin-left: 30px;
+          margin-top: 15px;
+          border: none;
+          text-align: center;
+        }
+        .top_menu {
+          position: absolute;
+          width: 700px;
+          height: 70px;
+          margin-left: 210px;
+          margin-top: 15px;
+        }
+        .top_menu_link {
+        display: inline-block;
+        height: 26px;
+        margin-top: 22px;
+        font-size: 26px;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.3);
+        }
+        .top_menu_link:hover{
+          color: rgba(255, 255, 255, 0.7);
+        }
+        .coin_all {
+          width: 850px;
+          height: 1060px;
+          float: left;
+          background-color: white;
+        }
+        .coin_list {
+          width: 410px;
+          height: 1060px;
+          float: right;
+          background-color: white;
+        }
+        .search {
+          display: flex;
+          height: 50px;
+        }
+        .input {
+          border: 2px solid white;
+          outline: none;
+        }
+        .input:focus {
+          border: 2px solid black;
+          border-radius: 5px;
+          
+        }
+        .scroll_coin_list{
+          overflow-y: auto;
+          height: 978px;
+        }
+        .coin_logo_name{
+          height: 50px;
+          border: 1px solid black;
+        }
+        .coin_high_low_now_cost{
+          height: 150px;
+          border: 1px solid black;
+        }
+        .coin_graph{
+          height: 400px;
+          width: 850px;
+          border: 1px solid black;
+        }
+        .asking_price{
+          display: inline-block;
+          margin-top: 10px;
+          width: 50%;
+          height: 430px;
+          border: 1px solid black;
+        }
+        .trade_menu{
+          display: inline-block;
+          margin-top: 10px;
+          width: 50%;
+          height: 430px;
+          border: 1px solid black;
+        }
+        .asking_trade_box{
+          display: flex;
+        }
+        #show_change{
+          margin-top: 4px; 
+          margin-bottom: 4px;
+          border: 1px solid white;
+        }
+    </style>
+    <script>
+      let coin_price0;
+      let coin_price1;
+      let coin_price2;
+      let coin_price3;
+      let coin_price4;
+      let coin_price5;
+      let coin_price6;
+      let coin_price7;
+      let coin_price8;
+      let coin_price9;
+      let coin_price10;
+      let coin_price11;
+      let coin_price12;
+      let coin_price13;
+      let coin_price14;
+      let coin_price15;
+      let coin_price16;
+      let coin_price17;
+      let coin_price18;
+      let coin_price19;
+      window.onload = function() {
+
+        var input = document.querySelector(".input")
+        input.addEventListener("click", function() {
+          this.setAttribute("placeholder", "")
+        })
+        input.addEventListener("blur", function() {
+          if (this.value === "") {
+            this.setAttribute("placeholder", "코인명/심볼검색");
+          }
+        });
+        setInterval(coin_change, 1000);
+        
+        const inputElement = document.querySelector('#input');
+        const coin_input = document.querySelectorAll('.coin_input');
+        const coin_kor_name = document.querySelectorAll('.coin_kor_name');
+        inputElement.addEventListener('input', function(event) {
+          const inputValue = event.target.value;
+          if (inputValue == "") {
+            for (let i = 0; i < coin_input.length; i++) {
+              coin_input[i].style.display="";
+            }
+          }else {
+            for(let i = 0; i < coin_kor_name.length; i++){
+              if ((coin_kor_name[i].textContent).includes(inputValue)) {
+
+                coin_input[i].style.display="";
+              }else{
+
+                coin_input[i].style.display="none";
+              }
+            }
+          }
+        });
+      }
+      const coin_change = () => {
+        fetch("/market/coin_list", {
+                    method : "post",
+                    headers : {"Content-Type":"application/json"},
+                    body : JSON.stringify()
+                })
+        .then(res => res.json())
+        .then(data => {
+          for(let i = 0; i < data.length; i++) {
+            let num = (i).toString();
+            let up_box = ("up_box").concat(num);
+            let down_box = ("down_box").concat(num);
+            let up_line = ("up_line").concat(num);
+            let down_line = ("down_line").concat(num);
+            let coin_stock_price = ("coin_stock_price").concat(num);
+            let coin_stock_change_rate = ("coin_stock_change_rate").concat(num);
+            let coin_stock_kor_name = ("coin_stock_kor_name").concat(num);
+            let coin_stock_eng_name = ("coin_stock_eng_name").concat(num);
+            let coin_stock_change_price = ("coin_stock_change_price").concat(num);
+            let coin_stock_trans_price = ("coin_stock_trans_price").concat(num);
+
+            if (Number(data[i].CHANGE_RATE) > 0) {
+              document.querySelector(`#${up_box}`).style.height=String(Math.abs(Number(data[i].CHANGE_RATE))/2.5).concat("px");
+              document.querySelector(`#${down_box}`).style.height="1px";
+              
+              if (((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${up_line}`).style.height=((((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[0].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${up_line}`).style.height="2px";
+              }
+              if (((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${down_line}`).style.height=((((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[0].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${down_line}`).style.height="2px";
+              }
+              document.querySelector(`#${up_box}`).style.background="red";
+              document.querySelector(`#${up_line}`).style.background="red";
+              document.querySelector(`#${down_box}`).style.background="red";
+              document.querySelector(`#${down_line}`).style.background="red";
+              document.querySelector(`.${coin_stock_price}`).style.color="red";
+              document.querySelector(`.${coin_stock_change_rate}`).style.color="red";
+            }else if(Number(data[i].CHANGE_RATE) == 0){
+              document.querySelector(`#${up_box}`).style.height=String(Math.abs(Number(data[i].CHANGE_RATE))/2.5).concat("px");
+              document.querySelector(`#${down_box}`).style.height="1px";
+              
+              if (((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${up_line}`).style.height=((((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${up_line}`).style.height="2px";
+              }
+              if (((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${down_line}`).style.height=((((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${down_line}`).style.height="2px";
+              }
+              document.querySelector(`#${up_box}`).style.background="gray";
+              document.querySelector(`#${up_line}`).style.background="gray";
+              document.querySelector(`#${down_box}`).style.background="gray";
+              document.querySelector(`#${down_line}`).style.background="gray";
+              document.querySelector(`.${coin_stock_price}`).style.color="gray";
+              document.querySelector(`.${coin_stock_change_rate}`).style.color="gray";
+            }else if(Number(data[i].CHANGE_RATE) < 0){
+              document.querySelector(`#${up_box}`).style.height=String(Math.abs(Number(data[i].CHANGE_RATE))/2.5).concat("px");
+              document.querySelector(`#${down_box}`).style.height="1px";
+              
+              if (((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${up_line}`).style.height=((((((data[i].HIGH_PRICE - data[i].CLOSING_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${up_line}`).style.height="2px";
+              }
+              if (((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5) >= 2) {
+                document.querySelector(`#${down_line}`).style.height=((((((data[i].CLOSING_PRICE - data[i].LOW_PRICE)/data[i].CLOSING_PRICE)*100)/2.5).toFixed(2)).concat("px"));
+              }else{
+                document.querySelector(`#${down_line}`).style.height="2px";
+              }
+              document.querySelector(`#${up_box}`).style.background="blue";
+              document.querySelector(`#${up_line}`).style.background="blue";
+              document.querySelector(`#${down_box}`).style.background="blue";
+              document.querySelector(`#${down_line}`).style.background="blue";
+              document.querySelector(`.${coin_stock_price}`).style.color="blue";
+              document.querySelector(`.${coin_stock_change_rate}`).style.color="blue";
+            }
+            document.querySelector(`#${coin_stock_kor_name}`).textContent = data[i].COIN_NAME;
+            document.querySelector(`#${coin_stock_eng_name}`).textContent = data[i].COIN_ENG_NAME;
+            document.querySelector(`#${coin_stock_price}`).textContent = data[i].NOW_PRICE;
+            document.querySelector(`#${coin_stock_change_rate}`).textContent = data[i].CHANGE_RATE;
+            document.querySelector(`#${coin_stock_change_price}`).textContent = data[i].CHANGE_PRICE;
+            document.querySelector(`#${coin_stock_trans_price}`).textContent = data[i].TRANS_PRICE;
+          }
+
+          for(let i = 0; i < data.length; i++) {
+            if (i == 0) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price0 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price0 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price0 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price0 = data[i].NOW_PRICE;
+            }else if (i == 1) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price1 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price1 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price1 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price1 = data[i].NOW_PRICE;
+            }else if (i == 2) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price2 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price2 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price2 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price2 = data[i].NOW_PRICE;
+            }else if (i == 3) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price3 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price3 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price3 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price3 = data[i].NOW_PRICE;
+            }else if (i == 4) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price4 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price4 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price4 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price4 = data[i].NOW_PRICE;
+            }else if (i == 5) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price5 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price5 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price5 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price5 = data[i].NOW_PRICE;
+            }else if (i == 6) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price6 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price6 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price6 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price6 = data[i].NOW_PRICE;
+            }else if (i == 7) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price7 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price7 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price7 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price7 = data[i].NOW_PRICE;
+            }else if (i == 8) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price8 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price8 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price8 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price8 = data[i].NOW_PRICE;
+            }else if (i == 9) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price9 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price9 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price9 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price9 = data[i].NOW_PRICE;
+            }else if (i == 10) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price10 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price10 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price10 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price10 = data[i].NOW_PRICE;
+            }else if (i == 11) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price11 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price11 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price11 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price11 = data[i].NOW_PRICE;
+            }else if (i == 12) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price12 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price12 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price12 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price12 = data[i].NOW_PRICE;
+            }else if (i == 13) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price13 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price13 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price13 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price13 = data[i].NOW_PRICE;
+            }else if (i == 14) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price14 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price14 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price14 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price14 = data[i].NOW_PRICE;
+            }else if (i == 15) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price15 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price15 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price15 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price15 = data[i].NOW_PRICE;
+            }else if (i == 16) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price16 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price16 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price16 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price16 = data[i].NOW_PRICE;
+            }else if (i == 17) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price17 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price17 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price17 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price17 = data[i].NOW_PRICE;
+            }else if (i == 18) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price18 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price18 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price18 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price18 = data[i].NOW_PRICE;
+            }else if (i == 19) {
+              let num = (i).toString();
+              let show_change = ("show_change").concat(num);
+              if (coin_price19 == data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid white";
+              }else if(coin_price19 < data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid red";
+              }else if(coin_price19 > data[i].NOW_PRICE) {
+                document.querySelector(`.${show_change}`).style.border="1px solid blue";
+              }
+              coin_price19 = data[i].NOW_PRICE;
+            }
+          }
+          return;
+        });
+      }
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div style="background-color: #14776a;">
+            <div class="header">
+                <div class="top_logo">
+                    <a href="/">
+                        <img src="<%=logoDataURI%>" 
+                            alt="logo"
+                            height="70px"
+                            >
+                    </a>
+                </div>
+                <div class="top_menu">
+                    <a href="/market" class="top_menu_link" style="margin-left: 20px; color: white;">거래소</a>
+                    <a href="/board" class="top_menu_link" style="margin-left: 30px;">게시판</a>
+                    <a href="/wallet" class="top_menu_link" style="margin-left: 30px;">내 코인</a>
+                    <a href="/history" class="top_menu_link" style="margin-left: 30px;">거래내역</a>
+                </div>
+                <div class="top_login_register_box">
+                    <% if(member) { %>
+                        <a href="/login/userInfo" class="top_login_button">MY</a>
+                        <a href="/login/logout" class="top_register_button">로그아웃</a>
+                    <%} else { %>
+                        <a href="/login" class="top_login_button">로그인</a>
+                        <a href="/register" class="top_register_button">회원가입</a>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+          <section class="coin_all" style="border: 1px solid black;">
+            <div class="coin_logo_name">coin_logo_name</div>
+            <div class="coin_high_low_now_cost">coin_high_low_now_cost</div>
+            <div class="coin_graph">coin_graph</div>
+            <div class="asking_trade_box">
+              <div class="asking_price">호가창(asking price)</div>
+              <div class="trade_menu">매수/매도(trade_menu)</div>
+            </div>
+          </section>
+          <section class="coin_list" style="border: 1px solid black;"> 
+            <div class="search" >
+              <input id="input" class="input" type="text" placeholder="코인명/심볼검색" style="width: 350px; height: 30px; margin-top: 8px; margin-left: 12px; font-weight: 600;"> 
+              <a style="cursor: pointer; margin-top: 7px;"><img src="<%= searchDataURI %>" height="35px" ></a>
+            </div>
+            <hr>
+            <div class="coin_list_name" style=" font-size: 11px; color: gray; height: 28px; display: flex;">
+              <div style="padding-top: 5px; width: 90px; text-align: right;">한글명</div>
+              <div style="padding-top: 5px; width: 125px; text-align: right;">현재가</div>
+              <div style="padding-top: 5px; width: 85px; text-align: right;">전일대비</div>
+              <div style="padding-top: 5px; width: 75px; text-align: right;">거래대금</div>
+            </div>
+           <hr>
+            <div class="scroll_coin_list">
+              <% for(let i = 0; i < 20; i++){ %>
+                <a id="coin_block_<%= i %>" style="cursor: pointer;">
+                  <div class="coin_input">
+                    <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
+                      <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
+                        <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
+                          <span id="up_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
+                          <span id="up_line<%= i %>" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; bottom: 0px;" ></span>
+                        </div>
+                        <div style=" display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: 4px;">
+                          <span id="down_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; top:0px" ></span>
+                          <span id="down_line<%= i %>" class="line" style="position: absolute; display: block; width: 1px; height: 20px; margin-left: 5.3px; top: 0px;" ></span>
+                        </div>
+                      </div>
+                      <div class="coin_stock_name" style="width: 90px; margin-top: 13px; font-size: 12px;">
+                        <label id="coin_stock_kor_name<%= i %>" class="coin_kor_name" style="font-weight: 600;"></label><br>
+                        <label id="coin_stock_eng_name<%= i %>"></label>
+                      </div>
+                      <div class="show_change<%= i %>" id="show_change">
+                        <div class="coin_stock_price<%= i %>" style="width: 80px; margin-top: 15px; font-size: 13px; text-align: right;">
+                          <label id="coin_stock_price<%= i %>" class="coin_price" style="font-weight: 600;"></label>
+                        </div>
+                      </div>
+                      <div class="coin_stock_change_rate<%= i %>" style="width: 80px; margin-top: 10px; font-size: 13px; text-align: right;">
+                        <label id="coin_stock_change_rate<%= i %>" style="font-weight: 600;"></label><label style="font-weight: 600;">%</label><br>
+                        <label id="coin_stock_change_price<%= i %>" style="font-weight: 600;"></label>
+                      </div>
+                      <div class="coin_stock_trade_price" style="width: 90px; margin-top: 19px; font-size: 13px; text-align: right;">
+                        <label id="coin_stock_trans_price<%= i %>" style="font-size: 14px; font-weight: 600;"></label><label style="color: gray; font-weight: 600; font-size: 11px;">백만</label>
+                      </div>
+                    </div>
+                  </a>
+                  <hr style="border-color: rgb(0, 0, 0, 0.1); border-width: 0.001px;">
+                </div>
+              <% } %>
+            </div>
+          </section>
+        </div>
+        <div class="footer">
+            <div id="copyright_logo" style="margin-top: 15px;">
+              <img src="<%=copyrightDataURI%>" alt="logo" height="70px">
+            </div>
+            <div style="margin-top: 7px; margin-left: 10px;">
+              고객센터 010-3858-5430 <label style="color: gray;">(평일 09:00~18:00/주말 및 공휴일 휴무) | </label>금융사고 전담 콜센터 1800-1111 <label style="color: gray;">(24시간 연중무휴)</label>
+              <br>서울특별시 종로구 돈화문로 26, 4층
+              <br><br><label style="color: gray;">Copyright 2024 coin_investment. All rights reserved.</label>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

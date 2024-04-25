@@ -2,21 +2,19 @@ const fs = require("fs");
 const path = require("path");
 const service = require("../../service/board_write/bw_service");
 
-
-/*
-session
-addr , age , email , grade , id , login_type , 
-member_id , name , nickname , phone
-
-greade : 관리자>0 일반회원>1
-
-login type : 일반>0 카카오>1 네이버>2
-*/
 const logoPath = "../../../img/logo/banner_logo.png";
 const logoBase64 = fs.readFileSync(path.join(__dirname, logoPath), 'base64');
 const logoDataURI = `data:image/jpeg;base64,${logoBase64}`;
 
+/*
+session.member = {
+member_id, email , name, age , addr, phone, 
+nickname, grade, login_type, id }
 
+greade : 관리자:0 일반회원:1
+
+login type : 일반:0 카카오:1 네이버:2
+*/
 
 const board_views = {
     writeForm : (req, res) => {
