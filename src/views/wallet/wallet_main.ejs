@@ -138,11 +138,11 @@
               let each_coin_buy_cost = parseInt(each_coin_buy_cost_toLocaleString.replace(/,/g, ''), 10);
 
               // 평가 손익 표현 부분
-              document.getElementById(`each_now_coin_result_${i}`).textContent = (Number((each_coin_buy_cost - result).toFixed(0))).toLocaleString();
+              document.getElementById(`each_now_coin_result_${i}`).textContent = (Number(((result * coin_num) - each_coin_buy_cost).toFixed(0))).toLocaleString();
 
-              if((each_coin_buy_cost - result) > 0){
+              if(((result * coin_num) - each_coin_buy_cost) > 0){
                 document.getElementById(`each_now_coin_result_${i}`).style.color = "red";
-              }else if((each_coin_buy_cost - result) < 0){
+              }else if(((result * coin_num) - each_coin_buy_cost) < 0){
                 document.getElementById(`each_now_coin_result_${i}`).style.color = "blue";
               }
             })
