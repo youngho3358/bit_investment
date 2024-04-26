@@ -121,29 +121,27 @@
           overflow-y: auto;
           height: 978px;
         }
-        .coin_logo_name{
+        .notice{
           height: 50px;
           border: 1px solid black;
         }
-        .coin_high_low_now_cost{
-          height: 150px;
+        .coin_content{
+          height: 120px;
           border: 1px solid black;
         }
         .coin_graph{
           height: 400px;
-          width: 850px;
+          width: 848px;
           border: 1px solid black;
         }
         .asking_price{
           display: inline-block;
-          margin-top: 10px;
           width: 50%;
           height: 430px;
           border: 1px solid black;
         }
         .trade_menu{
           display: inline-block;
-          margin-top: 10px;
           width: 50%;
           height: 430px;
           border: 1px solid black;
@@ -179,6 +177,17 @@
       let coin_price18;
       let coin_price19;
       window.onload = function() {
+        // for(let i = 0; i < 20; i++) {
+        //   if (i == 1) {
+        //     let num = (i).toString();
+        //     let coin_stock_eng_name = ("coin_stock_eng_name").concat(num);
+        //     let coin_stock_name = document.querySelector(`#${coin_stock_eng_name}`);
+            
+        //     document.getElementById('coin_list_click').addEventListener('click', function() {  
+        //       location.href = '/login/'
+        //     });
+        //   }
+        // }
 
         var input = document.querySelector(".input")
         input.addEventListener("click", function() {
@@ -213,6 +222,15 @@
           }
         });
       }
+
+      function coin_list_onclick(n) {
+        let num = (n).toString();
+        let coin_stock_eng_name = ("coin_stock_eng_name").concat(num);
+        let coin_name = document.getElementById(`${coin_stock_eng_name}`).textContent;
+        console.log(coin_name)
+        location.href=`/market/${coin_name}`;
+      }
+      
       const coin_change = () => {
         fetch("/market/coin_list", {
                     method : "post",
@@ -561,11 +579,12 @@
             </div>
         </div>
         <div class="container">
-          <section class="coin_all" style="border: 1px solid black;">
-            <div class="coin_logo_name">coin_logo_name</div>
-            <div class="coin_high_low_now_cost">coin_high_low_now_cost</div>
-            <div class="coin_graph">coin_graph</div>
-            <div class="asking_trade_box">
+          <section class="coin_all" style=" background-color: #f1f1f3;">
+            <div class="notice" style="background-color: white;">공지</div>
+
+            <div class="coin_content" style="margin-top: 20px; background-color: white;"><%= coin_info.COIN_ENG_NAME %></div>
+            <div class="coin_graph" style="margin-top: 20px; background-color: white;">coin_graph</div>
+            <div class="asking_trade_box" style="margin-top: 20px; background-color: white;">
               <div class="asking_price">호가창(asking price)</div>
               <div class="trade_menu">매수/매도(trade_menu)</div>
             </div>
@@ -582,12 +601,12 @@
               <div style="padding-top: 5px; width: 85px; text-align: right;">전일대비</div>
               <div style="padding-top: 5px; width: 75px; text-align: right;">거래대금</div>
             </div>
-           <hr>
+           <hr> 
             <div class="scroll_coin_list">
               <% for(let i = 0; i < 20; i++){ %>
-                <a id="coin_block_<%= i %>" style="cursor: pointer;">
+                <a style="cursor: pointer;">
                   <div class="coin_input">
-                    <div class="coin_stock" style="height: 60px; position: relative; display: flex;">
+                    <div onclick="coin_list_onclick(<%= i %>)" class="coin_stock" style="height: 60px; position: relative; display: flex;">
                       <div class="coin_stock_graph" style="width: 40px; padding-top: 24px; padding-left: 15px;" >
                         <div style="display: inline-block; position: absolute; height: 10px; width: 10px; margin-top: -5px;">
                           <span id="up_box<%= i %>" class="box" style="position: absolute; display: block; width: 12px; height: 1px; bottom: 0px;" ></span>
