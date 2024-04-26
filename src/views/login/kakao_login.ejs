@@ -59,7 +59,7 @@
             }
         }
 
-        const register = () => {
+        register = () => {
             let nickname = document.querySelector("#userNickname").value;
             let email = document.querySelector("#userEmail").value;
 
@@ -72,6 +72,7 @@
                 })
                 .then(res => res.json())
                 .then(result => {
+                    console.log(result);
                     if(result){
                         alert("카카오톡 연동 계정 생성이 완료되었습니다.");
                         window.location.href = 'http://localhost:3000/login';

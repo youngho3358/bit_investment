@@ -219,6 +219,7 @@ const process = {
         let result = await service.register.changeEmail(changeEmail, memberId);
         if(result == 1){
             req.session.member.email = changeEmail;
+            res.json(result);
             return;
         }
         res.json(result);
