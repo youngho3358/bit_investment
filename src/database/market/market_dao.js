@@ -117,6 +117,28 @@ const views = {
             }
         }
         
+    },
+    coin_info : async (coin_name) => {
+        let connection;
+        try {
+            // Connection pool에서 연결 얻기
+            connection = await pool.getConnection();
+
+            let d = await connection.execute(`SELECT * FROM (SELECT * FROM (SELECT * FROM coin_info ORDER BY order_column DESC) WHERE ROWNUM <= 20) WHERE coin_eng_name = '${coin_name}'`);
+            await connection.close();
+            let data = d.rows[0]
+            return data;
+
+        } catch (error) {
+            console.error("쿼리 실행 중 오류:", error);
+            if (connection) {
+                try {
+                    await connection.close(); // 오류 발생 시 연결 닫기
+                } catch (closeError) {
+                    console.error("연결 닫기 오류:", closeError);
+                }
+            }
+        }
     }
 }
  

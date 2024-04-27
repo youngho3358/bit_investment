@@ -138,10 +138,16 @@
               <a href="/market" style="position: absolute; z-index: 1; top: 400px; left: 475px; width: 150px; height: 50px; background-color: #14776a;">
                 <div style="color: white; font-size: 18px; font-weight: 600; margin-top: 12px; margin-left: 8px;">거래소 둘러보기</div>
               </a>
-              <a>
-                <a href="/login" style="position: absolute; z-index: 1; top: 400px; left: 655px; width: 150px; height: 50px; background-color: #14776a;">
-                  <div style="color: white; font-size: 18px; font-weight: 600; margin-top: 12px; margin-left: 45px;">로그인</div>
+              <a><% if(member) { %>
+                <a href="/login/logout" style="position: absolute; z-index: 1; top: 400px; left: 655px; width: 150px; height: 50px; background-color: #14776a;">
+                  <div style="color: white; font-size: 18px; font-weight: 600; margin-top: 12px; margin-left: 40px;">로그아웃</div>
                 </a>
+                <%} else{ %>
+                  <a href="/login" style="position: absolute; z-index: 1; top: 400px; left: 655px; width: 150px; height: 50px; background-color: #14776a;">
+                    <div style="color: white; font-size: 18px; font-weight: 600; margin-top: 12px; margin-left: 45px;">로그인</div>
+                  </a>
+                <%}%>
+                
               </a>
           </div>
           <div>
