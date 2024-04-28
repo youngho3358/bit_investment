@@ -142,7 +142,7 @@
         }
         .trade_menu{
           display: inline-block;
-          width: 50%;
+          width: 100%;
           height: 430px;
           border: 1px solid black;
         }
@@ -153,6 +153,144 @@
           margin-top: 4px; 
           margin-bottom: 4px;
           border: 1px solid white;
+        }
+        .trade_tab_button{
+          display: flex;
+          width: 100%;
+          text-align: center;
+          font-size: 17px;
+          font-weight: bold;
+        }
+        #buy_tab_button{
+          width: 33.333%;
+          padding: 15px;
+          border-bottom: 5px solid rgb(210, 0, 0);
+        }
+        #buy_tab_button:hover{
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        #sell_tab_button{
+          width: 33.333%;
+          padding: 15px;
+        }
+        #sell_tab_button:hover{
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        #trade_list_tab_button{
+          width: 33.333%;
+          padding: 15px;
+        }
+        #trade_list_tab_button:hover{
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        .buy_sell_detail{
+          height: 370px;
+        }
+        .trade_detail{
+          border: 1px solid black;
+          width: 100%;
+          height: 300px;
+        }
+        .buy_sell_button_box{
+          border: 1px solid black;
+          padding: 10px 100px;
+          height: 50px;
+          display: flex;
+        }
+        #reset_button{
+          border: 1px solid black;
+          width: 150px;
+          cursor: pointer;
+          text-align: center;
+          padding-top: 10px;
+          border-radius: 5px;
+          background-color: gray;
+          color: white;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        #reset_button:hover{
+          text-decoration: underline;
+        }
+        #buy_button{
+          border: 1px solid black;
+          width: 430px;
+          margin-left: 50px;
+          text-align: center;
+          cursor: pointer;
+          padding-top: 10px;
+          border-radius: 5px;
+          background-color: rgb(210, 0, 0);
+          color: white;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        #buy_button:hover{
+          text-decoration: underline;
+        }
+        #sell_button{
+          border: 1px solid black;
+          width: 430px;
+          margin-left: 50px;
+          text-align: center;
+          cursor: pointer;
+          padding-top: 10px;
+          border-radius: 5px;
+          background-color: rgb(0, 0, 210);
+          color: white;
+          font-size: 20px;
+          font-weight: bold;
+          display: none;
+        }
+        #sell_button:hover{
+          text-decoration: underline;
+        }
+        .order_class_box{
+          display: flex;
+          margin: 20px 40px 0px;
+          font-weight: bold;
+        }
+        #limit_order{
+          margin-left: 200px;
+          cursor: pointer;
+        }
+        #limit_order_text{
+          margin-left: 5px;
+          cursor: pointer;
+        }
+        #market_order{
+          margin-left: 200px;
+          cursor: pointer;
+        }
+        #market_order_text{
+          margin-left: 5px;
+          cursor: pointer;
+        }
+        .can_order_KRW_box{
+          display: flex;
+          margin: 20px 40px 0px;
+          font-weight: bold;
+        }
+        #have_KRW{
+          width: 500px;
+          height: 25px;
+          margin-left: 100px;
+          margin-top: -7px;
+          font-size: 25px;
+          text-align: right;
+        }
+        .KRW_text{
+          margin-left: 10px;
+          display: inline-block;
+          color: gray;
+        }
+        .select_buy_price_box{
+          display: flex;
+          margin: 20px 40px 0px;
+          font-weight: bold;
         }
     </style>
     <script>
@@ -221,6 +359,9 @@
             }
           }
         });
+
+        // 매수, 매도 버튼 클릭 시 기능 분할
+        trade_tab();
       }
 
       function coin_list_onclick(n) {
@@ -547,6 +688,37 @@
           return;
         });
       }
+      
+      function trade_tab() {
+        let buy_tab_button = document.getElementById("buy_tab_button");
+        let sell_tab_button = document.getElementById("sell_tab_button");
+        let trade_list_tab_button = document.getElementById("trade_list_tab_button");
+
+        buy_tab_button.addEventListener("click", () => {
+          document.getElementById("sell_button").style.display = "none";
+          document.getElementById("buy_button").style.display = "block";
+          document.getElementById("reset_button").style.display = "block";
+          trade_list_tab_button.style.borderBottom = "none";
+          sell_tab_button.style.borderBottom = "none";
+          buy_tab_button.style.borderBottom = "5px solid rgb(210, 0, 0)";
+        });
+        sell_tab_button.addEventListener("click", () => {
+          document.getElementById("sell_button").style.display = "block";
+          document.getElementById("buy_button").style.display = "none";
+          document.getElementById("reset_button").style.display = "block";
+          trade_list_tab_button.style.borderBottom = "none";
+          sell_tab_button.style.borderBottom = "5px solid rgb(0, 0, 210)";
+          buy_tab_button.style.borderBottom = "none";
+        });
+        trade_list_tab_button.addEventListener("click", () => {
+          sell_tab_button.style.borderBottom = "none";
+          buy_tab_button.style.borderBottom = "none";
+          trade_list_tab_button.style.borderBottom = "5px solid rgb(20, 119, 106)";
+          document.getElementById("reset_button").style.display = "none";
+          document.getElementById("buy_button").style.display = "none";
+          document.getElementById("sell_button").style.display = "none";
+        })
+      }
     </script>
 </head>
 <body>
@@ -585,8 +757,38 @@
             <div class="coin_content" style="margin-top: 20px; background-color: white;"><%= coin_info.COIN_ENG_NAME %></div>
             <div class="coin_graph" style="margin-top: 20px; background-color: white;">coin_graph</div>
             <div class="asking_trade_box" style="margin-top: 20px; background-color: white;">
-              <div class="asking_price">호가창(asking price)</div>
-              <div class="trade_menu">매수/매도(trade_menu)</div>
+              <div class="trade_menu">
+                <div class="trade_tab_button">
+                  <div id="buy_tab_button">매수</div>
+                  <div id="sell_tab_button">매도</div>
+                  <div id="trade_list_tab_button">거래내역</div>
+                </div>
+                <div class="buy_sell_detail">
+                  <div class="trade_detail">
+                    <div class="order_class_box">
+                      주문 구분
+                      <input type="radio" id="limit_order" name="trade_option" checked>
+                      <label for="limit_order" id="limit_order_text">지정가 주문</label>
+                      <input type="radio" id="market_order" name="trade_option">
+                      <label for="market_order" id="market_order_text">시장가 주문</label>
+                    </div>
+                    <div class="can_order_KRW_box">
+                      주문 가능
+                      <div id="have_KRW">12,345,678</div>
+                      <div class="KRW_text">KRW</div>
+                    </div>
+                    <div class="select_buy_price_box">
+                      매수가격
+                      <div class="KRW_text">KRW</div>
+                    </div>
+                  </div>
+                  <div class="buy_sell_button_box">
+                    <a id="reset_button">초기화</a>
+                    <a id="buy_button">매수</a>
+                    <a id="sell_button">매도</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
           <section class="coin_list" style="border: 1px solid black;"> 
